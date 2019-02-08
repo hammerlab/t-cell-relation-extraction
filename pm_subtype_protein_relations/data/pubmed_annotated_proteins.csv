@@ -1,0 +1,348 @@
+exp_id,exp_name,investigators,researchers,pr_value_lbl,exp_lbl,exp_typ
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,CD8,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,CD14,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,CD4,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,CD3,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,TNFα,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,IFNγ,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,IL4,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,IL2,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,CD154,OMIP:014,OMIP
+FR-FCM-ZZ2L,OMIP-014: 12-color HVTN ICS assay,Stephen DeRosa,Stephen DeRosa,CD107A,OMIP:014,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,CD154,OMIP:016,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,CD4,OMIP:016,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,CD45RA,OMIP:016,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,IFNγ,OMIP:016,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,CD8,OMIP:016,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,IL2,OMIP:016,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,TNFα,OMIP:016,OMIP
+FR-FCM-ZZ2T,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Figure 1),Antonio Cosma,Antonio Cosma,CD3,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,TNFα,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,CD3,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,IL2,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,CD154,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,CD45RA,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,CD4,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,IFNγ,OMIP:016,OMIP
+FR-FCM-ZZ2V,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Suppl Figure 9),Antonio Cosma,Antonio Cosma,CD8,OMIP:016,OMIP
+FR-FCM-ZZ3Z,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Figure 6),Antonio Cosma,Antonio Cosma,CD107A,OMIP:016,OMIP
+FR-FCM-ZZ3Z,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Figure 6),Antonio Cosma,Antonio Cosma,CD4,OMIP:016,OMIP
+FR-FCM-ZZ3Z,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Figure 6),Antonio Cosma,Antonio Cosma,TNFα,OMIP:016,OMIP
+FR-FCM-ZZ3Z,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Figure 6),Antonio Cosma,Antonio Cosma,IFNγ,OMIP:016,OMIP
+FR-FCM-ZZ3Z,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Figure 6),Antonio Cosma,Antonio Cosma,CD3,OMIP:016,OMIP
+FR-FCM-ZZ3Z,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Figure 6),Antonio Cosma,Antonio Cosma,CD8,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,CD154,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,CD4,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,CD45RA,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,IFNγ,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,CD8,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,IL2,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,TNFα,OMIP:016,OMIP
+FR-FCM-ZZ3Y,OMIP-016: Characterization of Antigen-Responsive macaque and human T-cells (Online Fig 7&8),Antonio Cosma,Antonio Cosma,CD3,OMIP:016,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD69,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD25,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD38,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD16,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD127,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD4,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD45,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD3,OMIP:023,OMIP
+FR-FCM-ZZ74,"OMIP-023: 10-Color, 13 antibody panel for in-depth phenotyping of human peripheral blood leukocytes",Attila Tarnok,Jozsef Bocsi,CD8,OMIP:023,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD161,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD8,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD27,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD3,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD8β,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD45RO,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD4,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,TCRγδ,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD45RA,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,TCR,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD28,OMIP:021,OMIP
+FR-FCM-ZZ9H,OMIP-021: Innate-like T-cell Panel,Nicholas Gherardin,Nicholas Gherardin,CD197,OMIP:021,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,CD107A,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,IL17A,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,IFNα,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,CD197,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,CD45RO,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,IL22,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,CD8,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,CD4,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,IL2,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,CD3,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,CD154,OMIP:022,OMIP
+FR-FCM-ZZAZ,OMIP-022: Exemplary Data for comprehensive assessment of antigen-specific human t-cell functionality and memory,Andrew Graves,Andrew Graves,TNF,OMIP:022,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD4,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD19,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD25,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,HLADR,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD56,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD45RA,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD14,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD197,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD57,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD8,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,Vδ2,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD3,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD38,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,TCRγδ,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD127,OMIP:024,OMIP
+FR-FCM-ZZEB,OMIP-024: Pan-leukocyte immunophenotypic characterization of human PBMC subsets  (18-color panel),Stephen DeRosa,Gemma Moncunill,CD16,OMIP:024,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,TNFα,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,IL4,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,IFNγ,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD3,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD154,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD56,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD8,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD197,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,IL21,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD45RA,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,IL2,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD185,OMIP:025,OMIP
+FR-FCM-ZZEC,OMIP-025: Evaluation of human T- and NK-cell responses including memory and follicular helper phenotype by intracellular cytokine staining,Stephen DeRosa,Gemma Moncunill,CD4,OMIP:025,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD38,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD4,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD45RA,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD3,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD8,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD25,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD196,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD183,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD161,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD194,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD197,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD20,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD185,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CCR10,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,KI67,OMIP:030,OMIP
+FR-FCM-ZZWU,"OMIP-030: Characterization of eight major human CD4+ T helper subsets, including Tregs, via surface markers",Gerhard Wingender,Gerhard Wingender,CD127,OMIP:030,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD279,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD69,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD335,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD16,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD8,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,KI67,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD3,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD56,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,HLADR,OMIP:028,OMIP
+FR-FCM-ZZK4,OMIP-028: Rhesus macaque NK cell subset,Eva Rakasz,Eva Rakasz,CD45,OMIP:028,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD20,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD56,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD159A,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD16,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD8,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD45,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,IFNγ,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,GRZB,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD107A,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,TNF,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD4,OMIP:035,OMIP
+FR-FCM-ZZX9,OMIP-035: Nonhuman Primate NK cell functional assay,Eva Rakasz,Eva Rakasz,CD3,OMIP:035,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,KLRG1,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD28,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD45RA,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD160,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD272,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD14,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD366,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD127,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD279,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD197,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD152,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD3,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD4,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD8,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD19,OMIP:036,OMIP
+FR-FCM-ZZQP,OMIP-036: Coinhibitory Receptors,Zachary Healy,Zachary Healy,CD57,OMIP:036,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD4,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,TCRγδ,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD127,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD8,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD160,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD223,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,TIGIT,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD366,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD3,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD16,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD137,OMIP:037,OMIP
+FR-FCM-ZZSC,OMIP-037: 16-color panel to measure inhibitory receptor signatures from multiple human immune cell subsets,Anna Belkina,Anna Belkina,CD56,OMIP:037,OMIP
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD45,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD14,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,TCRγδ,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD3,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,HLADR,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,TNFα,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,IFNγ,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,MIP1β,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CXCL8,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD8,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD45RA,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD19,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD4,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD103,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,IL2,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD25,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD107A,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD197,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD184,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,Vδ2,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD38,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD56,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,INTEGRINβ7,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD279,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CDW199,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD152,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD154,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,Vδ1,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,Vα7.2,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD185,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD161,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD192,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,IL4,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,IL10,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD196,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CSF2,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD194,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,IL22,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CX3CR1,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,IL17A,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTJ,Optimization of mass cytometry sample cryopreservation after staining,Hermi Rizal Sumatoh,Hermi Rizal Sumatoh,CD16,CYTOF:FR-FCM-ZZTJ,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD45,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD14,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD57,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,TCRγδ,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD3,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,HLADR,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD29,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD38,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD69,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD62L,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD8,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD45RO,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD4,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD103,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD194,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD25,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD49A,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CCR10,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD186,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD19,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD27,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD56,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD278,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD279,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD161,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CDW199,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD183,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD95,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD31,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD185,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD49D,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD192,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD195,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD196,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD45RA,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD197,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CX3CR1,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD184,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD127,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IFNγ,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,TNFα,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CXCL8,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,GRZB,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL17F,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CD152,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL2,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL5,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL9,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,MIP1β,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL4,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL10,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,CSF2,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL22,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZZTM,Data from Wong et al Immunity  2016,Evan Newell,Evan Newell,IL17A,CYTOF:FR-FCM-ZZTM,CYTOF
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD2,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD337,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD14,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD57,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD7,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD85,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD328,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD56,OMIP:039,OMIP
+FR-FCM-ZYY6,OMIP-039: Detection and analysis of human adaptive NKG2C+ natural killer cells,Quirin Hammer,Quirin Hammer,CD3,OMIP:039,OMIP
+FR-FCM-ZY6D,OMIP-040: Henry et al - CytoPartA - 2017 - huEpi,Gervaise Henry,Gervaise Henry,CD31,OMIP:040,OMIP
+FR-FCM-ZY6D,OMIP-040: Henry et al - CytoPartA - 2017 - huEpi,Gervaise Henry,Gervaise Henry,CD45,OMIP:040,OMIP
+FR-FCM-ZY6D,OMIP-040: Henry et al - CytoPartA - 2017 - huEpi,Gervaise Henry,Gervaise Henry,CD26,OMIP:040,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,CD19,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,CD20,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,IgD,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,CD27,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,CD38,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,IgA,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,CD15,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,IgG,OMIP:043,OMIP
+FR-FCM-ZYBP,OMIP-043: Identification of Human Antibody Secreting subsets,Jeff Carrell,Jeff Carrell,IgM,OMIP:043,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD26,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD272,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD8,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD38,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD1,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD11C,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,HLADR,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CX3CR1,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD85K,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD45RA,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD141,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,SIRPα,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD14,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD11B,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD123,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD40,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD16,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD56,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD3,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD86,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD45,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD197,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD163,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD80,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD19,OMIP:044,OMIP
+FR-FCM-ZYC2,OMIP-044: 28-color immunophenotyping of the human DC compartment,Florian Mair,Florian Mair,CD4,OMIP:044,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,IgG,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,KI67,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD185,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD197,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD10,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD21,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD19,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,IgA,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD38,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD27,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,IgD,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD184,OMIP:047,OMIP
+FR-FCM-ZYFB,OMIP-047: High-dimensional phenotypic characterization of B cells,Thomas Liechti,Thomas Liechti,CD183,OMIP:047,OMIP
+CODEXH01,CODEX Human Panel 01,,,COLLAGENIV,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD7,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,KI67,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD38,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD31,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD4,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD45,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD90,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD19,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD15,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD3,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD104,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD21,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD34,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD278,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,HLADR,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD22,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD279,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD8,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD40,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CYTOKERATIN,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD9,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,PODOPLANIN,CODEX:H01,CODEX
+CODEXH01,CODEX Human Panel 01,,,CD11C,CODEX:H01,CODEX
