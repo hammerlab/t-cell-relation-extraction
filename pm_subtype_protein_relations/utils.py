@@ -55,3 +55,45 @@ class BioCreativeReader(Reader):
                 ret[data[0]].append(tuple([data[0], int(data[1]), int(data[2]), data[3], data[4]]))
 
         return ret
+    
+    
+PANDAS_DF_STYLE_HEAD = '''
+<html>
+<head>
+<style>
+
+    h2 {
+        text-align: center;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+    table { 
+        margin-left: auto;
+        margin-right: auto;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 5px;
+        text-align: center;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 90%;
+    }
+    table tbody tr:hover {
+        background-color: #dddddd;
+    }
+    .wide {
+        width: 90%; 
+    }
+
+</style>
+</head>
+<body>
+'''
+PANDAS_DF_STYLE_TAIL = '''
+</body>
+</html>
+'''
+def create_table_doc(html):
+    return PANDAS_DF_STYLE_HEAD + html + PANDAS_DF_STYLE_TAIL
