@@ -1,0 +1,19 @@
+T0	DNA 0 34	Blimp-1/Prdm1 Alternative Promoter
+T1	PROTEIN 106 167	zinc-finger PR domain transcriptional repressor Blimp-1/Prdm1
+T2	DNA 371 387	mouse Prdm1 gene
+T3	DNA 398 426	alternative promoter regions
+T4	DNA 438 461	alternative first exons
+T5	DNA 481 487	exon 3
+T6	DNA 673 700	transcriptional start sites
+T7	DNA 827 846	NF-κB binding sites
+T8	PROTEIN 867 872	NF-κB
+T9	PROTEIN 899 904	Prdm1
+T10	CELL_TYPE 922 936	mutant B cells
+T11	PROTEIN 953 958	Prdm1
+T12	CELL_TYPE 1036 1060	antibody-secreting cells
+T13	DNA 1077 1092	distal promoter
+T14	DNA 1101 1116	∼70 kb upstream
+T15	DNA 1219 1226	exon 1B
+T16	DNA 1382 1392	Prdm1 gene
+T17	PROTEIN 1414 1419	NF-κB
+T18	PROTEIN 1441 1446	Prdm1

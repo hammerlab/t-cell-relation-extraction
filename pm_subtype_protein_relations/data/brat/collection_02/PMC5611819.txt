@@ -1,0 +1,5 @@
+MiR-150 regulates memory CD8 T cell differentiation via c-Myb.
+
+Summary
+MicroRNAs play an important role in T cell responses. However, how microRNAs regulate CD8 T cell memory remains poorly defined. Here, we found that miR-150 negatively regulates CD8 T cell memory in vivo. Genetic deletion of miR-150 disrupted the balance between memory precursor and terminal effector CD8 T cells following acute viral infection. Moreover, miR-150-deficient memory CD8 T cells were more protective upon rechallenge. A key circuit whereby miR-150 repressed memory CD8 T cell development through the transcription factor c-Myb was identified. Without miR-150, c-Myb was upregulated and anti-apoptotic targets of c-Myb such as Bcl-2 and Bcl-xL were also increased suggesting a miR-150-c-Myb survival circuit during memory CD8 T cell development. Indeed, overexpression of non-repressible c-Myb rescued the memory CD8 T cell defects caused by overexpression of miR-150. Overall, these results identify a key role for miR-150 in memory CD8 T cells through a c-Myb-controlled enhanced survival circuit.
+

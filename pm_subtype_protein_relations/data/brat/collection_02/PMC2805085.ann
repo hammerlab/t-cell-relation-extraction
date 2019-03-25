@@ -1,0 +1,22 @@
+T0	CELL_LINE 11 76	MUC1-Specific Th1 Effector Cell Immunotherapy Induce Differential
+T1	CELL_LINE 96 120	TReg Cell Subpopulations
+T2	CELL_TYPE 216 238	autologous lymphocytes
+T3	CELL_TYPE 316 347	Ag-specific CD4 and CD8 T cells
+T4	PROTEIN 411 415	MUC1
+T5	PROTEIN 522 526	MUC1
+T6	PROTEIN 539 543	IL-2
+T7	CELL_LINE 556 578	CD4+/Th1 effector cell
+T8	CELL_TYPE 638 661	peripheral blood T cell
+T9	PROTEIN 806 830	serum CA125 tumor marker
+T10	CELL_TYPE 1060 1063	PBL
+T11	PROTEIN 1098 1102	MUC1
+T12	CELL_TYPE 1291 1312	CD3/CD4/CD25+ T cells
+T13	PROTEIN 1447 1452	Foxp3
+T14	PROTEIN 1457 1463	CTLA-4
+T15	CELL_TYPE 1645 1666	MUC1-specific T cells
+T16	PROTEIN 1682 1686	CCR5
+T17	PROTEIN 1691 1715	CCR1 chemokine receptors
+T18	PROTEIN 1724 1738	chemokine CCL4
+T19	PROTEIN 1755 1786	Th1 cell differentiation/memory
+T20	CELL_LINE 1833 1879	autologous MUC1-stimulated CD4+ effector cells
+T21	CELL_LINE 1957 1993	” CD4/CD25+ TReg cell subpopulations

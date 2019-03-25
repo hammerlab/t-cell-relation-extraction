@@ -1,0 +1,5 @@
+A critical role for STAT3 transcription factor signaling in the development and maintenance of human T cell memory.
+
+Summary
+STAT3 transcription factor signaling in specific T helper cell differentiation have been well described, whereas the broader roles for STAT3 in lymphocyte memory are less clear. Patients with autosomal dominant hyper-IgE syndrome (AD-HIES) carry dominant negative STAT3 mutations and are susceptible to a variety of bacterial and fungal infections. We found that AD-HIES patients have a cell-intrinsic defect in the number of central memory CD4+ and CD8+ T cells compared to healthy controls. Naïve T cells from AD-HIES patients had lower expression of memory-related transcription factors BCL6 and SOCS3, a primary proliferation defect, and they failed to acquire central memory-like surface phenotypes in vitro. AD-HIES patients showed a decreased ability to control varicella zoster virus (VZV) and Epstein-Barr virus (EBV) latency, and T cell memory to both of these viruses was compromised. These data point to a specific role for STAT3 in human central memory T cell formation and in control of certain chronic viruses.
+

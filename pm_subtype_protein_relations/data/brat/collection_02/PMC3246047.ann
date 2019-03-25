@@ -1,0 +1,20 @@
+T0	PROTEIN 34 42	cytokine
+T1	CELL_TYPE 60 84	T helper-17 cell lineage
+T2	PROTEIN 120 149	pattern recognition receptors
+T3	CELL_TYPE 153 168	dendritic cells
+T4	CELL_TYPE 170 173	DCs
+T5	CELL_TYPE 179 190	macrophages
+T6	PROTEIN 213 222	cytokines
+T7	CELL_TYPE 255 267	CD4+ T cells
+T8	PROTEIN 303 321	interleukin (IL)-6
+T9	PROTEIN 342 370	transforming growth factor-β
+T10	PROTEIN 372 377	TGF-β
+T11	CELL_TYPE 402 434	T helper-17 (Th17) lineage cells
+T12	PROTEIN 470 478	cytokine
+T13	PROTEIN 556 560	IL-6
+T14	CELL_TYPE 587 604	Th17 cell lineage
+T15	PROTEIN 716 720	IL-1
+T16	CELL_TYPE 765 788	Th17 cell lineage cells
+T17	PROTEIN 844 848	IL-6
+T18	CELL_TYPE 927 930	DCs
+T19	CELL_TYPE 1071 1088	Th17 cell lineage

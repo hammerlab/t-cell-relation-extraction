@@ -1,0 +1,25 @@
+T-cell exhaustion in chronic hepatitis B infection: current knowledge and clinical significance.
+
+Hepatitis B virus (HBV) infection is the major cause of inflammatory liver disease, of which the clinical recovery and effective anti-viral therapy is associated with the sustained viral control of effector T cells. In humans, chronic HBV infection often shows weak or absent virus-specific T-cell reactivity, which is described as the ‘exhaustion' state characterized by poor effector cytotoxic activity, impaired cytokine production and sustained expression of multiple inhibitory receptors, such as programmed cell death-1 (PD-1), lymphocyte activation gene-3, cytotoxic T lymphocyte-associated antigen-4 and CD244. As both CD4+ and CD8+ T cells participate in the immune responses against chronic hepatitis virus through distinct manners, compelling evidences have been proposed, which restore the anti-viral function of these exhausted T cells by blocking those inhibitory receptors with its ligand and will pave the way for the development of more effective immunotherapeutic and prophylactic strategies for the treatment of chronic infectious diseases. A large number of studies have stated the essentiality of T-cell exhaustion in virus-infected diseases, such as LCMV, hepatitis C virus (HCV), human immunodeficiency virus infections and cancers. Besides, the functional restoration of HCV- and HIV-specific CD8+ T cells by PD-1 blockade has already been repeatedly verified, and also for the immunological control of tumors in humans, blocking the PD-1 pathway could be a major immunotherapeutic strategy. Although the specific molecular pathways of T-cell exhaustion remain ambiguous, several transcriptional pathways have been implicated in T-cell exhaustion recently; among them Blimp-1, T-bet and NFAT2 were able to regulate exhausted T cells during chronic viral infection, suggesting a distinct lineage fate for this sub-population of T cells. This paper summarizes the current literature relevant to T-cell exhaustion in patients with HBV-related chronic hepatitis, the options for identifying new potential therapeutic targets to treat HBV infection and highlights priorities for further study.
+
+
+
+Chronic hepatitis B is a heterogeneous and refractory disease with poor prognosis as well as limitations including expensive cost, viral resistance and toxicity with ongoing anti-viral therapy.
+
+Patients with chronic HBV infections are usually characterized by a population of exhausted T cells, which have weak virus-specific T-cell responses during chronic HBV infection, impeding the clearance of virus and recovery from hepatitis.
+
+The mechanism of exhausted T cells in persistent infections such as LCMV and cancers have been well described, and related antibody blockade treatments have been applied, which have achieved evident outcomes. However, there is a significant lack of the underlying mechanisms of CD8+ and CD4+ T-cell exhaustion.
+
+Recent progresses in the exploration of exhausted T cells during chronic HBV infection have provided novel insight for the possibility of immunotherapy for this disease.
+
+As the effector function of T cells have been impaired during chronic HBV infection, we wonder whether and how the function of exhausted T cells can be restored to regain their anti-viral ability?
+
+Although previous studies mainly focus on the CD8+ exhausted T cells, more and more attention have been paid on CD4+ exhausted T cells; thus, we propose our question whether CD4+ exhausted T cells have similarly important roles in chronic HBV infection?
+
+Why does the blockade treatment restore the function of exhausted T cells only in partial patients, and why is the therapeutic outcome distinct among different research groups?
+
+Can the combination of several antibodies achieve better effect on the restoration of exhausted T cells in the treatment of chronic HBV?
+
+Whether the exhausted T cells in chronic HBV infection were regulated by specific transcriptional pathways?
+
+Hepatitis B virus (HBV) is the most prevalent virus that leads to liver injury and inflammation. During the acute phase of infection, effective T-cell response for viral clearance of HBV infection is characterized by active and sustained multiepitope-specific CD4+ and CD8+ T-cell responses. CD4+ T cells are provided with the ability to target HBV core antigen epitopes and produce Th-1-type cytokines such as interferon-γ (IFN-γ) and tumor necrosis factor-α (TNF-α), as well as the ability to induce and maintain successful CD8+ T-cell responses.1, 2, 3, 4 The anti-viral functions of HBV-specific CD8+ T cells were verified in experimentally infected chimpanzees, indicating that CD8+ T cells are the major immune cells contributing to the clearance of HBV.5, 6 Contrarily, chronic HBV infection fails to mount such an efficient innate and adaptive immune response to the virus, resulting in a lengthy and complicated combat between immune clearance and tolerance with respective immuno

@@ -1,0 +1,6 @@
+T0	CELL_TYPE 433 459	antibody producing B cells
+T1	CELL_TYPE 464 496	influenza-specific T lymphocytes
+T2	CELL_TYPE 562 575	T lymphocytes
+T3	PROTEIN 609 619	antibodies
+T4	CELL_TYPE 1027 1044	activated T cells
+T5	CELL_TYPE 1176 1183	T cells

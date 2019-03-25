@@ -1,0 +1,4 @@
+Common Gamma Chain Cytokines in Combinatorial Immune Strategies against Cancer.
+
+Common γ chain (γC) cytokines, namely IL-2, IL-4, IL-7, IL-9, IL-15, and IL-21 are important for the proliferation, differentiation, and survival of lymphocytes that display antitumor activity, thus stimulating considerable interest for the use of cytokines in cancer immunotherapy. In this review, we will focus on the γC cytokines that demonstrate the greatest potential for immunotherapy, IL-2, IL-7, IL-15, and IL-21. We will briefly cover their biological function, potential applications in cancer therapy, and update on their use in combinatorial immune strategies for eradicating tumors and hematopoietic malignancies.
+

@@ -1,0 +1,7 @@
+T0	CELL_TYPE 37 53	cytotoxic T cell
+T1	CELL_TYPE 57 68	memory cell
+T2	CELL_TYPE 146 158	CD8+ T cells
+T3	CELL_TYPE 181 193	memory cells
+T4	CELL_TYPE 332 363	bona fide memory cell precursor
+T5	CELL_TYPE 596 608	memory cells
+T6	CELL_TYPE 634 651	memory population

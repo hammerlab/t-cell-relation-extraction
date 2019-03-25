@@ -1,0 +1,5 @@
+Gut microbiota amplifies host-intrinsic conversion from the CD8 T cell lineage to CD4 T cells for induction of mucosal immune tolerance.
+
+Abstract
+Microbiota has been shown to promote tolerogenic differentiation of T lymphocytes. It remains unclear to what extent microbiota triggers de novo re-programming or amplify pre-existing plasticity intrinsic to T cells. In a study with mouse models to track the clonal fate of CD4 and CD8 T cells, we discovered that CD8 T cells converted to MHC class I-restricted CD4 T cells without regard to selfness of their antigen specificity. In mesenteric lymph nodes (MLN), CD8 T cells converted to CD4+Foxp3+ regulatory T (Treg) cells which were enriched in the large intestine lamina propria (LILP) and suppressed chemical- or immune-mediated inflammatory damage. In germ-free conditions, the converted CD4 populations were present in MLN, but absent in LILP. Therefore, an intrinsic plasticity in the host was amplified by the gut microbiota, leading to selfless tolerance induction in the intestinal mucosa. The findings may be relevant to HIV infection, cancer and autoimmune disorders.
+

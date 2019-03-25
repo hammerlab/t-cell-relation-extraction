@@ -1,0 +1,5 @@
+Intestinal host defense outcome is dictated by PGE2 production during efferocytosis of infected cells.
+
+Significance
+Citrobacter rodentium infection, a murine colitis model to study human intestinal diseases, causes exacerbated apoptosis of intestinal epithelial cells and triggers Th17 immune responses. Here, we identified a heretofore unknown role for the bioactive lipid mediator prostaglandin E2 (PGE2) in the inhibition of Th17 cell differentiation during intestinal C. rodentium infection. When the PGE2 receptor EP4 was antagonized, we detected enhanced colonic Th17 cells, increased expression of antimicrobial peptides, and decreased bacterial numbers in the colon. These results suggest that pharmacological intervention of the PGE2 signaling may be an important target to enhance Th17 actions and improve intestinal host defense.
+

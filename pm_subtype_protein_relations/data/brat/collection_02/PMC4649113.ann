@@ -1,0 +1,14 @@
+T0	CELL_TYPE 77 99	CD4 T helper (Th) cell
+T1	CELL_TYPE 130 144	T cell subsets
+T2	CELL_TYPE 241 254	naïve T cells
+T3	PROTEIN 340 349	cytokines
+T4	CELL_LINE 463 501	transdifferentiated T cell populations
+T5	PROTEIN 517 548	signature transcription factors
+T6	PROTEIN 553 562	cytokines
+T7	CELL_TYPE 635 651	T helper subsets
+T8	PROTEIN 904 955	Interleukin (IL)-17 secreting helper T (Th17) cells
+T9	CELL_TYPE 1162 1183	IL-17 secreting cells
+T10	CELL_TYPE 1250 1259	Th1 cells
+T11	PROTEIN 1283 1337	anti-inflammatory transcription factor forkhead box p3
+T12	PROTEIN 1351 1371	transcription factor
+T13	CELL_TYPE 1375 1393	regulatory T cells

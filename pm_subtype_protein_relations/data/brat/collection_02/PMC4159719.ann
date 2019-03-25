@@ -1,0 +1,15 @@
+T0	CELL_TYPE 18 44	Innate-like Lymphoid Cells
+T1	CELL_TYPE 320 341	innate lymphoid cells
+T2	CELL_TYPE 455 478	adaptive lymphoid cells
+T3	PROTEIN 771 782	ID proteins
+T4	PROTEIN 837 848	ID proteins
+T5	PROTEIN 880 911	E protein transcription factors
+T6	CELL_TYPE 1095 1113	innate lymphocytes
+T7	CELL_TYPE 1125 1145	natural killer cells
+T8	CELL_TYPE 1174 1195	innate lymphoid cells
+T9	PROTEIN 1197 1201	ILC1
+T10	PROTEIN 1203 1207	ILC2
+T11	PROTEIN 1213 1217	ILC3
+T12	CELL_TYPE 1224 1247	innate-like lymphocytes
+T13	CELL_TYPE 1259 1281	natural killer T cells
+T14	PROTEIN 1334 1345	ID proteins

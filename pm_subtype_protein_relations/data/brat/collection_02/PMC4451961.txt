@@ -1,0 +1,32 @@
+Murine IL-17+ Vγ4 T lymphocytes accumulate in the lungs and play a protective role during severe sepsis.
+
+
+Background
+Lung inflammation is a major consequence of the systemic inflammatory response caused by severe sepsis. Increased migration of γδ T lymphocytes into the lungs has been previously demonstrated during experimental sepsis; however, the involvement of the γδ T cell subtype Vγ4 has not been previously described.
+
+
+Methods
+Severe sepsis was induced by cecal ligation and puncture (CLP; 9 punctures, 21G needle) in male C57BL/6 mice. γδ and Vγ4 T lymphocyte depletion was performed by 3A10 and UC3-10A6 mAb i.p. administration, respectively. Lung infiltrating T lymphocytes, IL-17 production and mortality rate were evaluated.
+
+
+Results
+Severe sepsis induced by CLP in C57BL/6 mice led to an intense lung inflammatory response, marked by the accumulation of γδ T lymphocytes (comprising the Vγ4 subtype). γδ T lymphocytes present in the lungs of CLP mice were likely to be originated from peripheral lymphoid organs and migrated towards CCL2, CCL3 and CCL5, which were highly produced in response to CLP-induced sepsis. Increased expression of CD25 by Vγ4 T lymphocytes was observed in spleen earlier than that by αβ T cells, suggesting the early activation of Vγ4 T cells. The Vγ4 T lymphocyte subset predominated among the IL-17+ cell populations present in the lungs of CLP mice (unlike Vγ1 and αβ T lymphocytes) and was strongly biased toward IL-17 rather than toward IFN-γ production. Accordingly, the in vivo administration of anti-Vγ4 mAb abrogated CLP-induced IL-17 production in mouse lungs. Furthermore, anti-Vγ4 mAb treatment accelerated mortality rate in severe septic mice, demonstrating that Vγ4 T lymphocyte play a beneficial role in host defense.
+
+
+Conclusions
+Overall, our findings provide evidence that early-activated Vγ4 T lymphocytes are the main responsible cells for IL-17 production in inflamed lungs during the course of sepsis and delay mortality of septic mice.
+
+
+Electronic supplementary material
+The online version of this article (doi:10.1186/s12865-015-0098-8) contains supplementary material, which is available to authorized users.
+
+
+
+
+Mortality induced by sepsis is highly associated with secondary acute lung injury. Systemic inflammation during sepsis leads to acute respiratory distress syndrome (ARDS) caused by an exacerbated response of the immune system to bacteria and their products [1–4]. Indeed, mice subjected to experimental model of sepsis induced by cecal ligation and puncture (CLP) show deregulation in pulmonary immune response, marked by cytokine storm and intense accumulation of activated leukocytes in lung tissue, including T lymphocytes [5–8].
+γδ T lymphocytes are unconventional lymphocytes that have antigen recognition properties fundamentally different from those of αβ T lymphocytes, and are comprised by distinct functional subsets, defined by the differential usage of Vγ and Vδ gene repertoire [9, 10]. The Vγ4 T lymphocyte subset is highly associated with lung immune surveillance and increases in number in mouse lungs at early time points during bacterial infections [10–13]. Increased migration of γδ T cells into the lungs has been previously demonstrated during experimental sepsis; however, the identification of γδ T cell subtypes has not been previously described [7, 8, 14].
+The migration of γδ T lymphocytes is largely dictated by the activation of chemokine receptors by their counterpart ligands, among which members from both CC and CXC subfamilies play compelling roles [15–17]. Once at the infection site, these cells can rapidly respond to microbial antigens via innate surface receptors [18–21], producing high amounts of interferon (IFN)-γ and interleukin (IL)-17, which are signature cytokines produced by specific subsets of γδ T cells [22–26]. Vγ4 T lymphocytes represent one of the major subsets that produce IL-17 in different experimental models [27–30].
+γδ T lymphocytes have been shown to play divergent roles in mouse models of sepsis [8, 14, 31–34]. The protective role of γδ T lymphocytes during experimental sepsis has been attributed to the production of IL-17, a cytokine that triggers neutrophil recruitment and improves bacterial clearance [33, 35–37]. Furthermore, the accumulation of activated γδ T lymphocytes in the lungs of CLP mice has been correlated with beneficial outcome of septic mice [8, 14]. Here we show that during the course of experimental severe sepsis, Vγ4 T lymphocytes migrate into injured lungs of CLP mice and exert a protective role via the production of IL-17.
+
+Activated γδ T lymphocytes accumulate in mouse lungs during severe sepsis
+The induction of severe sepsis triggered an intense inflammatory response in mouse lungs, marked by a significant increase of γδ and αβ T lymphocyte numbers observed from 1 to 10 days after the surgery (Fig. 1a-c). The γδ T cell subtype Vγ4 also infiltrated into the lungs of CLP-induced mice and, differently from those of 

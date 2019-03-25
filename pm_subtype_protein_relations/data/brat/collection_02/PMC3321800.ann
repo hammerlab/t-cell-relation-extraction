@@ -1,0 +1,16 @@
+T0	CELL_TYPE 72 92	Mature T Lymphocytes
+T1	CELL_LINE 273 308	autologous gene-modified stem cells
+T2	CELL_TYPE 375 389	mature T cells
+T3	CELL_LINE 543 555	T-cell clone
+T4	DNA 607 632	T-cell protooncogene LMO2
+T5	CELL_TYPE 649 672	CD4/CD8 double-negative
+T6	DNA 965 987	IL2RA and IL15RA genes
+T7	CELL_LINE 1091 1114	immortalized cell clone
+T8	PROTEIN 1126 1130	IL-2
+T9	PROTEIN 1174 1185	IL2RA chain
+T10	PROTEIN 1190 1194	LMO2
+T11	CELL_LINE 1224 1248	cultured primary T cells
+T12	CELL_TYPE 1340 1354	mature T cells
+T13	PROTEIN 1439 1452	IL-2 receptor
+T14	PROTEIN 1461 1479	protooncogene LMO2
+T15	CELL_TYPE 1536 1556	mature T lymphocytes

@@ -1,0 +1,5 @@
+Programmed cell death 1 inhibits inflammatory helper T-cell development through controlling the innate immune response.
+
+Significance
+Programmed cell death 1 (PD-1) is a membrane receptor that transmits inhibitory signals on leucocytes. Lack of PD-1 in mice results in various autoimmune diseases, which have been believed to be caused by the activation of T lymphocytes without inhibition. The current study reveals that PD-1 inhibits T-lymphocyte–mediated autoimmunity through regulating macrophage function. PD-1 deficiency only in innate immune cells caused dysregulated macrophage responses against mycobacterial adjuvant and enhanced production of IL-6, a proinflammatory cytokine, leading to the development of inflammatory autoreactive helper T cells and the exacerbation of experimental autoimmune encephalomyelitis. The lymphocyte extrinsic regulation of PD-1 provides a unique perspective on the maintenance of the immune self-tolerance and the understanding of the development of autoimmune diseases.
+

@@ -1,0 +1,4 @@
+Metabolic Instruction of Immunity.
+
+Choices have consequences. Immune cells survey and migrate throughout the body and sometimes take residence in niche environments with distinct communities of cells, extracellular matrix, and nutrients that may differ from those in which they matured. Imbedded in immune cell physiology are metabolic pathways and metabolites that not only provide energy and substrates for growth and survival, but also instruct effector functions, differentiation, and gene expression. This review of immunometabolism will reference the most recent literature to cover the choices that environments impose on the metabolism and function of immune cells and highlight their consequences during homeostasis and disease.
+

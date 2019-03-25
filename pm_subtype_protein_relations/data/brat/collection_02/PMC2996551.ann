@@ -1,0 +1,11 @@
+T0	CELL_TYPE 123 141	memory T-cell pool
+T1	CELL_LINE 225 237	T-cell clone
+T2	PROTEIN 276 279	MHC
+T3	PROTEIN 310 344	T-cell receptor (TCR) –antigen–MHC
+T4	PROTEIN 346 354	TCR-pMHC
+T5	CELL_TYPE 426 433	T cells
+T6	CELL_LINE 610 622	T-cell clone
+T7	CELL_TYPE 631 645	daughter cells
+T8	CELL_TYPE 703 724	CD4+ and CD8+ T cells
+T9	PROTEIN 926 934	TCR-pMHC
+T10	CELL_TYPE 1003 1037	T helper type 1 memory populations

@@ -1,0 +1,14 @@
+T0	CELL_TYPE 33 59	inflammatory helper T-cell
+T1	PROTEIN 159 163	PD-1
+T2	PROTEIN 170 187	membrane receptor
+T3	CELL_TYPE 225 235	leucocytes
+T4	PROTEIN 245 249	PD-1
+T5	CELL_TYPE 357 370	T lymphocytes
+T6	PROTEIN 422 426	PD-1
+T7	PROTEIN 436 449	T-lymphocyte–
+T8	PROTEIN 511 515	PD-1
+T9	CELL_TYPE 535 554	innate immune cells
+T10	PROTEIN 654 658	IL-6
+T11	PROTEIN 662 686	proinflammatory cytokine
+T12	CELL_TYPE 718 758	inflammatory autoreactive helper T cells
+T13	PROTEIN 865 869	PD-1

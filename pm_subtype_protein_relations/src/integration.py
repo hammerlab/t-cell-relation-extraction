@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import re
+import string
 
 def clean_text(text):
     # Remove individual lines that have a very small number of characters
@@ -17,7 +18,12 @@ def extract_text(xml):
     return clean_text(body.text) if body else None
 
 def combine_text(title, abstract, body):
-    return '{}\n{}\n{}'.format(title or '', abstract or '', body or '')
+    parts = [title or '', abstract or '', body or '']
+    
+    def add_punc(t):
+        return t + '.' if t.strip() and t.strip()[-1] not in string.punctuation else t
+    
+    return '\n'.join([add_punc(p) for p in parts])
 
 def get_scispacy_pipeline(model='en_ner_jnlpba_md'):
     import spacy

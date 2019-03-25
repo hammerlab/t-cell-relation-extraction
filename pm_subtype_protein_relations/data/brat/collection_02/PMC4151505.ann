@@ -1,0 +1,13 @@
+T0	DNA 14 31	Foxp3 cis-element
+T1	CELL_TYPE 127 158	terminally differentiated cells
+T2	PROTEIN 388 414	transcription factor Foxp3
+T3	DNA 519 523	CNS2
+T4	DNA 528 563	CpG-rich Foxp3 intronic cis-element
+T5	CELL_TYPE 593 605	mature Tregs
+T6	DNA 827 831	CNS2
+T7	PROTEIN 846 851	Foxp3
+T8	PROTEIN 882 890	cytokine
+T9	PROTEIN 913 921	TCR/NFAT
+T10	DNA 976 980	CNS2
+T11	DNA 985 999	Foxp3 promoter
+T12	DNA 1029 1041	cis-elements

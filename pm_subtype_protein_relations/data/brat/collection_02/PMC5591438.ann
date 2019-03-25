@@ -1,0 +1,22 @@
+T0	PROTEIN 4 33	transcription factor musculin
+T1	CELL_TYPE 77 98	peripheral Treg cells
+T2	PROTEIN 161 189	master transcription factors
+T3	PROTEIN 191 194	TFs
+T4	CELL_TYPE 239 253	T cell subsets
+T5	PROTEIN 274 300	transcriptional regulators
+T6	CELL_TYPE 378 393	T cell lineages
+T7	PROTEIN 431 467	Transforming growth factor-β (TGF-β)
+T8	PROTEIN 526 537	TF Musculin
+T9	CELL_TYPE 539 542	MSC
+T10	CELL_TYPE 632 635	MSC
+T11	PROTEIN 644 649	Foxp3
+T12	PROTEIN 704 709	TGF-β
+T13	PROTEIN 718 723	iTreg
+T14	CELL_TYPE 752 755	MSC
+T15	PROTEIN 804 809	GATA3
+T16	DNA 813 822	TH2 locus
+T17	DNA 877 886	Th2 locus
+T18	PROTEIN 934 937	TH2
+T19	CELL_LINE 956 1015	Msc−/− mice spontaneously develop gut and lung inflammation
+T20	CELL_TYPE 1049 1052	MSC
+T21	PROTEIN 1062 1067	Foxp3

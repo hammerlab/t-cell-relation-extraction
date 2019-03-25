@@ -1,0 +1,19 @@
+Myeloid-derived Suppressor Cells Have a Proinflammatory Role in the Pathogenesis of Autoimmune Arthritis.
+
+
+Objectives
+Although myeloid-derived suppressive cells (MDSCs) have been linked to T-cell tolerance, their role in autoimmune rheumatoid arthritis (RA) remains elusive. Here we investigate the potential association of MDSCs with the disease pathogenesis using a preclinical model of RA and specimen collected from RA patients.
+
+
+Methods
+The frequency of MDSCs in blood, lymphoid tissues, inflamed paws, or synovial fluid and their association with disease severity, tissue inflammation, and the levels of pathogenic T-helper (Th) 17 cells was examined in arthritic mice or in patients with RA (n=35) and osteoarthritis (OA, n=15). The MDSCs in arthritic mice were also characterized for their phenotype, inflammation status, T-cell suppressive activity, and their capacity of pro-Th17 cell differentiation. The involvement of MDSCs in the disease pathology and a Th17 response was examined by adoptive transfer or antibody depletion of MDSCs in arthritic mice or by co-culturing mouse or human MDSCs with naïve CD4+ T cells under Th17-polarizing conditions.
+
+
+Results
+MDSCs significantly expanded in arthritic mice and in RA patients, which correlated positively with disease severity and an inflammatory Th17 response. While displaying T-cell suppressive activity, MDSCs from arthritic mice produced high levels of inflammatory cytokines (e.g., IL-1β, TNF-α). Both mouse and human MDSCs promoted Th17 cell polarization ex vivo. Transfer of MDSCs facilitated disease progression, whereas their elimination in arthritic mice ameliorates disease symptoms concomitant with reduction of IL-17A/Th17 cells.
+
+
+Conclusions
+Our studies suggest that proinflammatory MDSCs with their capacity to drive Th17 cell differentiation may be a critical pathogenic factor in autoimmune arthritis.
+
+

@@ -1,0 +1,6 @@
+T0	CELL_TYPE 114 132	engineered T cells
+T1	PROTEIN 144 169	chimeric antigen receptor
+T2	PROTEIN 171 174	CAR
+T3	CELL_TYPE 608 615	T cells
+T4	CELL_TYPE 626 646	lymphoid progenitors
+T5	CELL_LINE 660 710	pluripotent stem cell (iPSC)-derived T lymphocytes

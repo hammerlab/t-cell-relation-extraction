@@ -1,0 +1,41 @@
+T0	CELL_TYPE 123 141	CD8+ memory T cell
+T1	CELL_TYPE 189 208	CD8+ memory T cells
+T2	CELL_TYPE 298 316	memory CD8+ T cell
+T3	CELL_TYPE 390 408	naïve CD8+ T cells
+T4	CELL_TYPE 796 826	less-differentiated stem cells
+T5	PROTEIN 1054 1076	cell fate determinants
+T6	CELL_TYPE 1082 1096	daughter cells
+T7	CELL_TYPE 1296 1308	parent cells
+T8	CELL_TYPE 1350 1364	daughter cells
+T9	PROTEIN 1583 1612	extracellular matrix proteins
+T10	PROTEIN 1614 1624	chemokines
+T11	PROTEIN 1630 1639	cytokines
+T12	CELL_TYPE 1916 1926	Stem cells
+T13	PROTEIN 2048 2057	Integrins
+T14	CELL_TYPE 2088 2097	stem cell
+T15	PROTEIN 2356 2365	integrins
+T16	PROTEIN 2399 2409	β1 subunit
+T17	CELL_TYPE 2451 2461	stem cells
+T18	CELL_TYPE 2478 2492	daughter cells
+T19	PROTEIN 2558 2561	Gui
+T20	PROTEIN 2566 2571	Homer
+T21	CELL_TYPE 2879 2908	myeloid and lymphoid lineages
+T22	PROTEIN 3024 3032	cytokine
+T23	PROTEIN 3037 3046	chemokine
+T24	CELL_TYPE 3123 3145	undifferentiated cells
+T25	CELL_TYPE 3233 3253	differentiated cells
+T26	CELL_TYPE 3350 3363	stromal cells
+T27	PROTEIN 3375 3383	integrin
+T28	PROTEIN 3385 3394	chemokine
+T29	PROTEIN 3400 3408	cytokine
+T30	CELL_TYPE 3467 3480	stromal cells
+T31	CELL_TYPE 3686 3703	multipotent cells
+T32	CELL_TYPE 3830 3849	low-frequency cells
+T33	CELL_TYPE 4215 4227	immune cells
+T34	PROTEIN 4328 4350	von Andrian and Mempel
+T35	CELL_TYPE 4476 4487	macrophages
+T36	PROTEIN 4509 4524	soluble factors
+T37	CELL_TYPE 4858 4865	B cells
+T38	CELL_TYPE 4867 4897	CD4+ follicular T helper cells
+T39	CELL_TYPE 4903 4929	follicular dendritic cells
+T40	CELL_TYPE 4931 4935	FDCs

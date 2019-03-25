@@ -1,0 +1,23 @@
+T0	PROTEIN 31 39	cytokine
+T1	CELL_LINE 54 85	calcitriol-primed human B cells
+T2	PROTEIN 273 287	immunoglobulin
+T3	CELL_TYPE 404 429	calcitriol-primed B cells
+T4	CELL_TYPE 471 484	Human B cells
+T5	PROTEIN 506 515	anti-CD40
+T6	PROTEIN 520 538	interleukin (IL)-4
+T7	CELL_TYPE 635 642	B cells
+T8	CELL_TYPE 665 688	autologous CD4+ T cells
+T9	CELL_TYPE 694 717	B cell phenotype T cell
+T10	PROTEIN 751 759	cytokine
+T11	CELL_TYPE 791 804	Naive T cells
+T12	CELL_TYPE 822 853	calcitriol-primed naive B cells
+T13	PROTEIN 882 917	nuclear factor of activated T cells
+T14	PROTEIN 919 932	cytoplasmic 2
+T15	PROTEIN 934 940	NFATc2
+T16	PROTEIN 957 965	cytokine
+T17	PROTEIN 997 1001	CD86
+T18	CELL_TYPE 1016 1023	B cells
+T19	PROTEIN 1153 1173	anti-CD28 antibodies
+T20	CELL_TYPE 1198 1223	calcitriol-primed B cells
+T21	CELL_TYPE 1265 1272	T cells
+T22	CELL_TYPE 1406 1431	calcitriol-primed B cells

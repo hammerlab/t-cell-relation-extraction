@@ -1,0 +1,25 @@
+T-Cell Autophagy Deficiency Increases Mortality and Suppresses Immune Responses after Sepsis.
+
+
+Background
+Although the role of autophagy in sepsis has been characterized in several organs, its role in the adaptive immune system remains to be ascertained. This study aimed to investigate the role of autophagy in sepsis-induced T cell apoptosis and immunosuppression, using knockout mice with T cell specific deletion of autophagy essential gene Atg7.
+
+
+Methods and Results
+Sepsis was induced in a cecal ligation and puncture (CLP) model, with T-cell-specific Atg7-knockout mice compared to control mice. Autophagic vacuoles examined by electron microscopy were decreased in the spleen after CLP. Autophagy proteins LC3-II and ATG7, and autophagosomes and autolysosomes stained by Cyto-ID Green and acridine orange were decreased in CD4+ and CD8+ splenocytes at 18 h and 24 h after CLP. This decrease in autophagy was associated with increased apoptosis of CD4+ and CD8+ after CLP. Moreover, mice lacking Atg7 in T lymphocytes showed an increase in sepsis-induced mortality, T cell apoptosis and loss of CD4+ and CD8+ T cells, in comparison to control mice. This was accompanied by suppressed cytokine production of Th1/Th2/Th17 by CD4+ T cells, reduced phagocytosis in macrophages and decreased bacterial clearance in the spleen after sepsis.
+
+
+Conclusion
+These results indicated that sepsis led to down-regulation of autophagy in T lymphocytes, which may result in enhanced apoptosis induction and decreased survival in sepsis. Autophagy may therefore play a protective role against sepsis-induced T lymphocyte apoptosis and immunosuppression.
+
+
+
+
+Despite advances in the care of critically ill patients, sepsis leading to multiple organ failure still remains the major cause of death in severely injured patients who survive initial trauma, hemorrhage, or burn injury [1], [2], [3], [4]. Sepsis is characterized by an initial hyper-inflammatory response, followed by a period of immunosuppression termed “immunoparalysis” [5]. Increased lymphocyte apoptosis has been correlated with decreased survival in experimental animal studies, and confirmed in observational human studies [6], [7], [8]. As lymphocytes produce proinflammatory cytokines and activate macrophages, loss of lymphocytes can impair the ability of the immune system to combat pathogens [8], [9]. Investigating the role and mechanisms of lymphocyte death may develop new effective strategies in the treatment of sepsis.
+Autophagy plays a protective role in liver, heart, lung and kidney in sepsis, which protects against apoptotic cell death [10], [11], [12], [13], [14], [15]. Autophagy also has critical physiological functions in the immune system. In the absence of the autophagy-related genes - Atg7 or Atg5, both CD4+ and CD8+ T lymphocytes rapidly undergo apoptosis in the periphery, with reduced numbers in secondary lymphoid organs, and a failure to proliferate in response to T cell antigen receptor stimulation [16], [17]. Autophagy also affects the presentation of cytosolic antigens in the context of MHC II molecules [18], in T-cell development, differentiation, polarization, and homeostasis [19], [20]. Moreover, autophagy is one of the main degradative pathways of the immune system responsible for the detection of intracellular bacteria, such as Mycobacterium tuberculosis and Streptococcus pyogenes
+[21], [22], [23]. In addition, autophagy cooperates with Toll-like receptors, and acts as both a regulator in plasmacytoid dendritic cells response to viral infection [24].
+The autophagy process is initiated by the formation of an isolation membrane in cytoplasm. Through an elongation step, the isolation membrane forms a double-membrane structure called the autophagosome to encapsulate cytoplasmic contents, damaged organelles, or invading intracellular pathogens. The autophagosome then fuses with the lysosome for the degradation of the encapsulated materials [25]. Autophagy ATG7 is an essential protein required for the elongation phase of autophagosome formation [26], [27], [28]. Therefore in this study we employed a mouse with Atg7 knockout specific to T lymphocytes only, in order to determine the role of autophagy in regulating T lymphocyte apoptosis and immune responses in sepsis.
+
+Animal experiments were performed in strict accordance with the international guidelines for the care and use of laboratory animals and with ethics approval from the Institutional Animal Care and Use Committee (IACUC) of E-Da Hospital/I-Shou University, Taiwan (Permit number: IACUC-100010).
+
+Experiments were performed on male mice (6-8 weeks old). C57BL/6 mice (BioLASCO Taiwan Co., Ltd., Taipei, Taiwan) were used for time-point studies. Transgenic Atg7floxp/floxp mice (loxP-Atg7 conditional targeting allele, referred to as Atg7f/f) were obtained from Dr. Masaaki Komatsu, Laboratory of Frontier Science, Tokyo Metropolitan Institute of Medical Science, Bunkyo-ku, Tokyo, Japan. Transgenic CD4-Cre mice that e
