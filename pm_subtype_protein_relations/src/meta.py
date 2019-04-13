@@ -2,23 +2,40 @@ import pandas as pd
 import mygene
 mg = mygene.MyGeneInfo()
 
+
+def mygene_batch_query(**kwargs):
+    kwargs['as_dataframe'] = True
+    start = 0
+    dfs = []
+    while True:
+        kwargs['size'] = 1000
+        kwargs['from'] = start
+        df = mg.query(**kwargs)
+        start += kwargs['size']
+        if len(df) == 0:
+            break
+        dfs.append(df)
+    return pd.concat(dfs)
+        
+
 def mygene_query(query, species='human', score_threshold=20):
-    df = mg.query(
+    query_args = dict(
         q=query,
-        size=1000,
         scopes=["symbol", "retired", "name", "alias"],
         fields='symbol,name,taxid,ensembl.gene,alias', 
         species=species, 
         as_dataframe=True
     )
+    df = mygene_batch_query(**query_args)
     print('Original result info:')
     print(df.info())
     
     print('Score histogram:')
     ax = df['_score'].hist(bins=32)
-    ax.vlines(x=score_threshold, ymin=0, ymax=100)
-    
-    df = df[df['_score'] > score_threshold]
+    if score_threshold is not None:
+        ax.vlines(x=score_threshold, ymin=0, ymax=100)
+        df = df[df['_score'] > score_threshold]
+        
     df = df.rename(columns={'_id': 'extid'}).drop('_score', axis=1)
     return df
     

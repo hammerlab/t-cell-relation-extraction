@@ -144,6 +144,9 @@ inducibleTreg,iTreg,1,manual,,CTC881661E8DBA35BC
 induced-Treg,iTreg,1,manual,,CTB1409183E8FCA373
 induced Treg,iTreg,1,manual,,CT7934BBFEC34F18DD
 inducedTreg,iTreg,1,manual,,CT356885F549C5A405
+inducible-regulatory-T,iTreg,1,manual,,CTFDDD33416A1010B7
+inducible regulatory T,iTreg,1,manual,,CT561AB33D0CC11964
+inducibleregulatoryT,iTreg,1,manual,,CTBC9BCD200170B3C5
 pTreg,pTreg,1,manual,,CTEB875A23AC9FB7E3
 peripheral-Treg,pTreg,1,manual,,CT900F60084FAACF31
 peripheral Treg,pTreg,1,manual,,CTC79F324E22A53FC4
