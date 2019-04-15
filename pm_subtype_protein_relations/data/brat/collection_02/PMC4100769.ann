@@ -22,8 +22,7 @@ T20	CELL_TYPE 2788 2815	CD4+ and CD8+ T lymphocytes
 T21	PROTEIN 2955 2978	T cell antigen receptor
 T22	PROTEIN 3046 3064	cytosolic antigens
 T23	PROTEIN 3083 3099	MHC II molecules
-T24	PROTEIN 3365 3388	Streptococcus pyogenes
-
+T24	PROTEIN 3365 3387	Streptococcus pyogenes
 T25	PROTEIN 3445 3464	Toll-like receptors
 T26	CELL_TYPE 3498 3526	plasmacytoid dendritic cells
 T27	PROTEIN 3969 3973	ATG7

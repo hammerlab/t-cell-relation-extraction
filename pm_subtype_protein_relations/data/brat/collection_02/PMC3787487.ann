@@ -1,7 +1,4 @@
 T0	CELL_TYPE 16 51	Hematopoietic Stem/Progenitor Cells
-T1	PROTEIN 57 97	CD19-Specific Chimeric Antigen Receptors
-T2	PROTEIN 153 180	
-Chimeric antigen receptors
 T3	PROTEIN 196 200	CD19
 T4	CELL_TYPE 227 234	T-cells
 T5	CELL_TYPE 258 283	B-lineage malignant cells
