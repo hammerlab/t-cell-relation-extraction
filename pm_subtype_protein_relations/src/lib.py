@@ -3,11 +3,14 @@ import pandas as pd
 import os.path as osp
 from interlap import InterLap
 from env import META_DATA_DIR
+
 SPECIES_HUMAN_ID = 1
 SPECIES_MOUSE_ID = 2
+
 CELL_TYPES = 'cell_types'
 CYTOKINES = 'cytokines'
 TRANSCRIPTION_FACTORS = 'transcription_factors'
+
 
 def fix_jupyter_spacy_config():
     # Work-around for https://github.com/explosion/spaCy/issues/3208

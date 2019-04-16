@@ -1,12 +1,121 @@
 sym,lbl,spid
-IL-23,IL23,1
-IL23,IL23,1
-IL12α,IL12A,1
-IL-12α,IL12A,1
-IL-12 p35,IL12A,1
-IL-12p35,IL12A,1
-IL12p35,IL12A,1
-IL1,IL1,1
-IL-1,IL1,1
-transforming growth factor β,TGFβ,1
-transforming growth factor beta,TGFβ,1
+IL-23,IL-23,1
+IL23,IL-23,1
+IL-35,IL-35,1
+IL35,IL-35,1
+IL-32,IL-32,1
+IL32,IL-32,1
+IL-32α,IL-32,1
+IL-32β,IL-32,1
+IL-32δ,IL-32,1
+IL-32γ,IL-32,1
+IL-12α,IL-12α,1
+IL12α,IL-12α,1
+IL-12 p35,IL-12α,1
+IL-12p35,IL-12α,1
+IL12p35,IL-12α,1
+IL-1RA,IL-1RA,1
+IL1RA,IL-1RA,1
+IL1RN,IL-1RA,1
+IL-1RN,IL-1RA,1
+IL-28,IL-28,1
+IL28,IL-28,1
+IL-28A,IL-28A,1
+IL28A,IL-28A,1
+IFNL2,IL-28A,1
+IL-28B,IL-28B,1
+IL28B,IL-28B,1
+IFNL3,IL-28B,1
+IL-1,IL-1,1
+IL1,IL-1,1
+TGF-β,TGF-β,1
+TGF,TGF-β,1
+TGFβ,TGF-β,1
+TGF-B,TGF-β,1
+TGFB,TGF-β,1
+TGFB1,TGF-β,1
+transforming growth factor β,TGF-β,1
+transforming growth factor b,TGF-β,1
+transforming growth factor beta,TGF-β,1
+TNF-α,TNF-α,1
+TNF,TNF-α,1
+TNF-β,TNF-β,1
+LT-α,TNF-β,1
+LTA,TNF-β,1
+IFN-1,IFN-1,1
+IFN1,IFN-1,1
+type I interferons,IFN-1,1
+type 1 interferons,IFN-1,1
+type I interferon,IFN-1,1
+type 1 interferon,IFN-1,1
+IFN-α1,IFN-α1,1
+IFN-α2,IFN-α2,1
+IFN-α6,IFN-α6,1
+IFN-β1,IFN-β1,1
+CCL6,CCL6,1
+CCL9,CCL9,1
+CXCL4,CXCL4,1
+PF4,CXCL4,1
+PF-4,CXCL4,1
+platelet factor 4,CXCL4,1
+SCYB4,CXCL4,1
+CXCL7,CXCL7,1
+PPBP,CXCL7,1
+pro-platelet basic protein,CXCL7,1
+B-TG1,CXCL7,1
+β-TG,CXCL7,1
+CD40LG,CD40LG,1
+CSF1,CSF1,1
+CSF-1,CSF1,1
+Monocyte-CSF,CSF1,1
+M-CSF,CSF1,1
+MCSF,CSF1,1
+CSF2,CSF2,1
+CSF-2,CSF2,1
+CSF3,CSF3,1
+CSF-3,CSF3,1
+EBI3,EBI3,1
+EGF,EGF,1
+epidermal growth factor,EGF,1
+EPO,EPO,1
+erythropoietin,EPO,1
+MVCD2,EPO,1
+ECYT5,EPO,1
+hematopoietin,EPO,1
+hemopoietin,EPO,1
+FGF1,FGF1,1
+acidic fibroblast growth factor,FGF1,1
+fibroblast growth factor 1,FGF1,1
+HBGF1,FGF1,1
+HBGF-1,FGF1,1
+aFGF,FGF1,1
+FGF2,FGF2,1
+FGF-2,FGF2,1
+FGFB,FGF2,1
+HBGF-2,FGF2,1
+fibroblast growth factor 2,FGF2,1
+basic fibroblast growth factor,FGF2,1
+bFGF,FGF2,1
+FGF-β,FGF2,1
+FGFβ,FGF2,1
+GDF15,GDF15,1
+GDF-15,GDF15,1
+MIF,MIF,1
+MMIF,MIF,1
+macrophage migration inhibitory factor,MIF,1
+SPP1,SPP1,1
+APRIL,APRIL,1
+TNFSF13,APRIL,1
+TNFSF13B,TNFSF13B,1
+CD258,CD258,1
+TNFSF14,CD258,1
+VEGI,VEGI,1
+vascular endothelial growth inhibitor,VEGI,1
+TNFSF15,VEGI,1
+OX40L,OX40L,1
+TNFSF4,OX40L,1
+CD252,OX40L,1
+CD153,CD153,1
+TNFSF8,CD153,1
+4-1BB,4-1BB,1
+TNFSF9,4-1BB,1
