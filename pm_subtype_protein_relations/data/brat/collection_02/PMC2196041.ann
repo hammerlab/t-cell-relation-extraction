@@ -12,7 +12,6 @@ T16	CYTOKINE 596 601	IL-12
 T17	CYTOKINE 605 609	IL-6
 T18	CELL_TYPE 633 657	antigen-presenting cells
 T19	CELL_TYPE 790 808	naive CD4+ T cells
-T21	CELL_TYPE 856 865	Th1 cells
 T22	CYTOKINE 874 878	IL-2
 T23	CYTOKINE 880 885	IFN-γ
 T24	CYTOKINE 891 896	TNF-β
@@ -91,9 +90,6 @@ R4	Induction Arg1:T9 Arg2:T12
 R5	Secretion Arg1:T14 Arg2:T13	
 R6	Secretion Arg1:T18 Arg2:T17	
 R7	Secretion Arg1:T18 Arg2:T16	
-R8	Secretion Arg1:T21 Arg2:T22	
-R9	Secretion Arg1:T21 Arg2:T23	
-R10	Secretion Arg1:T21 Arg2:T24	
 T15	CELL_TYPE 957 960	Th2
 R11	Secretion Arg1:T15 Arg2:T26	
 R12	Secretion Arg1:T15 Arg2:T27	
@@ -129,3 +125,7 @@ T78	CELL_TYPE 3799 3802	Th2
 T10	CYTOKINE 0 18	Interleukin (IL)-6
 T1	CELL_TYPE 65 77	CD4+ T Cells
 R30	Induction Arg1:T10 Arg2:T1	
+T20	CELL_TYPE 856 859	Th1
+R8	Secretion Arg1:T20 Arg2:T22	
+R9	Secretion Arg1:T20 Arg2:T23	
+R10	Secretion Arg1:T20 Arg2:T24	
