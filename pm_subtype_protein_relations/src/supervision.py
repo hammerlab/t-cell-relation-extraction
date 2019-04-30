@@ -9,6 +9,15 @@ REL_CLASS_INDUCING_CYTOKINE = 'InducingCytokine'
 REL_CLASS_SECRETED_CYTOKINE = 'SecretedCytokine'
 REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR = 'InducingTranscriptionFactor'
 
+DISPLACY_ENT_OPTS = {
+    "ents": [ENT_TYP_CK, ENT_TYP_CT, ENT_TYP_TF],
+    "colors": {
+        ENT_TYP_CK: "lightblue", 
+        ENT_TYP_CT: "lightgreen", 
+        ENT_TYP_TF: "lightred"
+    }
+}
+
 class CandidateClass(object):
     
     def __init__(self, name, field, label, entity_types):
@@ -108,6 +117,12 @@ def get_terms_map():
             ('expressor|expression', 'express', 'expressed', 'expressing'),
             ('producer|production', 'produce', 'produced', 'producing'),
             ('releaser|release', 'release', 'released', 'releasing'),
+        ],
+        'r_oppose': [
+            ('inhibitor', 'inhibit', 'inhibited', 'inhibiting'),
+            ('suppresor|suppressor', 'suppress', 'suppressed', 'suppressing'),
+            ('repressor', 'repress', 'repressed', 'repressing'),
+            ('antagonizer', 'antagonize', 'antagonized', 'antagonizing'),
         ]
     }
     terms_map = {}
@@ -117,7 +132,8 @@ def get_terms_map():
         terms_map[k+'_p'] = ltp([r[2] for r in v])
         terms_map[k+'_g'] = ltp([r[3] for r in v])
 
-    terms_map['n_do'] = '(cannot|can\'t|will not|won\'t|does not|doesn\'t|do not|don\'t)'
+    terms_map['n_do'] = '(cannot|can\'t|will not|won\'t|are not|aren\'t|does not|doesn\'t|do not|don\'t|have not|haven\'t|would not|wouldn\'t|should not|shouldn\'t)'
+    terms_map['n_break'] = '(;|however|whereas|yet|otherwise|thereby|although|nonetheless|despite|spite of)'
     
     # Create varying length "wildcard" terms for substitution matching everything except
     # characters/phrases that typically indicate separate clauses (currently just ';')
@@ -227,50 +243,96 @@ LF_REGEX = {
             [r'{{A}}{{wc_sm}}{{r_push_v}}{{wc_sm}}{{r_diff_n}}{{wc_sm}}{{B}}'],
         ],
         'negative': [
-            # [cytokine] cannot produce [cell type] cells de novo from naïve T cells 
-            [r'{{wc_md}}{{A}}{{wc_md}}{{n_do}} {{r_prod_v}}{{wc_md}}{{B}}'],
-
+            [p % t]
+            for p in [
+                # [cell type] are NOT induced by [cytokine]
+                # [cytokine] do NOT induce [cell type]
+                # [cytokine] cannot produce [cell type] cells de novo from naïve T cells 
+                r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
+                r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
+            ]
+            for t in [
+                'r_push_v', 'r_push_n', 'r_push_p', 'r_push_g',
+                'r_prod_v', 'r_prod_n', 'r_prod_p', 'r_prod_g'
+            ]
+        ] + [
+            [p % t]
+            # [cytokine] inhibits [cell type]
+            # [cell type] are inhibited by [cytokine]
+            # [cytokine] also antagonizes the [other cytokine]– mediated differentiation of [cell type] cells
+            for p in [
+                '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
+                '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
+            ]
+            for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
+        ] + [
             # [cell type] cells do not respond to [cytokine]
             [r'{{B}}{{wc_md}} {{n_do}} (respond|react) to {{wc_md}}{{A}}'],
-
-            # Vote negative when some kind of contrasting or punctuating clause exists between references
-            # expressed high levels of [cytokine]; compared to adult subsets, [cell type]
-            # [cytokine] is instrumental in directing [cell type] differentiation, 
-            # whereas [cytokine] promotes [cell type] differentiation
-            [r'{{A}}{{wc_lg}} (;|:|whereas|however|although) {{wc_lg}}{{B}}'],
 
             # cells cultured in [cytokine] or low-dose IL-2 never developed into full-fledged [cell type] cells
             [r'{{A}}{{wc_md}}({{n_do}}|(never)){{wc_md}}{{r_diff_v}}{{wc_md}}{{B}}'],
 
             # *References to endogenous cytokines should rarely make sense in the context of polarization
             [r'(endogenous|intracellular|intra-cellular){{wc_sm}}{{A}}'],
-
-            # [cytokine] also antagonizes the [other cytokine]– mediated differentiation of [cell type] cells
-            [r'{{A}}{{wc_lg}}(antagonizes|inhibits){{wc_lg}}{{B}}'],
+            
+            # Patterns for contrasting or punctuating clauses/words between references
+            # expressed high levels of [cytokine]; compared to adult subsets, [cell type]
+            # [cytokine] is instrumental in directing [cell type] differentiation, 
+            # whereas [cytokine] promotes [cell type] differentiation
+            [r'{{A}}{{wc_lg}}{{n_break}}{{wc_lg}}{{B}}'],
+            [r'{{B}}{{wc_lg}}{{n_break}}{{wc_lg}}{{A}}'],
         ]
     },
     REL_CLASS_SECRETED_CYTOKINE: {
         'positive': [
-            # ... regulates [cell type] differentiation, inducing [cytokine] expression
-            [r'{{B}}{{wc_md}}{{r_diff_n}}{{wc_md}}{{r_push_g}}{{wc_sm}}{{A}}{{wc_sm}}{{r_secr_n}}'],
-
-            # [cell type] cells produce [cytokines]
-            # [cell type] cells, which secrete [cytokine]
-            [r'{{B}}{{wc_md}}{{r_secr_v}}{{wc_sm}}{{A}}'],
-
-            # induced [cell type] cell expansion and [cytokine] release
+            [p % t]
+            for p in [
+                # [cell type] cells produce [cytokines]
+                # [cell type] cells are a producer of [cytokines]
+                # [cell type] cells produced [cytokines]
+                # [cell type] cells producing [cytokine]
+                r'{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}',
+                
+                # [cytokine] expresses highly in [cell type] cells
+                # [cytokine] producer cell, [cell type] cells
+                # [cytokine] secreted by [cell type] cells
+                # [cytokine] producing [cell type] cells
+                r'{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
+                
+                # promotes generation of cells producing IL-9 (Th9)
+                r'{{%s}}{{wc_sm}}{{A}}{{wc_sm}}{{B}}',
+                
+                # key cytokine secreted by Tfh cells, IL-21
+                r'{{%s}}{{wc_sm}}{{B}}{{wc_sm}}{{A}}'
+            ]
+            for t in ['r_secr_v', 'r_secr_n', 'r_secr_p', 'r_secr_g']
+        ] + [
+            
+            # induced [cell type] cell expansion and [cytokine] (release|secretion)
+            # [cell type]-mediated therapeutic effect critically depended on [cytokine] production
+            [r'{{B}}{{wc_md}}{{A}}{{wc_sm}}{{r_secr_v}}'],
             [r'{{B}}{{wc_md}}{{A}}{{wc_sm}}{{r_secr_n}}'],
 
-            # Considerable amounts of [cytokine] were released by the [cell type] cells
-            # significantly higher levels of [cytokine] were secreted by [cell type]
-            [r'{{A}}{{wc_md}}{{r_secr_p}}{{wc_md}}{{B}}'],
+            # by inducing the initial (production|release) of [cytokine] in [cell type] cells
+            [r'{{r_secr_n}}{{wc_sm}}{{A}}{{wc_sm}}{{B}}'],
+            [r'{{r_secr_v}}{{wc_sm}}{{A}}{{wc_sm}}{{B}}'],
+            
+            # Th-1-type cytokines such as interferon-γ (IFN-γ) and tumor necrosis factor-α (TNF-α)
+            # Th2 cytokine, IL-4,
+            # IFNγ, a Th1 cytokine
+            [r'{{B}}{{wc_md}}cytokine{{wc_md}}{{A}}'],
+            [r'{{A}}{{wc_sm}}{{B}}{{wc_sm}}cytokine'],
+            
+            # [cell type] subset predominated among the IL-17+ cell  [*look for expression sign]
+            [r'{{A}}(\+|-)'],
+            [r'{{A}}(\+|-)?(positive|negative|pos|neg|hi|lo)'],
+            
+            # [cell type] was strongly biased toward IL-17 rather than toward IFN-γ production
+            [r'{{B}}{{wc_md}}biased toward{{wc_md}}{{A}}'], 
 
-            # [cell type] cells secreted significantly higher levels of [cytokine]
-            [r'{{B}}{{wc_md}}{{r_secr_p}}{{wc_md}}{{A}}'],
-
-            # by inducing the initial production of [cytokine] in [cell type] cells
-            [r'{{r_secr_n}} of {{A}}{{wc_sm}}{{B}}'],
-
+            # ... regulates [cell type] differentiation, inducing [cytokine] expression
+            [r'{{B}}{{wc_md}}{{r_diff_n}}{{wc_md}}{{r_push_g}}{{wc_sm}}{{A}}{{wc_sm}}{{r_secr_n}}'],
+            
             # while [cell type] are the main source of [cytokine]
             [r'{{B}}{{wc_sm}}{{primary}}{{wc_sm}}{{provider}}{{wc_sm}}{{A}}', {
               'primary': '(main|primary|typical|conventional|usual|consistent)',
@@ -279,7 +341,28 @@ LF_REGEX = {
 
         ],
         'negative': [
-            
+            [p % t]
+            for p in [
+                # [cell type] cells DO NOT produce [cytokines]
+                # [cytokines] are NOT produced by [cell type]
+                r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
+                r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
+            ]
+            for t in ['r_secr_v', 'r_secr_n', 'r_secr_p', 'r_secr_g']
+        ] + [
+            [p % t]
+            # [cytokine] inhibits [cell type]
+            # [cell type] are inhibited by [cytokine]
+            for p in [
+                '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
+                '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
+            ]
+            for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
+        ] + [
+            # Patterns for contrasting or punctuating clauses/words between references
+            # [cytokine] is secreted by [other cell type], however [cell type] ...
+            [r'{{A}}{{wc_lg}}{{n_break}}{{wc_lg}}{{B}}'],
+            [r'{{B}}{{wc_lg}}{{n_break}}{{wc_lg}}{{A}}']
         ]
     }
 }

@@ -11,8 +11,8 @@ T18	CELL_LINE 685 704	wild-type Th2 cells
 T19	PROTEIN 720 725	Gfi-1
 T20	CELL_TYPE 767 771	Th17
 T21	CELL_TYPE 804 813	Th2 cells
-T22	PROTEIN 824 829	Gfi-1
-T23	PROTEIN 851 856	IL-17
+T22	TF 824 829	Gfi-1
+T23	CYTOKINE 851 856	IL-17
 T24	CELL_TYPE 935 939	Th17
 T27	CELL_TYPE 1075 1085	CD4 T cell
 T28	PROTEIN 1165 1219	Gfi-1–lysine-specific demethylase 1 repressive complex
@@ -181,11 +181,8 @@ T229	CELL_LINE 9772 9791	wild-type Th2 cells
 T230	CELL_LINE 9846 9864	Gfi1 cKO Th2 cells
 T1	TF 19 24	Gfi-1
 T2	CYTOKINE 39 44	TGF-β
-T4	CELL_TYPE 90 125	CD103+ inducible regulatory T cells
 R1	Differentiation Arg1:T1 Arg2:T3	
 R2	Induction Arg1:T2 Arg2:T3	
-R3	Induction Arg1:T2 Arg2:T4	
-R4	Differentiation Arg1:T1 Arg2:T4	
 T7	CELL_TYPE 433 436	Th2
 T8	CELL_TYPE 509 513	Th17
 T9	CELL_TYPE 541 546	iTreg
@@ -286,3 +283,9 @@ R21	Secretion Arg1:T50 Arg2:T51
 R22	Secretion Arg1:T50 Arg2:T52	
 R23	Secretion Arg1:T50 Arg2:T53	
 R24	Secretion Arg1:T50 Arg2:T54	
+T4	CELL_TYPE 97 119	inducible regulatory T
+R3	Induction Arg1:T2 Arg2:T4	
+R4	Differentiation Arg1:T1 Arg2:T4	
+T187	CELL_TYPE 517 539	inducible regulatory T
+R58	Differentiation Arg1:T10 Arg2:T187	
+T233	CELL_TYPE 872 877	iTreg

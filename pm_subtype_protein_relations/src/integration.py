@@ -2,20 +2,45 @@ from bs4 import BeautifulSoup
 import re
 import string
 
-def clean_text(text):
+WS_REGEX = re.compile('\n{2,}')
+TC_REGEX_1 = re.compile('<sup><xref[^>]*>.*?</sup>')
+TC_REGEX_2 = re.compile('<xref[^>]*>[^<]*</xref[^>]*>')
+
+def clean_text_whitespace(text):
     # Remove individual lines that have a very small number of characters
     text = '\n'.join([l for l in text.split('\n') if len(l.strip()) == 0 or len(l.strip()) >= 64])
     # Replace 2+ newlines with double space
-    text = re.sub('\n{2,}', '\n\n', text)
+    text = WS_REGEX.sub('\n\n', text)
     return text
 
-def extract_text(xml):
+def remove_xml_citations(text):
+    # Remove citation elements
+    # Example: <sup><xref ref-type="bibr" rid="CR8">8</xref>–<xref ref-type="bibr" rid="CR11">11</xref></sup>
+    
+    # First, attempt to remove everything in superscript citation reference as there
+    # are often characters in the superscript but not the xref tags that relate to the
+    # citations (hyphens and commas mainly) and these should be removed as well
+    text = TC_REGEX_1.sub('', text)
+    
+    # Then remove any lingering citations not in superscript
+    text = TC_REGEX_2.sub('', text)
+    return text
+
+def extract_text(xml, clean_whitespace=True, remove_citations=True):
     if not xml:
         return None
+    # Apply transformations prior to BS4 tag strip (happens on .text call)
+    if remove_citations:
+        xml = remove_xml_citations(xml)
     soup = BeautifulSoup(xml, 'xml')
-    # TODO: remove citation elements (ex: <xref ref-type="bibr" rid="B1">1</xref>)
     body = soup.find('body')
-    return clean_text(body.text) if body else None
+    if not body:
+        return None
+    body = body.text
+    # Post-tag-stripping transformations
+    if clean_whitespace:
+        body = clean_text_whitespace(body)
+    return body
 
 def combine_text(title, abstract, body):
     parts = [title or '', abstract or '', body or '']
