@@ -20,8 +20,9 @@ DISPLACY_ENT_OPTS = {
 
 class CandidateClass(object):
     
-    def __init__(self, name, field, label, entity_types):
+    def __init__(self, index, name, field, label, entity_types):
         from snorkel.models import candidate_subclass
+        self.index = index # Most often used as tie to snorkel key_group
         self.name = name
         self.field = field
         self.label = label
@@ -44,6 +45,9 @@ class CandidateClasses(object):
             
     def __getitem__(self, k):
         return self.classes[k]
+    
+    def index(self, k):
+        return self.classes[k].index
 
     @property
     def inducing_cytokine(self):
@@ -55,22 +59,22 @@ class CandidateClasses(object):
     
     @property
     def inducing_transcription_factor(self):
-        return self.classes[REL_CLASS_INCUDING_TRANSCRIPTION_FACTOR]
+        return self.classes[REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR]
             
 def get_candidate_classes():
     return CandidateClasses([
         CandidateClass(
-            REL_CLASS_INDUCING_CYTOKINE, 'inducing_cytokine', 'Induction', 
+            0, REL_CLASS_INDUCING_CYTOKINE, 'inducing_cytokine', 'Induction', 
             [ENT_TYP_CK.lower(), ENT_TYP_CT.lower()]
         ),
         CandidateClass(
             # * Make sure SecretedCytokine gives cytokine + cell type in same order as they 
             # will share rules for labeling functions
-            REL_CLASS_SECRETED_CYTOKINE, 'secreted_cytokine', 'Secretion', 
+            1, REL_CLASS_SECRETED_CYTOKINE, 'secreted_cytokine', 'Secretion', 
             [ENT_TYP_CK.lower(), ENT_TYP_CT.lower()]
         ),
         CandidateClass(
-            REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR, 'inducing_transcription_factor', 'Differentiation', 
+            2, REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR, 'inducing_transcription_factor', 'Differentiation', 
             [ENT_TYP_TF.lower(), ENT_TYP_CT.lower()]
         ),
     ])
@@ -84,6 +88,56 @@ def get_cids_query(session, candidate_class, split):
 ###############################
 # Labeling Function Utilities
 ###############################
+
+def is_a_before_b(c):
+    """ Return signed result for whether or not first entity type appears before second """
+    from snorkel.lf_helpers import get_tagged_text
+    text = get_tagged_text(c)
+    return 1 if text.index('{{A}}') < text.index('{{B}}') else -1
+
+def has_closer_reference(c, right=True):
+    """Determine if there is a closer entity reference in a relation
+    
+    Args:
+        right: If true, this indicates that the right-most entity defined in a two-entity
+            relation will be the "source" and the left-most entity will be the "target" 
+            (and vise-versa when false).  This is true regardless of the order of the 
+            appearance of the entities in a candidate -- i.e. if the relation is defined
+            as [cytokine, cell_type], then saying right=True is equivalent to looking
+            for a closer cytokine to the cell type than the current one.
+    Returns:
+        1 or 0 indicating whether or not another target entity exists around the source entity
+        within a distance half that on either side of the source entity of the original distance
+        between the two (1 if true).
+    """
+    # Candidates are list of "Context" objects (Spans in this case) which will
+    # always be in the order of the entity types defined for the relation class
+    source_span, target_span = (c[1], c[0]) if right else (c[0], c[1])
+    first_span, last_span = (c[0], c[1]) if is_a_before_b(c) > 0 else (c[1], c[0])
+        
+    # Get word index start/end using original ordering of entities
+    dist = last_span.get_word_start() - first_span.get_word_end()
+    assert dist >= 0, \
+        'Candidate ({}) has distance ({}) between references < 0'.format(c, dist)
+    
+    # "source" = entity type to search around, "target" = entity type to search for
+    sent = c.get_parent()
+    target_typ = sent.entity_types[target_span.get_word_start()]
+    assert len(target_typ) > 0, 'Candidate ({}) has empty target type'.format(c)
+    target_cid = sent.entity_cids[target_span.get_word_start()].split(':')[-1]
+    
+    # Search within a dist // 2 window around the target entity for an entity of the 
+    # OTHER type, that is not equal to the non-target entity type within this candidate
+    start = max(0, source_span.get_word_start() - dist // 2)
+    end = min(len(sent.words), source_span.get_word_end() + dist // 2)
+    for i in range(start, end):
+        if source_span.get_word_start() <= i <= source_span.get_word_end():
+            continue
+        ent_typ, cid = sent.entity_types[i], sent.entity_cids[i].split(':')[-1]
+        if ent_typ == target_typ and cid != target_cid:
+            return 1
+    return 0
+
 
 def ltp(x):
     x = [v for v in x if v]
@@ -105,7 +159,9 @@ def get_terms_map():
             ('driver', 'drive', 'drove|driven', 'driving'),
             ('director', 'direct', 'directed', 'directing'),
             ('regulator', 'regulate', 'regulated', 'regulating'),
+            ('controller', 'control', 'controlled', 'controlling'),
             ('promoter', 'promote', 'promoted', 'promoting'),
+            ('mediator|mediater', 'mediate', 'mediated', 'mediating')
         ],
         'r_prod': [
             ('producer|production', 'produce', 'produced', 'producing'),
@@ -132,8 +188,11 @@ def get_terms_map():
         terms_map[k+'_p'] = ltp([r[2] for r in v])
         terms_map[k+'_g'] = ltp([r[3] for r in v])
 
-    terms_map['n_do'] = '(cannot|can\'t|will not|won\'t|are not|aren\'t|does not|doesn\'t|do not|don\'t|have not|haven\'t|would not|wouldn\'t|should not|shouldn\'t)'
-    terms_map['n_break'] = '(;|however|whereas|yet|otherwise|thereby|although|nonetheless|despite|spite of)'
+    terms_map['n_do'] = '(cannot|can\'t|will not|won\'t|are not|aren\'t|does not|doesn\'t|do not|don\'t|have not|haven\'t|would not|wouldn\'t|should not|shouldn\'t|never)'
+    terms_map['n_break'] = '(;|however|whereas|yet|otherwise|although|nonetheless|despite|spite of)'
+    
+    # Cell actions that may be the intended effect of cytokines/TF's not relevant in these relations
+    terms_map['n_action'] = '(stimulation|costimulation|expansion|proliferation|migration)'
     
     # Create varying length "wildcard" terms for substitution matching everything except
     # characters/phrases that typically indicate separate clauses (currently just ';')
@@ -143,6 +202,21 @@ def get_terms_map():
     terms_map['wc_xl'] = '[^;]{0,250}'
     return terms_map
 
+
+DEFAULT_NEGATIVE_PATTERNS = [
+    [p % t]
+    for p in [
+        '{{A}}{{wc_md}} {{%s}} {{wc_md}}{{B}}',
+        '{{B}}{{wc_md}} {{%s}} {{wc_md}}{{A}}'
+    ]
+    for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g', 'n_do', 'n_break']
+] + [
+    # [cell type] cell migration/proliferation/stimulation (i.e. not differentation)
+    [r'{{A}}{{wc_lg}}{{B}}{{wc_sm}}{{n_action}}'],
+    [r'{{A}}{{wc_lg}}{{n_action}}{{wc_sm}}{{B}}'],
+    [r'{{n_action}}{{wc_sm}}{{B}}{{wc_lg}}{{A}}'],
+    [r'{{B}}{{wc_sm}}{{n_action}}{{wc_lg}}{{A}}'],
+]
 
 LF_REGEX = {
     REL_CLASS_INDUCING_CYTOKINE: {
@@ -242,46 +316,33 @@ LF_REGEX = {
             # [cytokine] Directs the Differentiation of [cell type] Cells.
             [r'{{A}}{{wc_sm}}{{r_push_v}}{{wc_sm}}{{r_diff_n}}{{wc_sm}}{{B}}'],
         ],
-        'negative': [
-            [p % t]
-            for p in [
-                # [cell type] are NOT induced by [cytokine]
-                # [cytokine] do NOT induce [cell type]
-                # [cytokine] cannot produce [cell type] cells de novo from naïve T cells 
-                r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
-                r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
-            ]
-            for t in [
-                'r_push_v', 'r_push_n', 'r_push_p', 'r_push_g',
-                'r_prod_v', 'r_prod_n', 'r_prod_p', 'r_prod_g'
-            ]
-        ] + [
-            [p % t]
-            # [cytokine] inhibits [cell type]
-            # [cell type] are inhibited by [cytokine]
-            # [cytokine] also antagonizes the [other cytokine]– mediated differentiation of [cell type] cells
-            for p in [
-                '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
-                '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
-            ]
-            for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
-        ] + [
-            # [cell type] cells do not respond to [cytokine]
-            [r'{{B}}{{wc_md}} {{n_do}} (respond|react) to {{wc_md}}{{A}}'],
-
-            # cells cultured in [cytokine] or low-dose IL-2 never developed into full-fledged [cell type] cells
-            [r'{{A}}{{wc_md}}({{n_do}}|(never)){{wc_md}}{{r_diff_v}}{{wc_md}}{{B}}'],
-
+        'negative': DEFAULT_NEGATIVE_PATTERNS + [
             # *References to endogenous cytokines should rarely make sense in the context of polarization
             [r'(endogenous|intracellular|intra-cellular){{wc_sm}}{{A}}'],
-            
-            # Patterns for contrasting or punctuating clauses/words between references
-            # expressed high levels of [cytokine]; compared to adult subsets, [cell type]
-            # [cytokine] is instrumental in directing [cell type] differentiation, 
-            # whereas [cytokine] promotes [cell type] differentiation
-            [r'{{A}}{{wc_lg}}{{n_break}}{{wc_lg}}{{B}}'],
-            [r'{{B}}{{wc_lg}}{{n_break}}{{wc_lg}}{{A}}'],
         ]
+#             [p % t]
+#             for p in [
+#                 # [cell type] are NOT induced by [cytokine]
+#                 # [cytokine] do NOT induce [cell type]
+#                 # [cytokine] cannot produce [cell type] cells de novo from naïve T cells 
+#                 r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
+#                 r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
+#             ]
+#             for t in [
+#                 'r_push_v', 'r_push_n', 'r_push_p', 'r_push_g',
+#                 'r_prod_v', 'r_prod_n', 'r_prod_p', 'r_prod_g'
+#             ]
+#         ] + [
+#             [p % t]
+#             # [cytokine] inhibits [cell type]
+#             # [cell type] are inhibited by [cytokine]
+#             # [cytokine] also antagonizes the [other cytokine]– mediated differentiation of [cell type] cells
+#             for p in [
+#                 '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
+#                 '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
+#             ]
+#             for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
+#         ] + [
     },
     REL_CLASS_SECRETED_CYTOKINE: {
         'positive': [
@@ -293,25 +354,27 @@ LF_REGEX = {
                 # [cell type] cells producing [cytokine]
                 r'{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}',
                 
+                # **TOO OFTEN INCORRECT**
                 # [cytokine] expresses highly in [cell type] cells
                 # [cytokine] producer cell, [cell type] cells
                 # [cytokine] secreted by [cell type] cells
                 # [cytokine] producing [cell type] cells
-                r'{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
+                # r'{{A}}{{wc_sm}}{{%s}}{{wc_sm}}{{B}}',
                 
                 # promotes generation of cells producing IL-9 (Th9)
-                r'{{%s}}{{wc_sm}}{{A}}{{wc_sm}}{{B}}',
+                #r'{{%s}}{{wc_sm}}{{A}}{{wc_sm}}{{B}}',
                 
                 # key cytokine secreted by Tfh cells, IL-21
-                r'{{%s}}{{wc_sm}}{{B}}{{wc_sm}}{{A}}'
+                #r'{{%s}}{{wc_sm}}{{B}}{{wc_sm}}{{A}}'
             ]
             for t in ['r_secr_v', 'r_secr_n', 'r_secr_p', 'r_secr_g']
         ] + [
             
+            # **TOO OFTEN INCORRECT**
             # induced [cell type] cell expansion and [cytokine] (release|secretion)
             # [cell type]-mediated therapeutic effect critically depended on [cytokine] production
-            [r'{{B}}{{wc_md}}{{A}}{{wc_sm}}{{r_secr_v}}'],
-            [r'{{B}}{{wc_md}}{{A}}{{wc_sm}}{{r_secr_n}}'],
+            # [r'{{B}}{{wc_sm}}{{A}}{{wc_sm}}{{r_secr_v}}'],
+            # [r'{{B}}{{wc_sm}}{{A}}{{wc_sm}}{{r_secr_n}}'],
 
             # by inducing the initial (production|release) of [cytokine] in [cell type] cells
             [r'{{r_secr_n}}{{wc_sm}}{{A}}{{wc_sm}}{{B}}'],
@@ -320,7 +383,7 @@ LF_REGEX = {
             # Th-1-type cytokines such as interferon-γ (IFN-γ) and tumor necrosis factor-α (TNF-α)
             # Th2 cytokine, IL-4,
             # IFNγ, a Th1 cytokine
-            [r'{{B}}{{wc_md}}cytokine{{wc_md}}{{A}}'],
+            [r'{{B}}{{wc_sm}}cytokine{{wc_sm}}{{A}}'],
             [r'{{A}}{{wc_sm}}{{B}}{{wc_sm}}cytokine'],
             
             # [cell type] subset predominated among the IL-17+ cell  [*look for expression sign]
@@ -328,7 +391,7 @@ LF_REGEX = {
             [r'{{A}}(\+|-)?(positive|negative|pos|neg|hi|lo)'],
             
             # [cell type] was strongly biased toward IL-17 rather than toward IFN-γ production
-            [r'{{B}}{{wc_md}}biased toward{{wc_md}}{{A}}'], 
+            [r'{{B}}{{wc_sm}}biased toward{{wc_sm}}{{A}}'], 
 
             # ... regulates [cell type] differentiation, inducing [cytokine] expression
             [r'{{B}}{{wc_md}}{{r_diff_n}}{{wc_md}}{{r_push_g}}{{wc_sm}}{{A}}{{wc_sm}}{{r_secr_n}}'],
@@ -340,29 +403,90 @@ LF_REGEX = {
             }],
 
         ],
-        'negative': [
-            [p % t]
-            for p in [
-                # [cell type] cells DO NOT produce [cytokines]
-                # [cytokines] are NOT produced by [cell type]
-                r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
-                r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
-            ]
-            for t in ['r_secr_v', 'r_secr_n', 'r_secr_p', 'r_secr_g']
-        ] + [
-            [p % t]
-            # [cytokine] inhibits [cell type]
-            # [cell type] are inhibited by [cytokine]
-            for p in [
-                '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
-                '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
-            ]
-            for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
-        ] + [
-            # Patterns for contrasting or punctuating clauses/words between references
-            # [cytokine] is secreted by [other cell type], however [cell type] ...
-            [r'{{A}}{{wc_lg}}{{n_break}}{{wc_lg}}{{B}}'],
-            [r'{{B}}{{wc_lg}}{{n_break}}{{wc_lg}}{{A}}']
-        ]
+#         'negative': [
+#             [p % t]
+#             for p in [
+#                 # [cell type] cells DO NOT produce [cytokines]
+#                 # [cytokines] are NOT produced by [cell type]
+#                 r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
+#                 r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
+#             ]
+#             for t in ['r_secr_v', 'r_secr_n', 'r_secr_p', 'r_secr_g']
+#         ] + [
+#             [p % t]
+#             # [cytokine] inhibits [cell type]
+#             # [cell type] are inhibited by [cytokine]
+#             for p in [
+#                 '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
+#                 '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
+#             ]
+#             for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
+#         ] + [
+#             # Patterns for contrasting or punctuating clauses/words between references
+#             # [cytokine] is secreted by [other cell type], however [cell type] ...
+#             [r'{{A}}{{wc_lg}}{{n_break}}{{wc_lg}}{{B}}'],
+#             [r'{{B}}{{wc_lg}}{{n_break}}{{wc_lg}}{{A}}']
+#         ]
+        'negative': DEFAULT_NEGATIVE_PATTERNS
+    }, 
+    REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR: {
+        'positive': [
+            # Down-regulation of [TF] expression by [cytokine] is important for differentiation of [cell type]
+            # [TF] programs the development and function of [cell type]
+            # [TF] promote(s) differentiation into [cell type]
+            [r'{{A}}{{wc_sm}}{{r_diff_n}}{{wc_sm}}{{B}}'],
+            
+            # … induce [TF], a master regulator of [cell type]
+            # [TF] promotes [cell type] through direct transcriptional activation of [other TF]
+            # RORγ was previously shown to regulate TH17 differentiation
+            # [TF] is a key regulator of [cell type] cell differentiation
+            [r'{{A}}{{wc_md}}{{r_push_n}}{{wc_md}}{{B}}'],
+            [r'{{A}}{{wc_md}}{{r_push_v}}{{wc_md}}{{B}}'],
+            
+            # [cell type] cells differentiated from [TF] cKO mice have a severe defect
+            # factors known to interfere with [cell type] differentiation do so by regulation of [TF] expression
+            # Enhanced [cell type] formation by deletion of [TF]
+            # TH17 lineage differentiation is programmed by orphan nuclear receptors RORα and RORγ
+            [r'{{B}}{{wc_md}}{{r_diff_n}}{{wc_md}}{{A}}'],
+            
+            # [cell type] cell differentiation is mainly controlled by specific master transcription factors [TFs] 
+            # [cell type] differentiation is driven by [TF]
+            # TH17 lineage differentiation is mediated by both RORα and RORγ
+            [r'{{B}}{{wc_md}}{{r_diff_n}}{{wc_md}}{{r_push_p}}{{wc_md}}{{A}}'],
+            
+            # there is a selective component involving [TF] in [cell type] cell differentiation
+            # [TF] controls [cell type] differentiation
+            # whereas [cytokine], critical for [cell type] cell induction, down-regulates [TF] expression
+            # activation of [TF], a master gene for [cell type] differentiation
+            # enhanced [TF]-mediated stimulation of [cell type] differentiation
+            # Deletion of [TF] results in high potential for [cell type] differentiation 
+            # The [TF] (necessary for [cell type] differentiation) transcription factor …
+            # role for STAT3 in human central memory T cell formation
+            [r'{{A}}{{wc_md}}{{B}}{{wc_md}}{{r_diff_n}}'],
+            
+            # [TF] regulates the developmental program resulting in modulation of the potential for [cell type] formation
+            [r'{{A}}{{wc_md}} (program|processs|procedure){{wc_md}}{{B}}{{wc_md}}{{r_diff_n}}'],
+
+            
+            # suggesting that [TF] is important for sustaining the [cell type] cell phenotype
+            [r'{{A}}{{wc_md}} (sustain|maintain|establish){{wc_sm}}{{B}}{{wc_sm}}({{r_diff_n}}|phenotype)'],
+            
+            # It has been shown that [TF] programs the commitment of the [cell type] lineage
+            [r'{{A}}{{wc_md}} commitment{{wc_sm}}{{B}}{{wc_sm}}(lineage|{{r_diff_n}})'],
+            
+            # differentiation of Tr1 cells was dependent on the presence of the aryl hydrocarbon receptor, c-Maf [TF] and IL-27
+            [r'{{r_diff_n}}{{wc_sm}}{{B}}{{wc_md}} (depend|require|necessitate){{wc_md}}{{A}}'],
+            
+            # can form [cell type] cells once [TF] is provided
+            [r'{{B}}{{wc_md}}{{A}}{{wc_sm}} (provide|give|introduce|supplied)'],
+            
+            # forkhead box p3, a signature transcription factor of regulatory T cells
+            [r'{{A}}{{wc_md}} signature {{wc_md}}{{B}}'],
+            
+            # Th1 subset is defined by expression of the lineage-determining transcription factor T-bet
+            [r'{{B}}{{wc_md}} (lineage|phenotype|state)-(determin|decid|regulat|direct|dictat|govern){{wc_md}}{{A}}'],
+            
+        ], 
+        'negative': DEFAULT_NEGATIVE_PATTERNS
     }
 }
