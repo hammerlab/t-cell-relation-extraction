@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import pandas as pd
 import re
 import string
 
@@ -43,7 +44,7 @@ def extract_text(xml, clean_whitespace=True, remove_citations=True):
     return body
 
 def combine_text(title, abstract, body):
-    parts = [title or '', abstract or '', body or '']
+    parts = ['' if pd.isnull(p) else p for p in [title, abstract, body]]
     
     def add_punc(t):
         return t + '.' if t.strip() and t.strip()[-1] not in string.punctuation else t
