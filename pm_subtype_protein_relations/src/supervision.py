@@ -325,29 +325,6 @@ LF_REGEX = {
             # *References to endogenous cytokines should rarely make sense in the context of polarization
             [r'(endogenous|intracellular|intra-cellular){{wc_sm}}{{A}}'],
         ]
-#             [p % t]
-#             for p in [
-#                 # [cell type] are NOT induced by [cytokine]
-#                 # [cytokine] do NOT induce [cell type]
-#                 # [cytokine] cannot produce [cell type] cells de novo from naïve T cells 
-#                 r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
-#                 r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
-#             ]
-#             for t in [
-#                 'r_push_v', 'r_push_n', 'r_push_p', 'r_push_g',
-#                 'r_prod_v', 'r_prod_n', 'r_prod_p', 'r_prod_g'
-#             ]
-#         ] + [
-#             [p % t]
-#             # [cytokine] inhibits [cell type]
-#             # [cell type] are inhibited by [cytokine]
-#             # [cytokine] also antagonizes the [other cytokine]– mediated differentiation of [cell type] cells
-#             for p in [
-#                 '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
-#                 '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
-#             ]
-#             for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
-#         ] + [
     },
     REL_CLASS_SECRETED_CYTOKINE: {
         'positive': [
@@ -408,30 +385,6 @@ LF_REGEX = {
             }],
 
         ],
-#         'negative': [
-#             [p % t]
-#             for p in [
-#                 # [cell type] cells DO NOT produce [cytokines]
-#                 # [cytokines] are NOT produced by [cell type]
-#                 r'{{B}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{A}}',
-#                 r'{{A}}{{wc_md}}{{n_do}}{{%s}}{{wc_md}}{{B}}',
-#             ]
-#             for t in ['r_secr_v', 'r_secr_n', 'r_secr_p', 'r_secr_g']
-#         ] + [
-#             [p % t]
-#             # [cytokine] inhibits [cell type]
-#             # [cell type] are inhibited by [cytokine]
-#             for p in [
-#                 '{{A}}{{wc_md}}{{%s}}{{wc_md}}{{B}}',
-#                 '{{B}}{{wc_md}}{{%s}}{{wc_md}}{{A}}'
-#             ]
-#             for t in ['r_oppose_v', 'r_oppose_n', 'r_oppose_p', 'r_oppose_g']
-#         ] + [
-#             # Patterns for contrasting or punctuating clauses/words between references
-#             # [cytokine] is secreted by [other cell type], however [cell type] ...
-#             [r'{{A}}{{wc_lg}}{{n_break}}{{wc_lg}}{{B}}'],
-#             [r'{{B}}{{wc_lg}}{{n_break}}{{wc_lg}}{{A}}']
-#         ]
         'negative': DEFAULT_NEGATIVE_PATTERNS
     }, 
     REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR: {
