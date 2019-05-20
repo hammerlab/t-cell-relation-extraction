@@ -1,12 +1,7 @@
 # t-cell-relation-extraction
 
-This repository contains simple methods for relating T cell subtypes to related intracellular, transcriptional, and surface proteins.
-Currently, this only involves recognition of T cell subtype (e.g. NKT, MAIT, TSCM) and protein (e.g. RUNX3, CD25, EOMES) entities followed by
-analysis of their co-occurrence.  Ideally, this would also include a categorization of the relationship between the two but for now, a basic
-protein term relevance scoring can still capture proteins most specific to a particular cell subtype as shown below:
+This repository contains scripts and analysis necessary to extract relationships between T cells, cytokines, and transcription factors from a large PMC corpus using [Data Programming](https://arxiv.org/abs/1605.07723).  Results and methods are discussed in more detail in [Extracting T Cell Function and Differentiation Characteristics from Immunology Literature]().  
 
-![Outline](docs/images/outline_diagram.png)
+### Organization
 
-Cell type extractions are done using the [SciSpacy](https://allenai.github.io/scispacy/) project as a search for particular parts of
-speech that are immediately downstream to "cell" or "lymphocyte" lemmas and match heuristic rules common to T cell type acronyms.  
-Protein tagging comes from [D3NER](https://www.ncbi.nlm.nih.gov/pubmed/29718118).  
+Notebooks within [pm_subtype_protein_relations](pm_subtype_protein_relations) contain the scripts used to download (as xml) and extract the PMC articles analyzed.  Numbered in order of expected execution, there are also notebooks used to tag named entities and manage the metadata necessary for doing so.  Everything within [pm_subtype_protein_relations/snorkel](pm_subtype_protein_relations/snorkel) is relevant to the relation classifier training process and is intended to run within a separate, Snorkel-compatible environment (snorkel requires old versions of Spacy yet the tagging and initial processing relies on features available only in newer versions).  This directory also contains the analysis notebooks with final results and figures.
