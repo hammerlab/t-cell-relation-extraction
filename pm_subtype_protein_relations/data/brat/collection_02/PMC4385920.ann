@@ -1,0 +1,49 @@
+T0	CELL_TYPE 296 312	effector T cells
+T1	PROTEIN 513 521	cytokine
+T2	PROTEIN 561 590	multiple inhibitory receptors
+T3	PROTEIN 600 623	programmed cell death-1
+T4	PROTEIN 625 629	PD-1
+T5	PROTEIN 632 660	lymphocyte activation gene-3
+T6	CELL_TYPE 662 705	cytotoxic T lymphocyte-associated antigen-4
+T7	PROTEIN 710 715	CD244
+T8	CELL_TYPE 725 746	CD4+ and CD8+ T cells
+T9	CELL_TYPE 929 946	exhausted T cells
+T10	PROTEIN 965 985	inhibitory receptors
+T11	CELL_TYPE 1402 1427	HIV-specific CD8+ T cells
+T12	PROTEIN 1431 1435	PD-1
+T13	PROTEIN 1556 1560	PD-1
+T14	CELL_TYPE 1751 1757	T-cell
+T15	PROTEIN 1790 1797	Blimp-1
+T16	PROTEIN 1799 1804	T-bet
+T17	PROTEIN 1809 1814	NFAT2
+T18	CELL_TYPE 1837 1854	exhausted T cells
+T19	CELL_TYPE 1949 1956	T cells
+T20	CELL_TYPE 2491 2508	exhausted T cells
+T21	CELL_TYPE 2667 2684	exhausted T cells
+T22	CELL_TYPE 2928 2948	CD8+ and CD4+ T-cell
+T23	CELL_TYPE 3002 3019	exhausted T cells
+T24	CELL_TYPE 3161 3168	T cells
+T25	CELL_TYPE 3260 3277	exhausted T cells
+T26	CELL_TYPE 3377 3399	CD8+ exhausted T cells
+T27	CELL_TYPE 3443 3465	CD4+ exhausted T cells
+T28	CELL_TYPE 3505 3527	CD4+ exhausted T cells
+T29	CELL_TYPE 3642 3659	exhausted T cells
+T30	PROTEIN 3795 3805	antibodies
+T31	CELL_TYPE 3850 3867	exhausted T cells
+T32	CELL_TYPE 3914 3931	exhausted T cells
+T33	CELL_TYPE 4249 4291	multiepitope-specific CD4+ and CD8+ T-cell
+T34	CELL_TYPE 4303 4315	CD4+ T cells
+T35	PROTEIN 4356 4381	HBV core antigen epitopes
+T37	CYTOKINE 4436 4441	IFN-γ
+T38	CYTOKINE 4447 4470	tumor necrosis factor-α
+T39	CYTOKINE 4472 4477	TNF-α
+T40	CELL_TYPE 4537 4569	CD8+ T-cell responses.1, 2, 3, 4
+T41	CELL_TYPE 4598 4623	HBV-specific CD8+ T cells
+T42	CELL_TYPE 4694 4706	CD8+ T cells
+T43	PROTEIN 4767 4772	HBV.5
+T36	CELL_TYPE 4394 4398	Th-1
+T44	CYTOKINE 4422 4434	interferon-γ
+R1	Secretion Arg1:T36 Arg2:T44	
+R2	Secretion Arg1:T36 Arg2:T37	
+R3	Secretion Arg1:T36 Arg2:T38	
+R4	Secretion Arg1:T36 Arg2:T39	

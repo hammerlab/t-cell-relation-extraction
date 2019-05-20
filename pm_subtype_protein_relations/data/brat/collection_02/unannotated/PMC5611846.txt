@@ -1,0 +1,4 @@
+New Cell Sources for T Cell Engineering and Adoptive Immunotherapy.
+
+The promising clinical results obtained with engineered T cells, including chimeric antigen receptor (CAR) therapy, call for further advancements to facilitate and broaden their applicability. One potentially beneficial innovation is to exploit new T cell sources that reduce the need for autologous cell manufacturing and enable cell transfer across histocompatibility barriers. Here we review emerging T cell engineering approaches that utilize alternative T cell sources, which include virus-specific or T cell receptor-less allogeneic T cells, expanded lymphoid progenitors, and induced pluripotent stem cell (iPSC)-derived T lymphocytes. The latter offer the prospect for true off-the-shelf, genetically enhanced, histocompatible cell therapy products.
+

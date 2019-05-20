@@ -1,0 +1,30 @@
+T0	CELL_TYPE 0 46	Tertiary Lymphoid Structure-Associated B Cells
+T1	CELL_TYPE 192 214	tumor-specific T cells
+T2	CELL_TYPE 219 226	B cells
+T3	CELL_TYPE 280 310	tumor-infiltrating lymphocytes
+T4	CELL_TYPE 417 448	tumor-infiltrating immune cells
+T5	CELL_TYPE 898 925	effector and memory T cells
+T6	CELL_TYPE 930 937	B cells
+T7	CELL_TYPE 1322 1333	TLS B cells
+T8	CELL_TYPE 1366 1390	antigen-presenting cells
+T9	CELL_TYPE 1395 1442	tumor antigen-specific antibody-secreting cells
+T10	CELL_TYPE 1642 1653	TLS B cells
+T11	CELL_TYPE 1758 1769	tumor cells
+T12	CELL_TYPE 1779 1792	stromal cells
+T13	CELL_TYPE 1896 1913	sense tumor cells
+T14	CELL_TYPE 2052 2059	T cells
+T15	CELL_TYPE 2061 2068	B cells
+T16	PROTEIN 2074 2084	antibodies
+T17	PROTEIN 2098 2112	tumor antigens
+T18	CELL_TYPE 2194 2200	T-cell
+T19	CELL_TYPE 2204 2218	B-cell subsets
+T20	CELL_TYPE 2653 2676	anti-tumor immune cells
+T21	PROTEIN 2703 2717	tumor antigens
+T22	DNA 2753 2763	tumor site
+T23	PROTEIN 3110 3115	MALTs
+T24	PROTEIN 3190 3195	NALTs
+T25	DNA 3238 3243	BALTs
+T26	DNA 3485 3490	BALTs
+T27	CELL_TYPE 3514 3518	SLOs
+T28	PROTEIN 4592 4605	tumor antigen
+T29	CELL_TYPE 4743 4755	immune cells

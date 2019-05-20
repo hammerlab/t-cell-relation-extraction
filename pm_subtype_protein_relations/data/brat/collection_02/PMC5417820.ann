@@ -1,0 +1,11 @@
+T0	PROTEIN 24 39	N-Glycoproteome
+T1	PROTEIN 769 848	N-linked cell-surface glycoproteomes of 15 standard laboratory human cell lines
+T2	CELL_TYPE 859 889	primary lymphocytic cell types
+T3	CELL_TYPE 1038 1051	Primary cells
+T4	PROTEIN 1085 1100	surface markers
+T5	CELL_LINE 1170 1186	model cell lines
+T6	PROTEIN 1448 1471	plasma membrane protein
+T7	CELL_LINE 1515 1551	monocytic suspension cell line THP-1
+T8	CELL_TYPE 1557 1587	macrophage-like adherent cells
+T9	PROTEIN 1624 1640	membrane protein
+T10	PROTEIN 1942 1960	macrophage markers

@@ -1,0 +1,5 @@
+Development of chronic allergic responses by dampening Bcl6-mediated suppressor activity in memory T helper 2 cells.
+
+Significance
+It has been suggested that the transcriptional repressor Bcl6 suppresses T helper 2 (TH2) immune responses underlying allergic diseases. However, the molecular role of B-cell CLL/lymphoma 6 (Bcl6) in TH2 cells is incompletely understood in pathophysiological settings. We found that Bcl6 suppressed cytokine production in memory TH2 cells through binding to intron 2 of the Interkeukin 4 (Il4) locus using murine models. Furthermore, IL-33 controlled Bcl6 function at the chromatin level and consequently, augmented cytokine production in memory TH2 cells. Therefore, pro-TH2 cytokines, such as IL-33, play a role in chronic allergic diseases via the functional breakdown of Bcl6. This study identifies a relationship between TH2-promoting factors and Bcl6 in TH2 cells, which may lead to therapeutic strategies against chronic allergic diseases.
+

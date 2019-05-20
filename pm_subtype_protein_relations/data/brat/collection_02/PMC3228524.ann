@@ -1,0 +1,14 @@
+T0	PROTEIN 20 46	STAT3 transcription factor
+T1	CELL_TYPE 95 114	human T cell memory
+T3	TF 260 265	STAT3
+T5	PROTEIN 389 394	STAT3
+T6	CELL_TYPE 551 587	central memory CD4+ and CD8+ T cells
+T7	CELL_LINE 618 631	Naïve T cells
+T8	PROTEIN 678 719	memory-related transcription factors BCL6
+T9	PROTEIN 724 729	SOCS3
+T10	TF 1061 1066	STAT3
+T2	TF 125 130	STAT3
+T12	CELL_TYPE 174 182	T helper
+R1	Differentiation Arg1:T2 Arg2:T12	
+T4	CELL_TYPE 1076 1092	central memory T
+R2	Differentiation Arg1:T10 Arg2:T4	

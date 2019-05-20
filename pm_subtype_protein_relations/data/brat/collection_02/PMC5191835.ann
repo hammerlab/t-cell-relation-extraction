@@ -1,0 +1,8 @@
+T0	CELL_TYPE 454 491	primary chicken erythroid progenitors
+T1	PROTEIN 2262 2279	master regulators
+T2	CELL_TYPE 2751 2771	embryonic stem cells
+T3	PROTEIN 2773 2776	2–8
+T4	CELL_TYPE 2808 2830	pluripotent stem cells
+T5	CELL_TYPE 2966 2990	hematopoietic stem cells
+T6	DNA 3732 3741	chromatin
+T7	CELL_TYPE 4314 4335	differentiating cells

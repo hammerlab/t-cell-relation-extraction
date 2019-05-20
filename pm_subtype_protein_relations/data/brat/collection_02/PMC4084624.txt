@@ -1,0 +1,5 @@
+Segmented filamentous bacteria antigens presented by intestinal dendritic cells drive mucosal Th17 cell differentiation.
+
+SUMMARY
+How commensal microbiota contributes to immune cell homeostasis at barrier surfaces is poorly understood. Lamina propria (LP) T helper 17 (Th17) cells participate in mucosal protection and are induced by commensal segmented filamentous bacteria (SFB). Here we show that MHCII-dependent antigen presentation of SFB antigens by intestinal dendritic cells (DCs) is crucial for Th17 cell induction. Expression of MHCII on CD11c+ cells was necessary and sufficient for SFB-induced Th17 cell differentiation. Most SFB-induced Th17 cells recognized SFB in an MHCII-dependent manner. SFB primed and induced Th17 cells locally in the LP and Th17 cell induction occurred normally in mice lacking secondary lymphoid organs. The importance of other innate cells was unveiled by the finding that MHCII deficiency in group 3 innate lymphoid cells (ILCs) resulted in an increase in SFB independent Th17 cell differentiation. Our results outline the complex role of DCs and ILCs in the regulation of intestinal Th17 cell homeostasis
+.

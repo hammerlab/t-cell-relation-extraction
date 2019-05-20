@@ -1,0 +1,16 @@
+T1	CELL_TYPE 127 158	terminally differentiated cells
+T3	DNA 519 523	CNS2
+T7	TF 846 851	Foxp3
+T10	DNA 976 980	CNS2
+T12	DNA 1029 1041	cis-elements
+T13	TF 14 19	Foxp3
+T14	CELL_TYPE 46 58	regulatory T
+T15	CELL_TYPE 344 356	Regulatory T
+T16	CELL_TYPE 358 362	Treg
+T2	TF 409 414	Foxp3
+R1	Differentiation Arg1:T2 Arg2:T16	
+R2	Differentiation Arg1:T2 Arg2:T15	
+T4	TF 537 542	Foxp3
+T5	CELL_TYPE 600 605	Tregs
+T6	CELL_TYPE 820 825	Tregs
+T8	TF 985 990	Foxp3

@@ -1,0 +1,17 @@
+T0	CELL_TYPE 0 21	CD8+ Effector T Cells
+T1	CELL_TYPE 123 144	CD8+ effector T cells
+T2	CELL_TYPE 224 235	fetal cells
+T3	CELL_TYPE 350 369	memory CD8+ T cells
+T4	PROTEIN 377 380	TCR
+T5	PROTEIN 407 429	paternal MHC molecules
+T6	PROTEIN 517 556	fetal minor histocompatibility antigens
+T7	DNA 558 563	mHags
+T8	PROTEIN 606 609	MHC
+T9	PROTEIN 614 618	mHag
+T10	CELL_TYPE 755 766	CD8+ T cell
+T11	CELL_TYPE 792 814	CD8+ T cell repertoire
+T12	CELL_TYPE 844 856	CD8+ T cells
+T13	CELL_TYPE 1211 1223	CD8+ T cells
+T14	CELL_TYPE 1311 1343	fetal extravillous trophoblast (
+T15	CELL_TYPE 1357 1369	CD8+ T cells
+T16	CELL_TYPE 1418 1445	virus-specific CD8+ T cells

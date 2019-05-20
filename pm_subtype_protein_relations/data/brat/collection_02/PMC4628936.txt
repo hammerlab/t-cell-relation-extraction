@@ -1,0 +1,4 @@
+Hypoxia: a key player in antitumor immune response. A Review in the Theme: Cellular Responses to Hypoxia.
+
+The tumor microenvironment is a complex system, playing an important role in tumor development and progression. Besides cellular stromal components, extracellular matrix fibers, cytokines, and other metabolic mediators are also involved. In this review we outline the potential role of hypoxia, a major feature of most solid tumors, within the tumor microenvironment and how it contributes to immune resistance and immune suppression/tolerance and can be detrimental to antitumor effector cell functions. We also outline how hypoxic stress influences immunosuppressive pathways involving macrophages, myeloid-derived suppressor cells, T regulatory cells, and immune checkpoints and how it may confer tumor resistance. Finally, we discuss how microenvironmental hypoxia poses both obstacles and opportunities for new therapeutic immune interventions.
+

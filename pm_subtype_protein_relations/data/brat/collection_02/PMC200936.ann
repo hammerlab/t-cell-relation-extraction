@@ -1,0 +1,21 @@
+T0	CELL_TYPE 63 93	memory cytotoxic T lymphocytes
+T1	CELL_TYPE 150 157	T cells
+T2	CELL_TYPE 162 185	long-lived memory cells
+T3	CELL_TYPE 261 294	naive and early activated T cells
+T4	PROTEIN 303 306	GFP
+T5	CELL_TYPE 362 388	effector cytotoxic T cells
+T6	DNA 406 409	GFP
+T7	PROTEIN 514 517	TCR
+T8	PROTEIN 561 616	lymphocytic choriomeningitis virus glycoprotein peptide
+T9	PROTEIN 618 625	gp33-41
+T10	CELL_LINE 669 691	P14XT-GFP CD8+ T cells
+T11	PROTEIN 714 718	IL-2
+T12	DNA 803 806	GFP
+T13	PROTEIN 859 875	effector markers
+T14	CYTOKINE 958 963	IL-15
+T15	CYTOKINE 976 980	IL-2
+T17	CELL_TYPE 1054 1066	memory cells
+T18	PROTEIN 1114 1130	effector markers
+T19	CELL_TYPE 1391 1426	endogenously generated memory cells
+T20	CELL_TYPE 1480 1492	memory cells
+T16	CELL_TYPE 1015 1029	effector cells

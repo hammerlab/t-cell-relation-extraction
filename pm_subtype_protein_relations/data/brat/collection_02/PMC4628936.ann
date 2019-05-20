@@ -1,0 +1,5 @@
+T0	PROTEIN 285 294	cytokines
+T1	PROTEIN 306 325	metabolic mediators
+T2	CELL_TYPE 695 706	macrophages
+T3	CELL_TYPE 708 740	myeloid-derived suppressor cells
+T4	CELL_TYPE 742 760	T regulatory cells

@@ -1,0 +1,5 @@
+Priming microenvironments dictate cytokine requirements for T helper-17 cell lineage commitment.
+
+Summary
+Activation of pattern recognition receptors on dendritic cells (DCs) and macrophages leads to secretion of cytokines that control differentiation of CD4+ T cells. The current understanding is that interleukin (IL)-6 in combination with transforming growth factor-β (TGF-β) leads to generation of T helper-17 (Th17) lineage cells. Here, we have discovered that the cytokine requirements for Th17 cell polarization depend on the site of priming. While IL-6 played a critical role in Th17 cell lineage priming in the skin and mucosal tissues, it was not required for Th17 cell priming in the spleen. In contrast, IL-1 played an irreplaceable role for priming of Th17 cell lineage cells in all tissues. Importantly, we have demonstrated that IL-6 independent and dependent pathways of Th17 cell differentiation are guided by DCs residing in various tissues. These results reveal fundamental differences by which the systemic, mucosal and cutaneous immune systems guide Th17 cell lineage commitment.
+

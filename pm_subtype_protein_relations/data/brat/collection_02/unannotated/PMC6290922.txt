@@ -1,0 +1,4 @@
+T-bet: a bridge between innate and adaptive immunity.
+
+Originally described over a decade ago as a T cell transcription factor regulating T helper 1 cell lineage commitment, T-bet is now recognized as having an important role in many cells of the adaptive and innate immune system. T-bet has a fundamental role in coordinating type 1 immune responses by controlling a network of genetic programmes that regulate the development of certain immune cells and the effector functions of others. Many of these transcriptional networks are conserved across innate and adaptive immune cells and these shared mechanisms highlight the biological functions that are regulated by T-bet.
+

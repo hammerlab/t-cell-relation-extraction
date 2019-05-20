@@ -1,0 +1,21 @@
+T0	CELL_TYPE 127 146	proliferating cells
+T1	PROTEIN 291 295	Otto
+T2	CELL_TYPE 342 354	cancer cells
+T3	CELL_LINE 811 830	mouse T cell blasts
+T4	PROTEIN 1048 1063	IL-2 receptor-α
+T5	PROTEIN 1065 1069	CD25
+T7	CELL_TYPE 1649 1663	dividing cells
+T8	CELL_TYPE 1672 1679	T cells
+T9	PROTEIN 2126 2130	Otto
+T10	CELL_TYPE 2159 2171	cancer cells
+T11	CELL_TYPE 2880 2894	dividing cells
+T12	PROTEIN 2960 2962	Le
+T13	CELL_TYPE 3219 3226	T cells
+T14	CELL_LINE 3647 3731	pro-inflammatory T helper 17 (TH17) over anti-inflammatory T regulatory (Treg) cells
+T15	PROTEIN 3877 3882	GAPDH
+T16	PROTEIN 3884 3923	α-ketoglutarate and phosphoenolpyruvate
+T17	DNA 3940 3944	IFNγ
+T18	PROTEIN 4464 4473	galectins
+T19	PROTEIN 4553 4579	multiple surface receptors
+T20	PROTEIN 4785 4788	Lau
+T21	CELL_TYPE 4895 4902	T cells

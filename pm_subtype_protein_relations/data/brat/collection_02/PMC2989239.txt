@@ -1,0 +1,5 @@
+Once a killer, always a killer: from cytotoxic T cell to memory cell.
+
+Summary
+The control of the differentiation pathways followed by responding CD8+ T cells to produce protective memory cells has been intensely studied. Recent developments have identified heterogeneity at the effector cytotoxic T-lymphocyte level within which a bona fide memory cell precursor has emerged. The challenge now is to identify the cellular and molecular factors that control this developmental pathway. This review considers aspects of the regulation of the induction of effectors, the transition of effectors to memory cells, and the dynamics of the memory population.
+

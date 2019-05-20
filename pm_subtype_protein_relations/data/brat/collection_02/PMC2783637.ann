@@ -1,0 +1,29 @@
+T0	TF 0 7	Blimp-1
+T1	CELL_TYPE 45 71	virus-specific CD8 T cells
+T2	CELL_TYPE 105 126	central memory T cell
+T3	PROTEIN 140 148	SUMMARY
+T4	CELL_TYPE 195 215	effector CD8 T cells
+T5	CELL_TYPE 264 289	long-lived memory T cells
+T7	CELL_TYPE 375 412	terminally differentiated CD8 T cells
+T8	TF 440 447	Blimp-1
+T9	CELL_TYPE 487 498	memory cell
+T10	CELL_TYPE 513 527	effector cells
+T11	TF 529 536	Blimp-1
+T12	CELL_TYPE 579 613	terminally differentiated effector
+T14	CELL_TYPE 731 762	Blimp-1-/- effector CD8 T cells
+T15	PROTEIN 786 803	effector molecule
+T16	CELL_TYPE 843 865	memory precursor cells
+T17	PROTEIN 946 951	CD62L
+T18	PROTEIN 956 960	IL-2
+T19	TF 1051 1058	Blimp-1
+T20	CELL_TYPE 1154 1174	effector CD8 T cells
+R1	Differentiation Arg1:T0 Arg2:T1	
+T6	TF 341 348	Blimp-1
+R2	Differentiation Arg1:T6 Arg2:T7	
+R3	Differentiation Arg1:T8 Arg2:T9	
+T13	CELL_TYPE 618 653	“effector memory” (TEM) CD8 T cells
+T21	CELL_TYPE 695 709	central memory
+R4	Differentiation Arg1:T11 Arg2:T12	
+R5	Differentiation Arg1:T11 Arg2:T13	
+T22	CELL_TYPE 1115 1126	memory cell
+R6	Differentiation Arg1:T19 Arg2:T20	

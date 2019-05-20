@@ -1,0 +1,19 @@
+Pharmacological repression of RORγ is therapeutic in the collagen-induced arthritis experimental model.
+
+
+Objective
+The nuclear receptor RORγ (RAR-related orphan receptor gamma; T cell specific isoform is RORγt) is a key regulator of TH17 cell differentiation controlling the production of the inflammatory cytokine IL17. Further it has been shown that LPS stimulation of monocytes leads to induction of RORγ. Previously we have shown that the potent and selective inverse agonist of RORγ, SR2211 was effective at suppressing IL17 production in EL4 cells. Further we demonstrate here that SR2211 treatment blocks proinflammatory cytokine expression in LPS stimulated RAW264.7 cells. Based on these findings SR2211 was administered to collagen-induced arthritis (CIA) mice to evaluate the ability of the compound to reduce joint inflammation.
+
+
+Methods
+Collagen was injected into the tail of DBA mice followed by a second boost inoculation 21 days later. Three days prior to the boost inoculation, SR2211 was administered into these mice twice daily for 15 days. Thymus, spleen and lymph node (DLN) were harvested and TH17 cell differentiation and DLN stimulation were performed.
+
+
+Results
+Treatment of TH17 cells with SR2211 suppressed the expression and production of inflammatory cytokines. Likewise, SR2211 reduced inflammatory cytokine production in LPS stimulated RAW264.7 cells. CIA mice administered SR2211 twice daily for 15 days exhibited statistically significant reduction in joint inflammation as compared to mice receiving only vehicle. Interestingly, systemic TH1 cell activation was detected in SR2211 treated CIA mice as indicated by an increase in IFNγ.
+
+
+Conclusions
+These findings support targeting RORγ to therapeutically repress inflammatory T cell function and macrophage activation in rheumatoid arthritis. Compounds such as SR2211 have potential utility for the treatment of inflammatory disease.
+
+

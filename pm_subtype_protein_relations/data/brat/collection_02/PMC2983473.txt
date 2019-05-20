@@ -1,0 +1,5 @@
+The metabolic life and times of a T-cell.
+
+Summary
+The regulation of lymphocyte homeostasis is critical for the development and formation of productive immune responses. Cell numbers must be maintained to allow sufficient numbers of lymphocytes to combat foreign pathogens but prevent the accumulation of excess lymphocytes that may increase the risk of developing autoimmunity or neoplasia. Cell extrinsic growth factors are essential to maintain homeostasis and cell survival, and it has become increasingly apparent that a key mechanism of this control is through regulation of cell metabolism. The metabolic state of T cells can have profound influences on cell growth and survival and even differentiation. In particular, resting T cells utilize an energy efficient oxidative metabolism but shift to a highly glycolytic metabolism when stimulated to grow and proliferate by pathogen encounter. After antigen clearance, T cells must return to a more quiescent oxidative metabolism to support T-cell memory. This review highlights how these metabolic changes may be intricately involved with both T-cell growth and death in the control of homeostasis and immunity.
+

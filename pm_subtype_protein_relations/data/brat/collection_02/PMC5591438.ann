@@ -1,0 +1,47 @@
+T2	PROTEIN 161 189	master transcription factors
+T3	PROTEIN 191 194	TFs
+T4	CELL_TYPE 239 253	T cell subsets
+T5	PROTEIN 274 300	transcriptional regulators
+T6	CELL_TYPE 378 393	T cell lineages
+T9	TF 539 542	MSC
+T10	TF 632 635	MSC
+T11	TF 644 649	Foxp3
+T12	CYTOKINE 704 709	TGF-β
+T13	CELL_TYPE 718 723	iTreg
+T14	TF 752 755	MSC
+T15	TF 804 809	GATA3
+T18	CELL_TYPE 934 937	TH2
+T19	CELL_LINE 956 1015	Msc−/− mice spontaneously develop gut and lung inflammation
+T20	TF 1049 1052	MSC
+T21	TF 1062 1067	Foxp3
+T22	TF 25 33	musculin
+T1	CELL_TYPE 77 92	peripheral Treg
+T23	CELL_TYPE 118 121	TH2
+R1	Differentiation Arg1:T22 Arg2:T1	
+T7	CYTOKINE 431 459	Transforming growth factor-β
+T24	CYTOKINE 461 466	TGF-β
+T25	CELL_TYPE 468 488	induced regulatory T
+T26	CELL_TYPE 495 500	iTreg
+R2	Induction Arg1:T24 Arg2:T25	
+R3	Induction Arg1:T24 Arg2:T26	
+R4	Induction Arg1:T7 Arg2:T25	
+R5	Induction Arg1:T7 Arg2:T26	
+T8	TF 529 537	Musculin
+T27	CELL_TYPE 560 565	iTreg
+T28	CELL_TYPE 595 598	TH2
+R6	Differentiation Arg1:T9 Arg2:T27	
+R7	Differentiation Arg1:T8 Arg2:T27	
+T29	CELL_TYPE 673 676	TH2
+R8	Differentiation Arg1:T11 Arg2:T29	
+R9	Differentiation Arg1:T10 Arg2:T29	
+R10	Induction Arg1:T12 Arg2:T13	
+T16	CELL_TYPE 813 816	TH2
+T17	CELL_TYPE 877 880	Th2
+R11	Differentiation Arg1:T15 Arg2:T16	
+R12	Differentiation Arg1:T14 Arg2:T16	
+T30	CELL_TYPE 902 908	iTregs
+T31	TF 888 891	MSC
+T32	CELL_TYPE 1120 1126	iTregs
+T33	CELL_TYPE 1160 1163	TH2
+R13	Differentiation Arg1:T21 Arg2:T32	
+R14	Differentiation Arg1:T20 Arg2:T32	

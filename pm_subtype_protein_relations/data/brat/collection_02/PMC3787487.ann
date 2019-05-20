@@ -1,0 +1,21 @@
+T0	CELL_TYPE 16 51	Hematopoietic Stem/Progenitor Cells
+T3	PROTEIN 196 200	CD19
+T4	CELL_TYPE 227 234	T-cells
+T5	CELL_TYPE 258 283	B-lineage malignant cells
+T6	CELL_TYPE 422 436	effector cells
+T7	CELL_TYPE 494 529	hematopoietic stem/progenitor cells
+T8	CELL_TYPE 531 535	HSPC
+T9	PROTEIN 586 589	CAR
+T10	CELL_TYPE 644 658	effector cells
+T11	CELL_TYPE 690 715	B-lineage malignant cells
+T12	CELL_TYPE 770 794	natural killer (NK) cell
+T13	CELL_TYPE 814 825	human HSPCs
+T14	CELL_LINE 902 919	CD19-specific CAR
+T15	CELL_LINE 1039 1071	CAR-bearing myeloid and NK cells
+T16	CELL_TYPE 1091 1110	CD19-positive cells
+T17	PROTEIN 1117 1138	second-generation CAR
+T18	PROTEIN 1149 1161	CD28 domains
+T19	CELL_TYPE 1186 1194	NK cells
+T20	PROTEIN 1281 1285	HSPC
+T21	PROTEIN 1291 1294	CAR
+T22	CELL_TYPE 1345 1359	effector cells

@@ -1,0 +1,5 @@
+Tumor-specific IL-9–producing CD8+ Tc9 cells are superior effector than type-I cytotoxic Tc1 cells for adoptive immunotherapy of cancers.
+
+Significance
+Our laboratory has identified a critical role of IL-9 in promoting endogenous tumor-specific cytotoxic T lymphocyte response. In this study, we found that differentiation of CD8+ T cells under T helper 9-polarizing conditions induces the development of an IL-9–producing less cytolytic IL-9–skewed CD8+ T (Tc9) cell subset. Noticeably, adoptive transfer of tumor-reactive Tc9 cells elicited greater antitumor responses against large established tumors than classic type-I CD8+ cytotoxic T cells that are used in clinical protocols. Importantly, Tc9 cells have substantially enhanced persistence potential and possess the capacity to acquire/maintain effector function after transfer. Our results also revealed that Tc9-mediated therapeutic effect critically depended on IL-9 production in vivo. The ability of Tc9 cells to confer sustained antitumor responses might open an avenue for the advances of cancer immunotherapy.
+

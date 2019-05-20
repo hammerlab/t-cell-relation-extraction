@@ -1,0 +1,5 @@
+IFT20 controls LAT recruitment to the immune synapse and T-cell activation in vivo.
+
+Significance
+The immune synapse (IS), the site of cell–cell contact between T cells and antigen-presenting cells, plays a crucial role in the mounting of an immune response. Although IFT20 (intraflagellar transport protein 20), a component of the intraflagellar transport system, regulates polarized traffic to the IS, its role in T-cell activation in vivo is unknown. Here we show that in the absence of IFT20, T-cell receptor (TCR)-mediated signaling and recruitment of the signaling adaptor LAT to the immune synapse are impaired, leading to defective CD4+ T-cell activation and proliferation. IFT20-defective mice fail to mount effective antigen-specific T-cell responses, and their T cells do not induce disease in a T-cell-adoptive transfer model of colitis.
+

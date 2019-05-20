@@ -7,6 +7,12 @@ protein term relevance scoring can still capture proteins most specific to a par
 
 ![Outline](docs/images/outline_diagram.png)
 
+<<<<<<< HEAD
 Cell type extractions are done using the [SciSpacy](https://allenai.github.io/scispacy/) project as a search for particular parts of
 speech that are immediately downstream to "cell" or "lymphocyte" lemmas and match heuristic rules common to T cell type acronyms.  
 Protein tagging comes from [D3NER](https://www.ncbi.nlm.nih.gov/pubmed/29718118).  
+=======
+Cell type extractions are done using the experimental [SciSpacy](https://allenai.github.io/scispacy/) project as a search for particular parts of
+speech that are immediately downstream to "cell" or "lymphocyte" lemmas and match heuristic rules common to T cell type acronyms.  
+rotein tagging comes from [D3NER](https://www.ncbi.nlm.nih.gov/pubmed/29718118).  
+>>>>>>> snorkel_relations
