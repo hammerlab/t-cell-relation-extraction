@@ -181,9 +181,10 @@ def get_terms_map():
         ],
         'r_oppose': [
             ('inhibitor', 'inhibit', 'inhibited', 'inhibiting'),
-            ('suppresor|suppressor', 'suppress', 'suppressed', 'suppressing'),
-            ('repressor', 'repress', 'repressed', 'repressing'),
+            ('suppressor|suppresor', 'suppress|suppres', 'suppressed|suppresed', 'suppressing|suppresing'),
+            ('repressor|represor', 'repress|repres', 'repressed|represed', 'repressing|represing'),
             ('antagonizer', 'antagonize', 'antagonized', 'antagonizing'),
+            ('impairer', 'impair', 'impaired', 'impairing'),
         ]
     }
     terms_map = {}
@@ -221,6 +222,8 @@ DEFAULT_NEGATIVE_PATTERNS = [
     [r'{{A}}{{wc_lg}}{{n_action}}{{wc_sm}}{{B}}'],
     [r'{{n_action}}{{wc_sm}}{{B}}{{wc_lg}}{{A}}'],
     [r'{{B}}{{wc_sm}}{{n_action}}{{wc_lg}}{{A}}'],
+    [r'{{A}}{{wc_md}} negative(ly)? {{wc_md}}{{B}}'],
+    [r'{{B}}{{wc_md}} negative(ly)? {{wc_md}}{{A}}']
 ]
 
 LF_REGEX = {
@@ -445,6 +448,6 @@ LF_REGEX = {
             [r'{{B}}{{wc_md}} (lineage|phenotype|state)-(determin|decid|regulat|direct|dictat|govern){{wc_md}}{{A}}'],
             
         ], 
-        'negative': DEFAULT_NEGATIVE_PATTERNS
+       'negative': DEFAULT_NEGATIVE_PATTERNS
     }
 }
