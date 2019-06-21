@@ -20,5 +20,6 @@ umap-learn==0.3.9
 Owlready2==0.18
 pronto==0.12.2
 xlrd==1.2.0
+pyarrow==0.13.0
 plotly
 jupyterlab
