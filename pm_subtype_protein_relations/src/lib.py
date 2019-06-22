@@ -1,8 +1,7 @@
 import unicodedata
 import pandas as pd
 import os.path as osp
-from interlap import InterLap
-from env import META_DATA_DIR
+import os
 
 SPECIES_HUMAN_ID = 1
 SPECIES_MOUSE_ID = 2
@@ -17,10 +16,10 @@ def fix_jupyter_spacy_config():
     from IPython.core.getipython import get_ipython
     ip = get_ipython()
     ip.config['IPKernelApp']['parent_appname'] = 'notebook'
-    
+
     
 def get_entity_meta_data(table):
-    path = osp.join(META_DATA_DIR, '{}.csv'.format(table))
+    path = osp.join(os.environ['META_DATA_DIR'], '{}.csv'.format(table))
     return pd.read_csv(path)
 
 
@@ -28,6 +27,7 @@ class IntervalMergingDict(object):
     """Dictionary for interval keys with configurable overlap merging"""
     
     def __init__(self, merge_fn):
+        from interlap import InterLap
         self._intervals = InterLap()
         self._result = {}
         self.merge_fn = merge_fn
