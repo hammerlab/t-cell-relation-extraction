@@ -5,6 +5,8 @@ import string
 import sys
 import unicodedata
 from collections import defaultdict
+import logging
+logger = logging.getLogger(__name__)
 
 CHR_CAT_MAP = defaultdict(list)
 for c in map(chr, range(sys.maxunicode + 1)):
@@ -94,11 +96,16 @@ def parse_article(soup, clean_text=True):
     def parse_date(t):
         if not t or not t.find('year'):
             return None
-        return pd.to_datetime('{}-{}-{}'.format(
+        date_string = '{}-{}-{}'.format(
             t.find('year').text,
             t.find('month').text if t.find('month') else '01',
             t.find('day').text if t.find('day') else '01'
-        ))
+        )
+        try:
+            return pd.to_datetime(date_string)
+        except Exception as e:
+            logger.warning('Failed to parse date string "%s"; Reason: %s', date_string, e)
+            return None
     
     # Dates related to transmission
     history_dates = soup.find('history')
