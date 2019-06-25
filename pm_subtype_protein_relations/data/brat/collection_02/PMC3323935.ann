@@ -5,8 +5,9 @@ T3	PROTEIN 270 275	gp100
 T4	CELL_TYPE 755 769	melanoma cells
 T5	PROTEIN 814 835	MelanA/MART-1 antigen
 T6	CELL_LINE 854 872	melanoma cell line
-T7	PROTEIN 915 928	interleukin-2
-T8	CELL_LINE 945 958	Jurkat T cell
+T7	CYTOKINE 915 928	interleukin-2
+T8	CELL_TYPE 945 958	Jurkat T cell
 T9	PROTEIN 983 998	T-cell receptor
 T10	PROTEIN 1048 1070	Melan-A/MART-1 protein
 T11	CELL_TYPE 1696 1703	T cells
+R1	Secretion Arg1:T8 Arg2:T7	

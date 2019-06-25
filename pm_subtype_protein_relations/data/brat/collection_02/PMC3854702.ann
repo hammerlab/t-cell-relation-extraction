@@ -79,3 +79,5 @@ R1	Differentiation Arg1:T76 Arg2:T35
 R2	Differentiation Arg1:T76 Arg2:T34	
 R3	Differentiation Arg1:T77 Arg2:T34	
 R4	Differentiation Arg1:T77 Arg2:T35	
+T32	CYTOKINE 2125 2130	TNF-α
+R5	Secretion Arg1:T38 Arg2:T32	

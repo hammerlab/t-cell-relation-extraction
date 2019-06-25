@@ -1,7 +1,5 @@
 T2	CYTOKINE 201 205	IL-9
 T4	CELL_TYPE 326 338	CD8+ T cells
-T5	PROTEIN 408 422	IL-9–producing
-T6	CELL_LINE 428 474	cytolytic IL-9–skewed CD8+ T (Tc9) cell subset
 T7	CELL_TYPE 509 533	tumor-reactive Tc9 cells
 T8	PROTEIN 617 646	type-I CD8+ cytotoxic T cells
 T9	CELL_TYPE 697 706	Tc9 cells
@@ -14,3 +12,6 @@ T1	CELL_TYPE 89 92	Tc1
 T3	CELL_TYPE 245 256	cytotoxic T
 T14	CELL_TYPE 867 870	Tc9
 R2	Secretion Arg1:T14 Arg2:T10	
+T6	CELL_TYPE 458 461	Tc9
+T5	CYTOKINE 408 412	IL-9
+R3	Secretion Arg1:T6 Arg2:T5	

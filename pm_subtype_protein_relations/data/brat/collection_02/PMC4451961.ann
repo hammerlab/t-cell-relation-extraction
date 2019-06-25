@@ -58,3 +58,4 @@ T42	CELL_TYPE 4081 4085	γδ T
 R6	Secretion Arg1:T42 Arg2:T46	
 T45	CELL_TYPE 4487 4492	Vγ4 T
 R7	Secretion Arg1:T45 Arg2:T51	
+R8	Secretion Arg1:T13 Arg2:T16	
