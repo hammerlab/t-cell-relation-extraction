@@ -26,5 +26,8 @@ pyarrow==0.13.0
 interlap==0.2.6
 unidecode==1.1.1
 pytorch-pretrained-bert==0.6.2
+pytorch-ignite==0.2.0
+torchtext==0.3.1
+word2vec==0.10.2
 plotly
 jupyterlab
