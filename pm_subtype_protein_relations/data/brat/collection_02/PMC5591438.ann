@@ -37,11 +37,16 @@ R9	Differentiation Arg1:T10 Arg2:T29
 R10	Induction Arg1:T12 Arg2:T13	
 T16	CELL_TYPE 813 816	TH2
 T17	CELL_TYPE 877 880	Th2
-R11	Differentiation Arg1:T15 Arg2:T16	
-R12	Differentiation Arg1:T14 Arg2:T16	
+R11	DifferentiationNeutral Arg1:T15 Arg2:T16	
+R12	DifferentiationNeutral Arg1:T14 Arg2:T16	
 T30	CELL_TYPE 902 908	iTregs
 T31	TF 888 891	MSC
 T32	CELL_TYPE 1120 1126	iTregs
 T33	CELL_TYPE 1160 1163	TH2
 R13	Differentiation Arg1:T21 Arg2:T32	
 R14	Differentiation Arg1:T20 Arg2:T32	
+R15	DifferentiationNeg Arg1:T9 Arg2:T28	
+R16	DifferentiationNeg Arg1:T8 Arg2:T28	
+R17	DifferentiationNeg Arg1:T22 Arg2:T23	
+R18	DifferentiationNeutral Arg1:T31 Arg2:T30	
+R19	DifferentiationNeg Arg1:T20 Arg2:T33	
