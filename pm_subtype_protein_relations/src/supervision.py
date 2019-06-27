@@ -11,8 +11,8 @@ REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR = 'InducingTranscriptionFactor'
 
 SPLIT_TRAIN=0
 SPLIT_DEV=1
-SPLIT_TEST=2
-SPLIT_INFER=3
+SPLIT_INFER=2
+SPLIT_TEST=3
 
 DISPLACY_ENT_OPTS = {
     "ents": [ENT_TYP_CK, ENT_TYP_CT, ENT_TYP_TF],
@@ -83,6 +83,14 @@ def get_candidate_classes():
             [ENT_TYP_TF.lower(), ENT_TYP_CT.lower()]
         ),
     ])
+
+
+def get_entity_type(cand, span):
+    """Return string type of a span associated with a candidate"""
+    # Find index of type for first word in span and use it to lookup type in list 
+    # with length equal to number of words in sentence
+    return cand.get_parent().entity_types[span.get_word_start()]
+
 
 def get_cids_query(session, candidate_class, split):
     from snorkel.models import Candidate
