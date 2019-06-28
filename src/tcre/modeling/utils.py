@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 
 
 def mark_entities(tokens, positions, markers=[], style="insert"):
@@ -74,21 +72,3 @@ def mark_entities(tokens, positions, markers=[], style="insert"):
         else:
             raise NotImplementedError
     return toks
-
-
-def get_candidate_df(cands, entity_markers=[], entity_mark_style='insert'):
-    def get_text(cand):
-        words = list(cand.get_parent().words)
-        spans = cand.get_contexts()
-        positions = [spans[0].get_word_range(), spans[1].get_word_range()]
-        return ' '.join(mark_entities(words, positions, style=entity_mark_style, markers=entity_markers))
-
-    return pd.DataFrame([
-        dict(
-            cid=c.id,
-            text=get_text(c),
-            label=c.gold_labels[0].value if c.gold_labels else 0
-        )
-        for c in cands
-    ])
-

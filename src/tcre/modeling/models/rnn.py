@@ -20,6 +20,26 @@ from tcre.modeling.utils import mark_entities
 # https://stackoverflow.com/questions/49710537/pytorch-gensim-how-to-load-pre-trained-word-embeddings
 # https://discuss.pytorch.org/t/aligning-torchtext-vocab-index-to-loaded-embedding-pre-trained-weights/20878/2
 
+# Ignite example on packing + padding:
+# https://gist.github.com/HarshTrivedi/f4e7293e941b17d19058f6fb90ab0fec
+
+# Position embedding examples:
+# https://pythonawesome.com/neural-relation-extraction-implemented-in-tensorflow/
+# https://arxiv.org/pdf/1805.10586.pdf: word embedding = 200 dim, position embedding = 50 dim
+#   - This cites this paper as having definition of position features: https://www.aclweb.org/anthology/C14-1220
+# https://github.com/thunlp/OpenNRE/blob/master/nrekit/network/embedding.py - TF example
+# https://github.com/malllabiisc/RESIDE/blob/master/reside.py -- another TF example from RESIDE paper
+#    - Positions as integers in [-max_pos, max_pos] are mapped to [0, 2*(max_pos+1)] where:
+#       - if pos < -max_pos, 0; if pos == -max_pos, 1; if pos > max_pos, 2*(max_pos+1)
+#       - example: max_pos = 2 --> [-3, -2, -1, 0, 1, 2, 3] -> [0, 1, 2, 3, 4, 5, 6]
+# great SO post with citations:
+# https://stackoverflow.com/questions/46718501/creation-of-position-vectors-in-convolution-neural-network-for-relation-classifi
+
+# Align existing tokenization to BERT tokenization:
+# https://github.com/google-research/bert/issues/560
+# https://github.com/huggingface/pytorch-pretrained-BERT/issues/64#issuecomment-443703063
+
+
 class RNNClassifier(nn.Module):
     """ Override choices in Snorkel abstractions"""
 
