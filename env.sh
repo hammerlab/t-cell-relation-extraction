@@ -3,6 +3,7 @@ export MODEL_DATA_DIR=${REPO_DATA_DIR}/model
 export SUPERVISION_DATA_DIR=${REPO_DATA_DIR}/supervision
 export IMPORT_DATA_DIR_01=${DATA_DIR}/articles/import/20190314
 export IMPORT_DATA_DIR_02=${DATA_DIR}/articles/import/20190501
+export RESULTS_DATA_DIR=${DATA_DIR}/results
 export W2V_MODEL_01=${DATA_DIR}/word2vec/PubMed-and-PMC-w2v.bin
 export SCIBERT_UNCASED_MODEL_01=${DATA_DIR}/scibert/scibert_scivocab_uncased
 export SCIBERT_CASED_MODEL_01=${DATA_DIR}/scibert/scibert_scivocab_cased

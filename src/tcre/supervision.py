@@ -3,16 +3,19 @@ import collections
 ENT_TYP_CT = 'IMMUNE_CELL_TYPE'
 ENT_TYP_CK = 'CYTOKINE'
 ENT_TYP_TF = 'TRANSCRIPTION_FACTOR'
+ENT_TYP_CT_L = ENT_TYP_CT.lower()
+ENT_TYP_CK_L = ENT_TYP_CK.lower()
+ENT_TYP_TF_L = ENT_TYP_TF.lower()
 ENT_TYPES = [ENT_TYP_CT, ENT_TYP_CK, ENT_TYP_TF]
 
 REL_CLASS_INDUCING_CYTOKINE = 'InducingCytokine'
 REL_CLASS_SECRETED_CYTOKINE = 'SecretedCytokine'
 REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR = 'InducingTranscriptionFactor'
 
-SPLIT_TRAIN=0
-SPLIT_DEV=1
-SPLIT_INFER=2
-SPLIT_TEST=3
+SPLIT_TRAIN = 0
+SPLIT_DEV = 1
+SPLIT_INFER = 2
+SPLIT_TEST = 3
 
 DISPLACY_ENT_OPTS = {
     "ents": [ENT_TYP_CK, ENT_TYP_CT, ENT_TYP_TF],
@@ -22,6 +25,7 @@ DISPLACY_ENT_OPTS = {
         ENT_TYP_TF: "lightred"
     }
 }
+
 
 class CandidateClass(object):
     
@@ -36,7 +40,8 @@ class CandidateClass(object):
         
     def __repr__(self):
         return 'CandidateClass({!r})'.format(self.__dict__)
-    
+
+
 class CandidateClasses(object):
     
     def __init__(self, classes):
@@ -65,22 +70,23 @@ class CandidateClasses(object):
     @property
     def inducing_transcription_factor(self):
         return self.classes[REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR]
-            
+
+
 def get_candidate_classes():
     return CandidateClasses([
         CandidateClass(
             0, REL_CLASS_INDUCING_CYTOKINE, 'inducing_cytokine', 'Induction', 
-            [ENT_TYP_CK.lower(), ENT_TYP_CT.lower()]
+            [ENT_TYP_CK_L, ENT_TYP_CT_L]
         ),
         CandidateClass(
             # * Make sure SecretedCytokine gives cytokine + cell type in same order as they 
             # will share rules for labeling functions
             1, REL_CLASS_SECRETED_CYTOKINE, 'secreted_cytokine', 'Secretion', 
-            [ENT_TYP_CK.lower(), ENT_TYP_CT.lower()]
+            [ENT_TYP_CK_L, ENT_TYP_CT_L]
         ),
         CandidateClass(
             2, REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR, 'inducing_transcription_factor', 'Differentiation', 
-            [ENT_TYP_TF.lower(), ENT_TYP_CT.lower()]
+            [ENT_TYP_TF_L, ENT_TYP_CT_L]
         ),
     ])
 
@@ -102,11 +108,13 @@ def get_cids_query(session, candidate_class, split):
 # Labeling Function Utilities
 ###############################
 
+
 def is_a_before_b(c):
     """ Return signed result for whether or not first entity type appears before second """
     from snorkel.lf_helpers import get_tagged_text
     text = get_tagged_text(c)
     return 1 if text.index('{{A}}') < text.index('{{B}}') else -1
+
 
 def has_closer_reference(c, right=True):
     """Determine if there is a closer entity reference in a relation
@@ -155,6 +163,7 @@ def has_closer_reference(c, right=True):
 def ltp(x):
     x = [v for v in x if v]
     return '(' + '|'.join(x) + ')'
+
 
 def get_terms_map():
     terms = {
