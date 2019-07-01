@@ -261,7 +261,7 @@ def run(relation_class, marker_list, use_secondary, use_swaps, use_lower, wrd_em
         logger.info(f'Saving results to path {output_dir}')
         output_dir = pathlib.Path(output_dir)
         if not output_dir.exists():
-            output_dir.mkdir()
+            output_dir.mkdir(parents=True)
         import json
         with (output_dir / 'history.json').open('w') as f:
             json.dump(history, f)

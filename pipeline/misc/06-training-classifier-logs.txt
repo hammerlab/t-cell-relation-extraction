@@ -1,0 +1,189 @@
+####### Inducing Cytokine
+candidate_class = classes.inducing_cytokine
+train_kwargs = {
+    'n_epochs':        30,
+    'lr':              0.01,
+    'embedding_dim':   100,
+    'hidden_dim':      100,
+    'dropout':         0.5,
+    'rebalance':       0.25,
+    'print_freq':      1,
+    'seed':            1701,
+    'dev_ckpt_delay':  .25
+}
+
+[LSTM] Training model
+[LSTM] n_train=9492  #epochs=30  batch size=64
+/Users/eczech/anaconda3/envs/snorkel/lib/python3.6/site-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+[LSTM] Epoch 1 (68.15s)	Average loss=0.630718	Dev F1=26.91
+[LSTM] Epoch 2 (133.69s)	Average loss=0.607284	Dev F1=34.88
+[LSTM] Epoch 3 (195.48s)	Average loss=0.599955	Dev F1=37.86
+[LSTM] Epoch 4 (263.72s)	Average loss=0.593133	Dev F1=47.68
+[LSTM] Epoch 5 (331.17s)	Average loss=0.588174	Dev F1=36.62
+[LSTM] Epoch 6 (400.46s)	Average loss=0.583769	Dev F1=41.24
+[LSTM] Epoch 7 (468.82s)	Average loss=0.580137	Dev F1=48.02
+[LSTM] Epoch 8 (535.73s)	Average loss=0.579616	Dev F1=44.24
+[LSTM] Epoch 9 (598.74s)	Average loss=0.573524	Dev F1=40.14
+[LSTM] Epoch 10 (666.49s)	Average loss=0.571557	Dev F1=51.68
+[LSTM] Epoch 11 (734.20s)	Average loss=0.568518	Dev F1=49.35
+[LSTM] Epoch 12 (804.02s)	Average loss=0.570723	Dev F1=50.00
+[LSTM] Epoch 13 (865.57s)	Average loss=0.575043	Dev F1=50.17
+[LSTM] Epoch 14 (923.85s)	Average loss=0.570845	Dev F1=48.10
+[LSTM] Epoch 15 (982.47s)	Average loss=0.567446	Dev F1=45.10
+[LSTM] Epoch 16 (1043.49s)	Average loss=0.571103	Dev F1=35.51
+[LSTM] Epoch 17 (1103.80s)	Average loss=0.573376	Dev F1=42.21
+[LSTM] Epoch 18 (1167.61s)	Average loss=0.567605	Dev F1=48.60
+[LSTM] Epoch 19 (1231.91s)	Average loss=0.565447	Dev F1=43.36
+[LSTM] Epoch 20 (1290.82s)	Average loss=0.564604	Dev F1=47.74
+[LSTM] Epoch 21 (1350.83s)	Average loss=0.566815	Dev F1=44.83
+[LSTM] Epoch 22 (1408.56s)	Average loss=0.562582	Dev F1=42.04
+[LSTM] Epoch 23 (1472.78s)	Average loss=0.563583	Dev F1=39.23
+[LSTM] Epoch 24 (1533.13s)	Average loss=0.562126	Dev F1=47.50
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 25 (1593.79s)	Average loss=0.563640	Dev F1=41.69
+[LSTM] Epoch 26 (1650.71s)	Average loss=0.568280	Dev F1=47.90
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 27 (1711.62s)	Average loss=0.572615	Dev F1=44.52
+[LSTM] Epoch 28 (1770.04s)	Average loss=0.574514	Dev F1=40.66
+[LSTM] Epoch 29 (1828.00s)	Average loss=0.594293	Dev F1=40.80
+[LSTM] Epoch 30 (1893.03s)	Average loss=0.586711	Dev F1=34.66
+[LSTM] Training done (1894.03s)
+[LSTM] Loaded model <LSTM>
+
+
+train_kwargs = {
+    'n_epochs':        20,
+    #'lr':              0.01,
+    'lr':              0.001,
+    'embedding_dim':   100,
+    'hidden_dim':      100,
+    'dropout':         0.5,
+    'rebalance':       0.25,
+    'print_freq':      1,
+    'seed':            1701,
+    'dev_ckpt_delay':  .1
+}
+[LSTM] Training model
+[LSTM] n_train=9492  #epochs=20  batch size=64
+/Users/eczech/anaconda3/envs/snorkel/lib/python3.6/site-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+[LSTM] Epoch 1 (64.00s)	Average loss=0.637494	Dev F1=1.48
+[LSTM] Epoch 2 (129.85s)	Average loss=0.612026	Dev F1=36.64
+[LSTM] Epoch 3 (191.50s)	Average loss=0.601739	Dev F1=41.29
+[LSTM] Epoch 4 (250.82s)	Average loss=0.591465	Dev F1=43.09
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 5 (309.17s)	Average loss=0.588245	Dev F1=40.12
+[LSTM] Epoch 6 (365.88s)	Average loss=0.581731	Dev F1=43.48
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 7 (423.81s)	Average loss=0.575775	Dev F1=44.10
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 8 (481.36s)	Average loss=0.572247	Dev F1=42.00
+[LSTM] Epoch 9 (539.10s)	Average loss=0.571932	Dev F1=44.76
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 10 (599.13s)	Average loss=0.580826	Dev F1=44.74
+[LSTM] Epoch 11 (658.27s)	Average loss=0.575177	Dev F1=43.75
+[LSTM] Epoch 12 (717.19s)	Average loss=0.566153	Dev F1=49.70
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 13 (775.52s)	Average loss=0.559898	Dev F1=51.69
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 14 (833.13s)	Average loss=0.562185	Dev F1=52.05
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 15 (890.80s)	Average loss=0.553461	Dev F1=49.14
+[LSTM] Epoch 16 (949.00s)	Average loss=0.553875	Dev F1=51.05
+[LSTM] Epoch 17 (1007.70s)	Average loss=0.548371	Dev F1=50.54
+[LSTM] Epoch 18 (1064.96s)	Average loss=0.547876	Dev F1=49.49
+[LSTM] Epoch 19 (1121.51s)	Average loss=0.547120	Dev F1=49.65
+[LSTM] Epoch 20 (1177.71s)	Average loss=0.555542	Dev F1=46.50
+[LSTM] Training done (1178.53s)
+[LSTM] Loaded model <LSTM>
+
+
+####### Secreted Cytokine
+
+candidate_class = classes.secreted_cytokine
+train_kwargs = {
+    'n_epochs':        20,
+    'lr':              0.001,
+    'embedding_dim':   100,
+    'hidden_dim':      100,
+    'dropout':         0.5,
+    'rebalance':       0.25,
+    'print_freq':      1,
+    'seed':            1701,
+    'dev_ckpt_delay':  .1
+}
+
+[LSTM] Training model
+[LSTM] n_train=8953  #epochs=20  batch size=64
+/Users/eczech/anaconda3/envs/snorkel/lib/python3.6/site-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+[LSTM] Epoch 1 (63.85s)	Average loss=0.652018	Dev F1=14.95
+[LSTM] Epoch 2 (124.24s)	Average loss=0.622226	Dev F1=42.81
+[LSTM] Epoch 3 (181.92s)	Average loss=0.606310	Dev F1=48.89
+[LSTM] Epoch 4 (237.37s)	Average loss=0.599160	Dev F1=55.51
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 5 (291.62s)	Average loss=0.587547	Dev F1=48.55
+[LSTM] Epoch 6 (346.27s)	Average loss=0.576439	Dev F1=42.80
+[LSTM] Epoch 7 (399.56s)	Average loss=0.583224	Dev F1=50.00
+[LSTM] Epoch 8 (455.27s)	Average loss=0.564452	Dev F1=40.55
+[LSTM] Epoch 9 (508.67s)	Average loss=0.558456	Dev F1=42.94
+[LSTM] Epoch 10 (563.54s)	Average loss=0.560026	Dev F1=49.81
+[LSTM] Epoch 11 (617.78s)	Average loss=0.555377	Dev F1=51.52
+[LSTM] Epoch 12 (671.65s)	Average loss=0.546995	Dev F1=51.24
+[LSTM] Epoch 13 (725.86s)	Average loss=0.544597	Dev F1=50.39
+[LSTM] Epoch 14 (781.12s)	Average loss=0.540576	Dev F1=45.73
+[LSTM] Epoch 15 (834.30s)	Average loss=0.538895	Dev F1=52.94
+[LSTM] Epoch 16 (888.43s)	Average loss=0.543237	Dev F1=54.63
+[LSTM] Epoch 17 (942.94s)	Average loss=0.537668	Dev F1=46.64
+[LSTM] Epoch 18 (996.78s)	Average loss=0.534483	Dev F1=44.38
+[LSTM] Epoch 19 (1049.43s)	Average loss=0.533140	Dev F1=46.58
+[LSTM] Epoch 20 (1104.71s)	Average loss=0.541971	Dev F1=51.72
+[LSTM] Training done (1105.52s)
+[LSTM] Loaded model <LSTM>
+
+
+####### Inducing TF
+
+candidate_class = classes.inducing_transcription_factor
+train_kwargs = {
+    'n_epochs':        20,
+    #'lr':              0.01,
+    'lr':              0.001,
+    'embedding_dim':   100,
+    'hidden_dim':      100,
+    'dropout':         0.5,
+    'rebalance':       0.25,
+    'print_freq':      1,
+    'seed':            1701,
+    'dev_ckpt_delay':  .1
+}
+[LSTM] Training model
+[LSTM] n_train=1740  #epochs=20  batch size=64
+/Users/eczech/anaconda3/envs/snorkel/lib/python3.6/site-packages/torch/nn/functional.py:1332: UserWarning: nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.
+  warnings.warn("nn.functional.sigmoid is deprecated. Use torch.sigmoid instead.")
+[LSTM] Epoch 1 (8.77s)	Average loss=0.693251	Dev F1=18.03
+[LSTM] Epoch 2 (18.78s)	Average loss=0.688029	Dev F1=24.82
+[LSTM] Epoch 3 (28.75s)	Average loss=0.681911	Dev F1=23.53
+[LSTM] Epoch 4 (37.87s)	Average loss=0.674705	Dev F1=31.75
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 5 (47.33s)	Average loss=0.672536	Dev F1=27.65
+[LSTM] Epoch 6 (56.53s)	Average loss=0.666382	Dev F1=28.42
+[LSTM] Epoch 7 (65.75s)	Average loss=0.663726	Dev F1=29.19
+[LSTM] Epoch 8 (75.03s)	Average loss=0.657468	Dev F1=27.06
+[LSTM] Epoch 9 (84.25s)	Average loss=0.654133	Dev F1=28.17
+[LSTM] Epoch 10 (94.43s)	Average loss=0.651533	Dev F1=30.25
+[LSTM] Epoch 11 (104.04s)	Average loss=0.645764	Dev F1=29.57
+[LSTM] Epoch 12 (113.82s)	Average loss=0.644995	Dev F1=30.73
+[LSTM] Epoch 13 (123.07s)	Average loss=0.639951	Dev F1=31.95
+[LSTM] Model saved as <LSTM>
+[LSTM] Epoch 14 (132.85s)	Average loss=0.640717	Dev F1=29.75
+[LSTM] Epoch 15 (142.09s)	Average loss=0.639584	Dev F1=30.03
+[LSTM] Epoch 16 (151.33s)	Average loss=0.634623	Dev F1=29.92
+[LSTM] Epoch 17 (159.82s)	Average loss=0.632267	Dev F1=31.15
+[LSTM] Epoch 18 (168.55s)	Average loss=0.628959	Dev F1=30.48
+[LSTM] Epoch 19 (177.13s)	Average loss=0.629464	Dev F1=30.64
+[LSTM] Epoch 20 (185.85s)	Average loss=0.625856	Dev F1=31.43
+[LSTM] Training done (186.42s)
+[LSTM] Loaded model <LSTM>
+

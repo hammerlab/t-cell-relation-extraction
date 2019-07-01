@@ -11,10 +11,16 @@ import sys
 import os.path as osp
 from dotenv import dotenv_values
 
+# Root environment variables that should always be set externally
+DEFAULT_ENV_VARS = ['DATA_DIR', 'REPO_DATA_DIR']
 
-def _get_env_vars():
+
+def _get_env_vars(default_vars=DEFAULT_ENV_VARS):
     pkg_dir = osp.abspath(osp.dirname(__file__))
-    return dotenv_values(osp.normpath(osp.join(pkg_dir, '..', '..', 'env.sh')))
+    path = osp.normpath(osp.join(pkg_dir, '..', '..', 'env.sh'))
+    if not osp.exists(path):
+        raise ValueError(f'Environment variable script not found (path = {path})')
+    return {**dotenv_values(path), **{v: os.getenv(v) for v in default_vars}}
 
 
 def _set_env_vars(env_vars):

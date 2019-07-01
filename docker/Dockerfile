@@ -25,7 +25,10 @@ RUN pip install --upgrade pip
 RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.2.0/en_core_sci_md-0.2.0.tar.gz
 RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.2.0/en_ner_jnlpba_md-0.2.0.tar.gz
 
+# Install all other dependencies, making an exception for Cython which must already be
+# present for the successful installation of some other packages
 COPY requirements.txt .
+RUN pip install Cython==0.29.10
 RUN pip install -r requirements.txt
 
 # Install bratreader from specific commit for future stability

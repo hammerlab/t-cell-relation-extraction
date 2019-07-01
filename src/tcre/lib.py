@@ -2,6 +2,7 @@ import unicodedata
 import pandas as pd
 import os.path as osp
 import os
+from tcre.env import *
 
 SPECIES_HUMAN_ID = 1
 SPECIES_MOUSE_ID = 2
@@ -19,7 +20,7 @@ def fix_jupyter_spacy_config():
 
     
 def get_entity_meta_data(table):
-    path = osp.join(os.environ['META_DATA_DIR'], '{}.csv'.format(table))
+    path = osp.join(META_DATA_DIR, '{}.csv'.format(table))
     return pd.read_csv(path)
 
 
