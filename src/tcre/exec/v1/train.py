@@ -43,7 +43,8 @@ MARKER_LISTS = {
 MODEL_SIZES = {
     'S': {'hidden_dim': 5, 'wrd_embed_dim': 10, 'pos_embed_dim': 3},
     'M': {'hidden_dim': 10, 'wrd_embed_dim': 30, 'pos_embed_dim': 8},
-    'L': {'hidden_dim': 20, 'wrd_embed_dim': 50, 'pos_embed_dim': 10}
+    'L': {'hidden_dim': 20, 'wrd_embed_dim': 50, 'pos_embed_dim': 10},
+    'XL': {'hidden_dim': 30, 'wrd_embed_dim': 100, 'pos_embed_dim': 10},
 }
 
 
@@ -136,6 +137,8 @@ def train(cands, config):
         model_args['wrd_embed_dim'] = None
     if config['wrd_embedding_type'] in ['w2v_trained']:
         model_args['train_wrd_embed'] = True
+    if not config['use_positions']:
+        model_args['pos_embed_dim'] = 0
     config['model_args'] = model_args
 
     logger.info(f"Building model with arguments: {config['model_args']}")
@@ -223,16 +226,19 @@ def supervise(model, lr, decay, train_iter, val_iter):
 @click.option('--use-secondary/--no-secondary', default=True, help='Use secondary markers')
 @click.option('--use-swaps/--no-swaps', default=True, help='Use swaps for primary entity text')
 @click.option('--use-lower/--no-lower', default=False, help='Whether or not to use only lower case tokens')
+@click.option('--use-positions/--no-positions', default=False, help='Whether or not to use positional features')
 @click.option('--wrd-embedding-type', default='w2v_frozen', help='One of "w2v_frozen", "w2v_trained", or "denovo"')
 @click.option('--vocab-limit', default=50000, help='For pre-trained vectors, max vocab size')
 @click.option('--model-size', default='S', help='One of "S", "M", "L"')
 @click.option('--weight-decay', default=0.0, help='Weight decay for training')
+@click.option('--dropout', default=0.0, help='Dropout rate')
 @click.option('--learning-rate', default=.005, help='Learning rate')
 @click.option('--device', default='cuda', help='Device to use for training')
 @click.option('--log-level', default='info', help='Logging level')
 @click.option('--output-dir', default=None, help='Output directory (nothing saved if omitted)')
-def run(relation_class, marker_list, use_secondary, use_swaps, use_lower, wrd_embedding_type, vocab_limit, model_size,
-        weight_decay, learning_rate, device, log_level, output_dir):
+def run(relation_class, marker_list, use_secondary, use_swaps, use_lower, use_positions,
+        wrd_embedding_type, vocab_limit, model_size,
+        weight_decay, dropout, learning_rate, device, log_level, output_dir):
     logging.basicConfig(level=log_level.upper())
     session = SnorkelSession()
     classes = get_candidate_classes()
@@ -247,9 +253,10 @@ def run(relation_class, marker_list, use_secondary, use_swaps, use_lower, wrd_em
         entity_types=candidate_class.entity_types,
         marker_list=marker_list,
         use_secondary=use_secondary,
-        use_swaps=use_swaps, use_lower=use_lower,
+        use_swaps=use_swaps, use_lower=use_lower, use_positions=use_positions,
         wrd_embedding_type=wrd_embedding_type,
-        model_size=model_size, weight_decay=weight_decay, learning_rate=learning_rate,
+        model_size=model_size, learning_rate=learning_rate,
+        weight_decay=weight_decay, dropout=dropout,
         vocab_limit=vocab_limit,
         device=device
     )

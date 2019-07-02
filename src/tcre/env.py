@@ -12,7 +12,7 @@ import os.path as osp
 from dotenv import dotenv_values
 
 # Root environment variables that should always be set externally
-DEFAULT_ENV_VARS = ['DATA_DIR', 'REPO_DATA_DIR']
+DEFAULT_ENV_VARS = ['DATA_DIR', 'REPO_DATA_DIR', 'REPO_DIR']
 
 
 def _get_env_vars(default_vars=DEFAULT_ENV_VARS):

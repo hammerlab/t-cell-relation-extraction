@@ -3,7 +3,10 @@ import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence
 from tcre.modeling.features import MAX_POS_DIST
 DIST_PAD_VAL = MAX_POS_DIST + 1
-CELL_TYPES = {'LSTM': nn.LSTM, 'GRU': nn.GRU}
+CT_GRU = 'GRU'
+CT_LSTM = 'LSTM'
+CELL_TYPES = {CT_LSTM: nn.LSTM, CT_GRU: nn.GRU}
+
 
 def pos_indices(pos, max_dist, pad_val):
     """Convert position features provided as positive or negative integers to embedding indices
@@ -25,7 +28,8 @@ def pos_indices(pos, max_dist, pad_val):
 
 class RNN(nn.Module):
 
-    def __init__(self, fields, cardinality=2, hidden_dim=50, wrd_embed_dim=None, pos_embed_dim=10, train_wrd_embed=None,
+    def __init__(self, fields, cardinality=2, hidden_dim=50, wrd_embed_dim=None,
+                 pos_embed_dim=10, train_wrd_embed=None,
                  num_layers=1, cell_type='LSTM',
                  dropout=0, bidirectional=False, max_dist=50, device=None,
                  names=['text', 'label', 'e0_dist', 'e1_dist']):
@@ -43,9 +47,6 @@ class RNN(nn.Module):
         self.bidirectional = bidirectional
         self.num_directions = 2 if self.bidirectional else 1
         self.cell_type = cell_type
-        if self.cell_type not in CELL_TYPES:
-            raise ValueError(f'Cell type must be one of {list(keys(CELL_TYPES))}, not {self.cell_type}')
-        self.cell_type = CELL_TYPES[self.cell_type]
         self.max_dist = max_dist
         self.device = device
         self.names = names
@@ -68,11 +69,14 @@ class RNN(nn.Module):
         # Index values are 0=pad, 1=< -max_dist, 2=-max_dist, 3=-max_dist+1, ..., 2*(max_dist+2) > max_dist
         self.pos_embed_shape = (2 * (self.max_dist + 2), self.pos_embed_dim)
         # Define without looping/lists as placement on GPU will fail otherwise
-        self.pos_embed_e0 = nn.Embedding(*self.pos_embed_shape, padding_idx=0)
-        self.pos_embed_e1 = nn.Embedding(*self.pos_embed_shape, padding_idx=0)
+        if self.pos_embed_dim:
+            self.pos_embed_e0 = nn.Embedding(*self.pos_embed_shape, padding_idx=0)
+            self.pos_embed_e1 = nn.Embedding(*self.pos_embed_shape, padding_idx=0)
 
     def _init_cell(self):
-        self.cell = self.cell_type(
+        if self.cell_type not in CELL_TYPES:
+            raise ValueError(f'Cell type must be one of {list(keys(CELL_TYPES))}, not {self.cell_type}')
+        self.cell = CELL_TYPES[self.cell_type](
             self.wrd_embed_shape[1] + 2 * self.pos_embed_dim, self.hidden_dim,
             num_layers=self.num_layers, bidirectional=self.bidirectional,
             dropout=self.dropout, batch_first=True
@@ -98,10 +102,12 @@ class RNN(nn.Module):
         X, L, D0, D1 = features
         H = self.initial_hidden_state(len(X))
         X = self.wrd_embed(X)
-        D = torch.cat([self.pos_embed_e0(D0), self.pos_embed_e1(D1)], dim=-1)
-        X = torch.cat([X, D], dim=-1)
+        if self.pos_embed_dim:
+            D = torch.cat([self.pos_embed_e0(D0), self.pos_embed_e1(D1)], dim=-1)
+            X = torch.cat([X, D], dim=-1)
         L = L.view(-1).tolist()
         X = nn.utils.rnn.pack_padded_sequence(X, L, batch_first=True)
+        print(type(X), type(H))
         ht = self.cell(X, H)[1]
         ht = ht[0] if isinstance(ht, tuple) else ht
         Y = ht[-1] if self.num_directions == 1 else torch.cat((ht[0], ht[1]), dim=1)
@@ -112,9 +118,9 @@ class RNN(nn.Module):
         def get_h0():
             return torch.zeros(self.num_layers * self.num_directions, batch_size, self.hidden_dim).to(self.device)
 
-        if self.cell_type == nn.GRU:
+        if self.cell_type == CT_GRU:
             return get_h0()
-        elif self.cell_type == nn.LSTM:
+        elif self.cell_type == CT_LSTM:
             return tuple([get_h0(), get_h0()])
         else:
-            raise ValueError(f'RNN type {self.cell_type.__name__} not supported')
+            raise ValueError(f'RNN cell type "{self.cell_type}" not supported')
