@@ -109,6 +109,12 @@ class ProteinToken(object):
         
     @property
     def sign_value_text(self):
+        """Normalized sign as text
+
+        For example, tokens like CD69hi and CD69+++ would both return '⁺' for this property
+
+        To change the normalized sign character, set ProteinToken.SIGN_POS_CHAR or ProteinToken.SIGN_NEG_CHAR
+        """
         sign = ''
         if self.sign_value == 1:
             sign = ProteinToken.SIGN_POS_CHAR

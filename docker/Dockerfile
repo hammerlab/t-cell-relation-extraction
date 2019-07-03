@@ -40,6 +40,11 @@ RUN pip install --no-deps -e git+$SNORKEL_REPO_URL --src $REPO_DIR
 RUN pip install --no-deps git+https://github.com/HazyResearch/numbskull@master
 RUN pip install --no-deps git+https://github.com/HazyResearch/treedlib@master
 
+# Install helpful jupyter extensions
+RUN pip install jupyter_contrib_nbextensions && \
+    jupyter contrib nbextension install --user && \
+    jupyter nbextension enable python-markdown/main
+
 # Add TCRE project source modules to PYTHONPATH
 RUN echo "$TCRE_REPO_DIR/src" >> /opt/conda/envs/nlp/lib/python3.6/site-packages/local.pth
 

@@ -36,10 +36,15 @@ def to_html(nb):
 
 
 def get_tag_html(path, name, prefix):
+    tag = prefix + '.' + name
+
     def predicate(c):
         if 'metadata' in c and 'tags' in c['metadata']:
             for t in c['metadata']['tags']:
-                if t == prefix + '.' + name:
+                if t == tag:
                     return True
         return False
-    return to_html(get_cell_nb(get_nb(path), predicate))
+    nb = get_cell_nb(get_nb(path), predicate)
+    if len(nb['cells']) == 0:
+        raise ValueError(f'Failed to find cell with tag "{tag}"')
+    return to_html(nb)

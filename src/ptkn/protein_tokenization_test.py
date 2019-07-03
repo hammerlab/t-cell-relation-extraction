@@ -1,5 +1,5 @@
 import unittest
-from protein_tokenization import ProteinTokenizer, ProteinToken
+from ptkn.protein_tokenization import ProteinTokenizer, ProteinToken
 
 VOCAB1 = [
     'CD4', 'CD45RA', 'CD45', 'CD45RO', 'CD62L', 'CCR7', 'CD127',

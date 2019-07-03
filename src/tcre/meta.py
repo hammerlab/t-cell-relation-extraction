@@ -46,7 +46,8 @@ def mygene_query(query, species='human', score_threshold=20):
     df = df.rename(columns={'_id': 'extid'}).drop('_score', axis=1)
     df['extid'] = df['extid'].astype(str)
     return df
-    
+
+
 def mygene_prep(df, label_fn=None):
     dfs = []
     if label_fn is None:
@@ -66,6 +67,7 @@ def mygene_prep(df, label_fn=None):
     dfs = pd.DataFrame(dfs, columns=['sym', 'lbl', 'extid'])
     return dfs
 
+
 def _get_greek_alphabet():
     from itertools import chain
     from unicodedata import name
@@ -74,6 +76,7 @@ def _get_greek_alphabet():
     greek_letters = [c for c in greek_symbols if c.isalpha()]
     alphabet = [l for l in greek_letters if 'GREEK SMALL LETTER' in name(l) and len(name(l).split()) == 4]
     return alphabet
+
 
 def get_greek_alphabet():
     import unidecode
@@ -86,9 +89,11 @@ def get_greek_alphabet():
         if unidecode.unidecode(l) != '[?]'
     ]
 
+
 def get_ids(df, typ):
     ids = [':'.join([r['src'], str(r['spid']), r['sym'], r['lbl']]) for _, r in df.iterrows()]
     return [typ + hashlib.md5(v.encode('utf-8')).hexdigest()[:16].upper() for v in ids]
+
 
 def merge(dfs, typ):
     cols = ['id', 'src', 'sym', 'lbl', 'spid', 'extid']
@@ -100,7 +105,9 @@ def merge(dfs, typ):
     df = pd.concat([df[cols] for df in dfs])
     return df
 
+
 DEFAULT_SRC_PRIORITY = {'manual': 2, 'transform': 1}
+
 
 def add_preferred_id(g, src_priority=DEFAULT_SRC_PRIORITY):
     """Add preferred id for synonym records grouped by label"""
@@ -128,6 +135,7 @@ def add_preferred_id(g, src_priority=DEFAULT_SRC_PRIORITY):
     assert len(pid) == 1
     pid = pid.iloc[0]['id']
     return g.assign(prefid=pid)
+
 
 def add_preferred_ids(df, src_priority=DEFAULT_SRC_PRIORITY):
     return df.groupby(['lbl'], group_keys=False).apply(add_preferred_id, src_priority=src_priority)
