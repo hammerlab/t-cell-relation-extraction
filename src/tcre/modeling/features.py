@@ -3,31 +3,7 @@ import os.path as osp
 import numpy as np
 import pandas as pd
 from tcre.modeling.utils import mark_entities
-
-# class W2VFeaturizer(object):
-#
-#     def __init__(self, model, tokenizer):
-#         self.model = model
-#         self.tokenizer = tokenizer
-#         self.words = set(model.vocab)
-#
-#     def indices(self, sentence):
-#         tokens = [str(w) for w in self.tokenizer(sentence)]
-#         tokens = [t if t in self.words else 'UNK' for t in tokens]
-#         indices = [self.model.ix(t) for t in tokens]
-#         return np.array(indices), np.array(tokens)
-#
-#     def embeddings(self, sentence):
-#         indices, tokens = self.indices(sentence)
-#         return np.stack([model.vectors[i] for i in indices]), tokens
-#
-#
-# def get_spacy_w2v_featurizer(nlp_model='en_core_sci_md'):
-#     import spacy
-#     import word2vec
-#     nlp = spacy.load(nlp_model)
-#     model = word2vec.load(W2V_MODEL_01)
-#     return W2VFeaturizer(model, nlp)
+from tcre.supervision import LABEL_TYPE_MAP
 
 
 def candidate_to_entities(cand):
@@ -49,16 +25,37 @@ def candidate_to_entities(cand):
     return ents
 
 
-def candidates_to_records(cands, entity_predicate=None):
+def get_label(cand, label_type=LABEL_TYPE_MAP):
+
+    # If label type is configured per split, resolve to scalar
+    # lable type for candidate split
+    if isinstance(label_type, dict):
+        label_type = label_type[cand.split]
+
+    if label_type not in ['gold', 'marginal']:
+        raise ValueError(f'Label type must be "gold" or "marginal" (candidate = {cand})')
+
+    # Return all labels in [0, 1] with default at 0 for candidates with no label
+    if label_type == 'gold':
+        return max(cand.gold_labels[0].value, 0) if cand.gold_labels else 0
+    else:
+        if len(cand.marginals) > 1:
+            raise AssertionError(
+                f'Expecting <= 1 marginal value for candidate id {cand.id} ({cand}) but got {len(cand.marginals)}')
+        return cand.marginals[0].probability if cand.marginals else 0
+
+
+def candidates_to_records(cands, entity_predicate=None, label_type=LABEL_TYPE_MAP):
     def get_record(cand):
         ents = candidate_to_entities(cand)
         if entity_predicate is not None:
             ents = [e for e in ents if entity_predicate(e)]
+        label = get_label(cand, label_type=label_type)
         return dict(
             id=cand.id,
             text=str(cand.get_parent().text),
             words=list(cand.get_parent().words),
-            label=cand.gold_labels[0].value if cand.gold_labels else 0,
+            label=float(label),
             entities=ents
         )
     return [get_record(cand) for cand in cands]

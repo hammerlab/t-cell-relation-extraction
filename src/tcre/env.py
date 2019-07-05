@@ -11,6 +11,8 @@ import sys
 import os.path as osp
 from dotenv import dotenv_values
 
+TCRE_SEED = int(os.getenv('TCRE_SEED', 3832))
+
 # Root environment variables that should always be set externally
 DEFAULT_ENV_VARS = ['DATA_DIR', 'REPO_DATA_DIR', 'REPO_DIR']
 

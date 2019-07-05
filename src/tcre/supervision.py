@@ -16,6 +16,10 @@ SPLIT_TRAIN = 0
 SPLIT_DEV = 1
 SPLIT_INFER = 2
 SPLIT_TEST = 3
+SPLIT_VAL = 4
+
+SPLIT_MAP = {SPLIT_TRAIN: 'train', SPLIT_DEV: 'dev', SPLIT_INFER: 'infer', SPLIT_TEST: 'test', SPLIT_VAL: 'val'}
+LABEL_TYPE_MAP = {k: 'gold' if k in [SPLIT_DEV, SPLIT_TEST, SPLIT_VAL] else 'marginal' for k in SPLIT_MAP.keys()}
 
 DISPLACY_ENT_OPTS = {
     "ents": [ENT_TYP_CK, ENT_TYP_CT, ENT_TYP_TF],

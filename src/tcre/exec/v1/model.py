@@ -26,13 +26,33 @@ def pos_indices(pos, max_dist, pad_val):
     return pos
 
 
-class RNN(nn.Module):
+class RERNN(nn.Module):
+    """RNN module for relation extraction modeling"""
 
     def __init__(self, fields, cardinality=2, hidden_dim=50, wrd_embed_dim=None,
                  pos_embed_dim=10, train_wrd_embed=None,
                  num_layers=1, cell_type='LSTM',
                  dropout=0, bidirectional=False, max_dist=50, device=None,
-                 names=['text', 'label', 'e0_dist', 'e1_dist']):
+                 names=['text', 'label', 'e0_dist', 'e1_dist', 'id']):
+        """Relation Extraction RNN with position features and configurable word embedding
+
+        Args:
+            fields: Torchtext field dictionary
+            cardinality: Number of predicted classes
+            hidden_dim: Number of dimensions in FC layer on top of LSTM hidden state
+            wrd_embed_dim: Number of word embedding dimensions; if 0/false word vectors from the "text" field
+                will be used instead with the assumption being that they are pre-trained
+            pos_embed_dim: Number of position embedding dimensions; if 0/false position features are ignored
+            train_wrd_embed: When true, word embedding will be unfrozen for training
+            num_layers: Number of LSTM layers to use
+            cell_type: One of "LSTM" or "GRU"
+            dropout: Dropout percentage
+            bidirectional: Use bi-LSTM or bi_GRU models
+            max_dist: Maximum absolute value of relative position features (relative to entity positions)
+            device: Torch device
+            names: Ordered list of fields names (order in fields is arbitrary but order of this list is not -- it
+                must provide the field names in the order ["text", "target", "pos_feature_1", "pos_feature_2", "id"])
+        """
         super().__init__()
         self.fields = fields
         self.cardinality = cardinality
@@ -84,12 +104,16 @@ class RNN(nn.Module):
 
     def prepare(self, batch, **kwargs):
         """Extract seq token indices, seq lengths, and training labels"""
-        text, label, e0_dist, e1_dist = [getattr(batch, n) if n in batch.fields else None for n in self.names]
+        text, label, e0_dist, e1_dist, ids = [getattr(batch, n) if n in batch.fields else None for n in self.names]
+        # Text index sequences and associated lengths
         X, L = text[0].t(), text[1]
+        # Example ids (integers)
+        I = ids.type(torch.IntTensor)
         # Convert relative positions (as pos/neg integers or pad) to embedding indices
         D0, D1 = [pos_indices(v.t(), self.max_dist, DIST_PAD_VAL) for v in [e0_dist, e1_dist]]
-        Y = None if label is None else (label - 1).type(torch.FloatTensor).to(self.device)
-        features = (X, L, D0, D1)
+        # Example labels
+        Y = None if label is None else label.type(torch.FloatTensor).to(self.device)
+        features = (X, L, D0, D1, I)
         return tuple([f.to(self.device) for f in features]), Y
 
     def transform(self, Y):
@@ -98,8 +122,11 @@ class RNN(nn.Module):
     def classify(self, Y):
         return torch.round(Y) if self.cardinality == 2 else torch.argmax(Y, dim=0)
 
+    def predict(self, batch):
+        return self.transform(self.forward(self.prepare(batch)[0]))
+
     def forward(self, features):
-        X, L, D0, D1 = features
+        X, L, D0, D1, _ = features
         H = self.initial_hidden_state(len(X))
         X = self.wrd_embed(X)
         if self.pos_embed_dim:
@@ -107,7 +134,6 @@ class RNN(nn.Module):
             X = torch.cat([X, D], dim=-1)
         L = L.view(-1).tolist()
         X = nn.utils.rnn.pack_padded_sequence(X, L, batch_first=True)
-        print(type(X), type(H))
         ht = self.cell(X, H)[1]
         ht = ht[0] if isinstance(ht, tuple) else ht
         Y = ht[-1] if self.num_directions == 1 else torch.cat((ht[0], ht[1]), dim=1)
