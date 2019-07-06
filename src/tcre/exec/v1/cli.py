@@ -262,7 +262,7 @@ def _to_candidate_class(relation_class):
 @click.group(invoke_without_command=True)
 @click.option('--relation-class', default=None, help='Candidate type class (e.g. "inducing_cytokine")')
 @click.option('--device', default='cuda', help='Device to use for training')
-@click.option('--batch-size', default=32, help='Batch size used in training and prediction')
+@click.option('--batch-size', default=64, help='Batch size used in training and prediction')
 @click.option('--log-level', default='info', help='Logging level')
 @click.option('--output-dir', default=None, help='Output directory (nothing saved if omitted)')
 @click.option('--seed', default=TCRE_SEED, help='RNG seed')
@@ -280,15 +280,15 @@ def cli(ctx, relation_class, device, batch_size, log_level, output_dir, seed):
 @click.option('--splits-file', default=None, help='Path to json file containing candidate ids keyed '
                                                   'by split name ("train", "val", "test")')
 @click.option('--marker-list', default='mult_01', help='Marker list name ("doub_01", "sngl_01")')
-@click.option('--use-checkpoints/--no-checkpoints', default=False, help='Save checkpoint for best model')
-@click.option('--use-secondary/--no-secondary', default=True, help='Use secondary markers')
-@click.option('--use-swaps/--no-swaps', default=True, help='Use swaps for primary entity text')
-@click.option('--use-lower/--no-lower', default=False, help='Whether or not to use only lower case tokens')
-@click.option('--use-positions/--no-positions', default=False, help='Whether or not to use positional features')
+@click.option('--use-checkpoints', default=False, type=bool, help='Save checkpoint for best model')
+@click.option('--use-secondary', default=True, type=bool, help='Use secondary markers')
+@click.option('--use-swaps', default=True, type=bool, help='Use swaps for primary entity text')
+@click.option('--use-lower', default=False, type=bool, help='Whether or not to use only lower case tokens')
+@click.option('--use-positions', default=False, type=bool, help='Whether or not to use positional features')
 @click.option('--wrd-embedding-type', default='w2v_frozen', help='One of "w2v_frozen", "w2v_trained", or "denovo"')
 @click.option('--vocab-limit', default=50000, help='For pre-trained vectors, max vocab size')
 @click.option('--model-size', default='S', help='One of "S", "M", "L"')
-@click.option('--use-bidirectional/--no-birectional', default=False, help='Use bi-directional RNN')
+@click.option('--bidirectional', default=False, type=bool, help='Use bi-directional RNN')
 @click.option('--cell-type', default='LSTM', help='LSTM or GRU')
 @click.option('--weight-decay', default=0.0, help='Weight decay for training')
 @click.option('--dropout', default=0.0, help='Dropout rate')
@@ -297,7 +297,7 @@ def cli(ctx, relation_class, device, batch_size, log_level, output_dir, seed):
               help='Resulting data to save as csv list (output_dir must be set to have an effect)')
 @click.pass_context
 def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swaps, use_lower, use_positions,
-        wrd_embedding_type, vocab_limit, model_size, use_bidirectional, cell_type,
+        wrd_embedding_type, vocab_limit, model_size, bidirectional, cell_type,
         weight_decay, dropout, learning_rate, save_keys):
     relation_class = ctx.obj['relation_class']
     candidate_class = _to_candidate_class(relation_class)
@@ -319,7 +319,7 @@ def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swa
         use_checkpoints=use_checkpoints,
         wrd_embedding_type=wrd_embedding_type,
         model_size=model_size,
-        bidirectional=use_bidirectional,
+        bidirectional=bidirectional,
         cell_type=cell_type,
         learning_rate=learning_rate,
         weight_decay=weight_decay,

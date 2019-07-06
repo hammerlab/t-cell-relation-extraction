@@ -113,14 +113,10 @@ def supervise(model, lr, decay, train_iter, val_iter,
     @trainer.on(Events.EPOCH_COMPLETED)
     def log_training_results(engine):
         epoch, iteration = engine.state.epoch, engine.state.iteration
-        _ = log_results(train_evaluator, train_iter, 'training', epoch, iteration)['loss']
+        log_results(train_evaluator, train_iter, 'training', epoch, iteration)
+        log_results(test_evaluator, test_iter, 'test', epoch, iteration)
         metric = log_results(val_evaluator, val_iter, 'validation', epoch, iteration)['f1']
         scheduler.step(metric)
-
-    @trainer.on(Events.COMPLETED)
-    def log_test_results(engine):
-        epoch, iteration = engine.state.epoch, engine.state.iteration
-        log_results(test_evaluator, test_iter, 'test', epoch, iteration)
 
     trainer.run(train_iter, max_epochs=max_epochs)
     return history
