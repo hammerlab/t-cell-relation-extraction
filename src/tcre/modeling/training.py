@@ -1,5 +1,8 @@
 import glob
 import pathlib as pl
+import numpy as np
+import random
+import os
 from collections import defaultdict
 from ignite.metrics import Accuracy, Loss, Precision, Recall
 from ignite.handlers import EarlyStopping, ModelCheckpoint
@@ -14,9 +17,24 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def set_seed(seed):
+    # See:
+    # - https://pytorch.org/docs/stable/notes/randomness.html
+    # - https://www.kaggle.com/protan/lstm-cnn-torchtext-with-ignite
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+
 def supervise(model, lr, decay, train_iter, val_iter,
               test_iter=None, model_dir=None, max_epochs=250, es_patience=25, lr_patience=25,
-              log_iter_interval=10, log_epoch_interval=1):
+              log_iter_interval=10, log_epoch_interval=1, seed=0):
+    set_seed(seed)
 
     if test_iter is None:
         test_iter = val_iter
@@ -32,37 +50,25 @@ def supervise(model, lr, decay, train_iter, val_iter,
         device=model.device, prepare_batch=model.prepare
     )
 
-    def output_transform(x, y, y_pred):
-        # x is output of model.prepare (first item)
-        # return y_pred, y, ids
-        return model.classify(model.transform(y_pred)), y, x[-1]
-
-    def output_selector(args):
-        # Subset above to first two items (y_pred, y)
-        # Round both in case either is a probability and all metrics require labels
-        return torch.round(args[0]), torch.round(args[1])
-
-    def get_metrics(predictions=False):
+    def get_metrics():
         metrics = {
-            'accuracy': Accuracy(output_selector),
-            'precision': Precision(output_selector, average=False),
-            'recall': Recall(output_selector, average=False),
-            'loss': Loss(criterion, output_transform=output_selector)
+            'accuracy': Accuracy(),
+            'precision': Precision(average=False),
+            'recall': Recall(average=False),
+            'loss': Loss(criterion)
         }
         metrics['f1'] = get_f1_metric(metrics['precision'], metrics['recall'])
-        if predictions:
-            metrics['predictions'] = PredictionAggregator()
         return metrics
 
-    def get_evaluator(predictions=False):
+    def get_evaluator():
         return create_supervised_evaluator(
-            model, metrics=get_metrics(predictions), prepare_batch=model.prepare, device=model.device,
-            output_transform=output_transform
+            model, metrics=get_metrics(), prepare_batch=model.prepare, device=model.device,
+            output_transform=lambda x, y, y_pred: (model.classify(model.transform(y_pred)), y)
         )
 
     train_evaluator = get_evaluator()
     val_evaluator = get_evaluator()
-    test_evaluator = get_evaluator(predictions=True)
+    test_evaluator = get_evaluator()
 
     def score_function(engine):
         return engine.state.metrics['f1']
@@ -81,7 +87,7 @@ def supervise(model, lr, decay, train_iter, val_iter,
             {'model': model, 'optimizer': optimizer, 'scheduler': scheduler}
         )
 
-    history, test_predictions = [], []
+    history = []
 
     @trainer.on(Events.ITERATION_COMPLETED)
     def log_training_loss(engine):
@@ -114,19 +120,20 @@ def supervise(model, lr, decay, train_iter, val_iter,
     @trainer.on(Events.COMPLETED)
     def log_test_results(engine):
         epoch, iteration = engine.state.epoch, engine.state.iteration
-        preds = log_results(test_evaluator, test_iter, 'test', epoch, iteration)['predictions']
-        test_predictions.append(preds)
+        log_results(test_evaluator, test_iter, 'test', epoch, iteration)
 
     trainer.run(train_iter, max_epochs=max_epochs)
-    assert len(test_predictions) == 1, f'Found {len(test_predictions)} test prediction sets, expecting 1'
-    return history, test_predictions[0]
+    return history
 
 
 def load_checkpoint(checkpoint_dir):
     files = glob.glob(str(pl.Path(checkpoint_dir) / '*.pth'))
     comps = defaultdict(lambda: [])
     for f in files:
-        comps[f.split('_')[1]].append(torch.load(f))
+        comps[pl.Path(f).name.split('_')[1]].append(torch.load(f))
     if any([len(v) > 1 for v in comps.values()]):
-        raise ValueError(f'Found multiple checkpoint files for the same component in dir "{checkpoint_dir}"')
+        raise ValueError(
+            f'Found multiple checkpoint files for the same component '
+            f'in dir "{checkpoint_dir}" (keys found = {comps.keys()})'
+        )
     return {k: v[0] for k, v in comps.items()}

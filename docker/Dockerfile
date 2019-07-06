@@ -40,6 +40,9 @@ RUN pip install --no-deps -e git+$SNORKEL_REPO_URL --src $REPO_DIR
 RUN pip install --no-deps git+https://github.com/HazyResearch/numbskull@master
 RUN pip install --no-deps git+https://github.com/HazyResearch/treedlib@master
 
+# Install skopt for hyperparameter search
+RUN pip install -e git://github.com/scikit-optimize/scikit-optimize.git@v0.6#egg=scikit-optimize
+
 # Install helpful jupyter extensions
 RUN pip install jupyter_contrib_nbextensions && \
     jupyter contrib nbextension install --user && \

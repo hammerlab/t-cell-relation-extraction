@@ -1,6 +1,6 @@
 import os
 import os.path as osp
-import pathlib
+import pathlib as pl
 import pandas as pd
 import numpy as np
 import json
@@ -16,14 +16,15 @@ from tcre.modeling import utils
 from tcre.modeling import features
 from tcre.modeling import data as tcre_data
 from tcre.modeling.vocab import W2VVocab
-from tcre.modeling.training import supervise
+from tcre.modeling.training import supervise, load_checkpoint, set_seed
 from tcre.exec.v1.model import RERNN, DIST_PAD_VAL
 from torchtext import data as txd
 from torchtext.vocab import Vocab
-from torchtext.data import BucketIterator
+from torchtext.data import BucketIterator, Iterator
 import click
 import logging
 import dill
+import torch
 logger = logging.getLogger(__name__)
 
 DEFAULT_SWAPS = {
@@ -44,7 +45,7 @@ MODEL_SIZES = {
 }
 
 
-def get_training_config(**kwargs):
+def get_modeling_config(**kwargs):
     markers = MARKER_LISTS[kwargs['marker_list']]
     if not kwargs['use_secondary']:
         markers[2] = None
@@ -62,11 +63,18 @@ def get_training_config(**kwargs):
     return res
 
 
-def _splits(splits_file):
+def _splits(splits_file, keys=None):
     # Expect splits written using something like:
     # pd.Series({'train': [1,2,3], 'test': [3,4]}).to_json('/tmp/splits.json', orient='index')
     # --> {"train":[1,2,3],"test":[3,4]}
-    return pd.read_json(splits_file, typ='series', orient='index').to_dict()
+
+    logger.info(f'Gathering candidates for splits at "{splits_file}"')
+    splits = pd.read_json(splits_file, typ='series', orient='index').to_dict()
+    if keys is not None:
+        splits = {k: v for k, v in splits.items() if k in keys}
+    splits_ct = {s: len(cids) for s, cids in splits.items()}
+    logger.info(f'Split sizes = {splits_ct}')
+    return splits
 
 
 def _cands(candidate_class, splits):
@@ -78,7 +86,9 @@ def _cands(candidate_class, splits):
 
 def get_model(fields, config):
     model_args = dict(MODEL_SIZES[config['model_size']])
-    model_args.update(dict(dropout=0, bidirectional=False, cell_type='LSTM', device=config['device']))
+    for k in ['dropout', 'bidirectional', 'cell_type', 'device', 'num_layers', 'max_dist']:
+        if k in config:
+            model_args[k] = config[k]
     if config['wrd_embedding_type'] != 'denovo':
         model_args['wrd_embed_dim'] = None
     if config['wrd_embedding_type'] in ['w2v_trained']:
@@ -89,18 +99,7 @@ def get_model(fields, config):
     return model, model_args
 
 
-def _train(cands, splits, config):
-    """Train a single model
-
-    Args:
-        cands: List of all candidates
-        splits: Dict with keys "train", "val", "test" each having a list of integer candidate ids
-        config: Training configuration
-    """
-    SEQ_LEN = 128
-
-    if set(splits.keys()) != {'train', 'val', 'test'}:
-        raise ValueError(f'Splits must contain keys "train", "val", "test", got keys {splits.keys()}')
+def _datasets(cands, splits, config, fields):
 
     logger.info('Collecting features')
     # Filter for candidates used in marking
@@ -127,14 +126,6 @@ def _train(cands, splits, config):
     logger.info('Label distribution:\n%s',
                 pd.concat([df['label'].value_counts(), df['label'].value_counts(normalize=True)], axis=1))
 
-    fields = {
-        'text': txd.Field(sequential=True, lower=False, fix_length=SEQ_LEN, include_lengths=True),
-        'label': txd.Field(sequential=False, use_vocab=False),
-        'e0_dist': txd.Field(sequential=True, use_vocab=False, pad_token=DIST_PAD_VAL, fix_length=SEQ_LEN),
-        'e1_dist': txd.Field(sequential=True, use_vocab=False, pad_token=DIST_PAD_VAL, fix_length=SEQ_LEN),
-        'id': txd.Field(sequential=False, use_vocab=False)
-    }
-
     # Build dataset for each split (one candidate may exist in multiple splits)
     logger.info('Initializing batch iterators')
     dfi = df.set_index('id', drop=False)
@@ -146,6 +137,81 @@ def _train(cands, splits, config):
         k: tcre_data.DataFrameDataset(g.drop('split', axis=1), fields)
         for k, g in datasets.groupby('split')
     }
+
+    return datasets
+
+
+def _predict(cands, splits, config):
+    """Predict labels for candidates using a model checkpoint"""
+
+    output_dir = pl.Path(config['output_dir'])
+
+    # Load model weights
+    checkpoint_dir = output_dir / 'checkpoints'
+    logger.info(f'Loading model state from checkpoint dir {checkpoint_dir}')
+    checkpoint = load_checkpoint(checkpoint_dir)
+
+    # Load fields
+    with (output_dir / 'fields.pkl').open('rb') as f:
+        fields = dill.load(f)
+
+    model, model_args = get_model(fields, config)
+    model.load_state_dict(checkpoint['model'])
+    logger.info(f'Restored model with arguments: {model_args}')
+
+    datasets = _datasets(cands, splits, config, fields)
+    if 'predict' not in datasets:
+        raise AssertionError(f'Expecting dataset with key "predict"; got datasets {datasets.keys()}')
+    dataset = datasets['predict']
+
+    iterator = Iterator(
+        dataset,
+        config['batch_size'],
+        sort_key=lambda x: len(x.text),
+        sort_within_batch=True,
+        repeat=False,
+        shuffle=False,
+        device=config['device']
+    )
+
+    model.eval()
+    with torch.no_grad():
+        predictions = []
+        for batch in iterator:
+            predictions.append(pd.DataFrame({
+                'id': batch.id,
+                'y_true': batch.label,
+                'y_pred': model.predict(batch)
+            }))
+        predictions = pd.concat(predictions).reset_index(drop=True)
+
+    return predictions
+
+
+def _train(cands, splits, config):
+    """Train a single model
+
+    Args:
+        cands: List of all candidates
+        splits: Dict with keys "train", "val", "test" each having a list of integer candidate ids
+        config: Training configuration
+    """
+    set_seed(config['seed'])
+    SEQ_LEN = 128
+
+    # Check that required keys are present in splits
+    if len({'train', 'val', 'test'} - set(splits.keys())) > 0:
+        raise ValueError(f'Splits must contain keys "train", "val", "test", got keys {splits.keys()}')
+
+    fields = {
+        'text': txd.Field(sequential=True, lower=False, fix_length=SEQ_LEN, include_lengths=True),
+        'label': txd.Field(sequential=False, use_vocab=False),
+        'e0_dist': txd.Field(sequential=True, use_vocab=False, pad_token=DIST_PAD_VAL, fix_length=SEQ_LEN),
+        'e1_dist': txd.Field(sequential=True, use_vocab=False, pad_token=DIST_PAD_VAL, fix_length=SEQ_LEN),
+        'id': txd.Field(sequential=False, use_vocab=False)
+    }
+
+    datasets = _datasets(cands, splits, config, fields)
 
     # If using w2v, set text field vocabulary on all datasets
     if config['wrd_embedding_type'].startswith('w2v'):
@@ -179,52 +245,98 @@ def _train(cands, splits, config):
     lr, decay = config['learning_rate'], config['weight_decay']
 
     logger.info('Running optimization')
-    history, predictions = supervise(
+    history = supervise(
         model, lr, decay, train_iter, val_iter, test_iter=test_iter,
-        model_dir=config['model_dir'] if config['use_checkpoints'] else None
+        model_dir=config['output_dir'] if config['use_checkpoints'] else None,
+        seed=config['seed']
     )
-    return history, predictions, fields
+    return history, fields
 
 
-@click.command()
-@click.option('--relation-class', default=None, help='Candidate type class ("inducing_cytokine")')
-@click.option('--splits-file', default=None, help='Path to json file containing candidate ids keyed '
-                                                  'by split name ("train", "val" required, "test" optional)')
-@click.option('--marker-list', default='mult_01', help='Marker list name ("doub_01", "sngl_01")')
-@click.option('--use-secondary/--no-secondary', default=True, help='Use secondary markers')
-@click.option('--use-swaps/--no-swaps', default=True, help='Use swaps for primary entity text')
-@click.option('--use-lower/--no-lower', default=False, help='Whether or not to use only lower case tokens')
-@click.option('--use-positions/--no-positions', default=False, help='Whether or not to use positional features')
-@click.option('--use-checkpoints/--no-checkpoints', default=False, help='Save checkpoint for best model')
-@click.option('--save-predictions/--no-predictions', default=False, help='Save test set predictions')
-@click.option('--wrd-embedding-type', default='w2v_frozen', help='One of "w2v_frozen", "w2v_trained", or "denovo"')
-@click.option('--vocab-limit', default=50000, help='For pre-trained vectors, max vocab size')
-@click.option('--model-size', default='S', help='One of "S", "M", "L"')
-@click.option('--weight-decay', default=0.0, help='Weight decay for training')
-@click.option('--dropout', default=0.0, help='Dropout rate')
-@click.option('--learning-rate', default=.005, help='Learning rate')
+def _to_candidate_class(relation_class):
+    classes = get_candidate_classes()
+    classes = {classes[c].field: classes[c] for c in classes}
+    return classes[relation_class]
+
+
+@click.group(invoke_without_command=True)
+@click.option('--relation-class', default=None, help='Candidate type class (e.g. "inducing_cytokine")')
 @click.option('--device', default='cuda', help='Device to use for training')
 @click.option('--batch-size', default=32, help='Batch size used in training and prediction')
 @click.option('--log-level', default='info', help='Logging level')
 @click.option('--output-dir', default=None, help='Output directory (nothing saved if omitted)')
-def train(relation_class, splits_file, marker_list, use_secondary, use_swaps, use_lower, use_positions, use_checkpoints,
-        save_predictions, wrd_embedding_type, vocab_limit, model_size,
-        weight_decay, dropout, learning_rate, device, batch_size, log_level, output_dir):
+@click.option('--seed', default=TCRE_SEED, help='RNG seed')
+@click.pass_context
+def cli(ctx, relation_class, device, batch_size, log_level, output_dir, seed):
     logging.basicConfig(level=log_level.upper())
+    ctx.obj['relation_class'] = relation_class
+    ctx.obj['device'] = device
+    ctx.obj['batch_size'] = batch_size
+    ctx.obj['output_dir'] = output_dir
+    ctx.obj['seed'] = seed
 
-    classes = get_candidate_classes()
-    classes = {classes[c].field: classes[c] for c in classes}
-    candidate_class = classes[relation_class]
 
-    logger.info(f'Gathering candidates for splits at "{splits_file}"')
-    splits = _splits(splits_file)
-    splits_ct = {s: len(cids) for s, cids in splits.items()}
+@cli.command()
+@click.option('--splits-file', default=None, help='Path to json file containing candidate ids keyed '
+                                                  'by split name ("train", "val", "test")')
+@click.option('--marker-list', default='mult_01', help='Marker list name ("doub_01", "sngl_01")')
+@click.option('--use-checkpoints/--no-checkpoints', default=False, help='Save checkpoint for best model')
+@click.option('--use-secondary/--no-secondary', default=True, help='Use secondary markers')
+@click.option('--use-swaps/--no-swaps', default=True, help='Use swaps for primary entity text')
+@click.option('--use-lower/--no-lower', default=False, help='Whether or not to use only lower case tokens')
+@click.option('--use-positions/--no-positions', default=False, help='Whether or not to use positional features')
+@click.option('--wrd-embedding-type', default='w2v_frozen', help='One of "w2v_frozen", "w2v_trained", or "denovo"')
+@click.option('--vocab-limit', default=50000, help='For pre-trained vectors, max vocab size')
+@click.option('--model-size', default='S', help='One of "S", "M", "L"')
+@click.option('--use-bidirectional/--no-birectional', default=False, help='Use bi-directional RNN')
+@click.option('--cell-type', default='LSTM', help='LSTM or GRU')
+@click.option('--weight-decay', default=0.0, help='Weight decay for training')
+@click.option('--dropout', default=0.0, help='Dropout rate')
+@click.option('--learning-rate', default=.005, help='Learning rate')
+@click.option('--save-keys', default='history,config,fields',
+              help='Resulting data to save as csv list (output_dir must be set to have an effect)')
+@click.pass_context
+def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swaps, use_lower, use_positions,
+        wrd_embedding_type, vocab_limit, model_size, use_bidirectional, cell_type,
+        weight_decay, dropout, learning_rate, save_keys):
+    relation_class = ctx.obj['relation_class']
+    candidate_class = _to_candidate_class(relation_class)
+    output_dir = ctx.obj['output_dir']
+
+    splits = _splits(splits_file, keys=['train', 'val', 'test'])
     cands = _cands(candidate_class, splits)
-    logger.info(f'Found {len(cands)} candidates (split sizes = {splits_ct}')
+    logger.info(f'Found {len(cands)} candidates')
 
+    config = get_modeling_config(
+        relation_class=relation_class,
+        splits_file=splits_file,
+        entity_types=candidate_class.entity_types,
+        marker_list=marker_list,
+        use_secondary=use_secondary,
+        use_swaps=use_swaps,
+        use_lower=use_lower,
+        use_positions=use_positions,
+        use_checkpoints=use_checkpoints,
+        wrd_embedding_type=wrd_embedding_type,
+        model_size=model_size,
+        bidirectional=use_bidirectional,
+        cell_type=cell_type,
+        learning_rate=learning_rate,
+        weight_decay=weight_decay,
+        dropout=dropout,
+        vocab_limit=vocab_limit,
+        save_keys=save_keys,
+        device=ctx.obj['device'],
+        batch_size=ctx.obj['batch_size'],
+        output_dir=ctx.obj['output_dir'],
+        seed=ctx.obj['seed']
+    )
+    logger.info(f'Modeling config:\n{pprint.pformat(config, compact=True, indent=6, width=128)}')
+
+    # Clear the output directory if present
     if output_dir is not None:
         logger.info(f'Initializing {output_dir}')
-        output_dir = pathlib.Path(output_dir)
+        output_dir = pl.Path(output_dir)
         if output_dir.exists():
             # Validate that path is at least 2 levels away from root
             # dir before deleting it
@@ -236,36 +348,51 @@ def train(relation_class, splits_file, marker_list, use_secondary, use_swaps, us
         if not output_dir.exists():
             output_dir.mkdir(parents=True)
 
-    config = get_training_config(
-        relation_class=relation_class,
-        splits_file=splits_file,
-        entity_types=candidate_class.entity_types,
-        marker_list=marker_list,
-        use_secondary=use_secondary, use_swaps=use_swaps, use_lower=use_lower,
-        use_positions=use_positions, use_checkpoints=use_checkpoints,
-        wrd_embedding_type=wrd_embedding_type,
-        model_size=model_size, learning_rate=learning_rate,
-        weight_decay=weight_decay, dropout=dropout,
-        vocab_limit=vocab_limit,
-        device=device, batch_size=batch_size,
-        model_dir=str(output_dir) if output_dir is not None else None
-    )
-    logger.info(f'Training config:\n{pprint.pformat(config, compact=True, indent=6, width=128)}')
-
-    history, predictions, fields = _train(cands, splits, config)
+    history, fields = _train(cands, splits, config)
 
     if output_dir is not None:
-        with (output_dir / 'fields.pkl').open('wb') as f:
-            dill.dump(fields, f)
-        with (output_dir / 'history.json').open('w') as f:
-            json.dump(history, f)
-        with (output_dir / 'config.json').open('w') as f:
-            json.dump(config, f)
-        if save_predictions:
-            predictions.to_json(output_dir / 'predictions.json', orient='records')
+        save_keys = [v.strip().lower() for v in save_keys.split(',')]
+        if 'fields' in save_keys:
+            logger.info('Saving input fields definition to fields.pkl')
+            with (output_dir / 'fields.pkl').open('wb') as f:
+                dill.dump(fields, f)
+        if 'history' in save_keys:
+            logger.info('Saving history to history.json')
+            with (output_dir / 'history.json').open('w') as f:
+                json.dump(history, f)
+        if 'config' in save_keys:
+            logger.info('Saving config to config.json')
+            with (output_dir / 'config.json').open('w') as f:
+                json.dump(config, f)
 
     logger.info('Training complete')
 
 
+@cli.command()
+@click.option('--splits-file', default=None, help='Path to json file containing candidate ids keyed '
+                                                  'by split name ("predict")')
+@click.pass_context
+def predict(ctx, splits_file):
+    candidate_class = _to_candidate_class(ctx.obj['relation_class'])
+    output_dir = ctx.obj['output_dir']
+
+    # Read in configuration from training and overwrite any non-essential properties
+    config = json.loads((pl.Path(output_dir) / 'config.json').read_text('utf-8'))
+    for prop in ['device', 'batch_size']:
+        config[prop] = ctx.obj[prop]
+
+    splits = _splits(splits_file, keys=['predict'])
+    cands = _cands(candidate_class, splits)
+    logger.info(f'Found {len(cands)} candidates')
+
+    logger.info('Gathering predictions')
+    predictions = _predict(cands, splits, config)
+    logger.info(f'Prediction Info:\n{predictions.info()}')
+
+    path = pl.Path(output_dir) / 'predictions.json'
+    logger.info(f'Saving predictions to {path}')
+    predictions.to_json(path)
+
+
 if __name__ == '__main__':
-    train()
+    cli(obj={})

@@ -2,6 +2,7 @@ import os
 import os.path as osp
 import numpy as np
 import pandas as pd
+import tqdm
 from tcre.modeling.utils import mark_entities
 from tcre.supervision import LABEL_TYPE_MAP
 
@@ -148,5 +149,5 @@ def get_record_features(records, markers=DEFAULT_MARKERS, swaps=None, subtokeniz
         return features
 
     df1 = pd.DataFrame([(rec['id'], rec['label']) for rec in records], columns=['id', 'label'])
-    df2 = pd.DataFrame([get_features(rec) for rec in records])
+    df2 = pd.DataFrame([get_features(rec) for rec in tqdm.tqdm(records)])
     return pd.concat([df1, df2], axis=1)

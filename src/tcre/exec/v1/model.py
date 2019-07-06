@@ -57,8 +57,8 @@ class RERNN(nn.Module):
         self.fields = fields
         self.cardinality = cardinality
         self.hidden_dim = hidden_dim
-        self.pos_embed_dim = pos_embed_dim
-        self.wrd_embed_dim = wrd_embed_dim
+        self.pos_embed_dim = pos_embed_dim or 0
+        self.wrd_embed_dim = wrd_embed_dim or 0
         self.train_wrd_embed = train_wrd_embed
         if self.train_wrd_embed is None:
             self.train_wrd_embed = wrd_embed_dim is not None
@@ -97,7 +97,7 @@ class RERNN(nn.Module):
         if self.cell_type not in CELL_TYPES:
             raise ValueError(f'Cell type must be one of {list(keys(CELL_TYPES))}, not {self.cell_type}')
         self.cell = CELL_TYPES[self.cell_type](
-            self.wrd_embed_shape[1] + 2 * self.pos_embed_dim, self.hidden_dim,
+            self.wrd_embed_shape[1] + 2 * self.pos_embed_shape[1], self.hidden_dim,
             num_layers=self.num_layers, bidirectional=self.bidirectional,
             dropout=self.dropout, batch_first=True
         )
