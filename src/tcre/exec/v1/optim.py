@@ -1,23 +1,17 @@
 """Hyperparameter search utilitis"""
-from skopt.callbacks import CheckpointSaver, TimerCallback
-from skopt import forest_minimize
-from tcre.env import *
-import logging
 import os
 import os.path as osp
 import pandas as pd
 import numpy as np
-from tcre.exec.v1 import cli
+from tcre.env import *
+from tcre.exec.v1 import cli_client
+from skopt import forest_minimize
+from skopt.callbacks import CheckpointSaver, TimerCallback
+import logging
 logger = logging.getLogger(__name__)
 
-DEFAULT_DEVICE = "cuda:1"
-CLI_PATH = cli.__file__
-CMD_FORMAT = """python {script_file} \\
---relation-class={relation_class} --device={device} --output-dir={output_dir} \\
-train \\
---splits-file={splits_file} --save-keys="history" --use-checkpoints=False \\
-{args} > {log_dir}/log.txt 2>&1
-"""
+DEFAULT_DEVICE = '"cuda:1"'
+CMD_FORMAT = "{cmd} > {log_dir}/log.txt 2>&1"
 
 
 class CheckpointCallback(CheckpointSaver):
@@ -28,6 +22,7 @@ class CheckpointCallback(CheckpointSaver):
         self.interval = interval
 
     def __call__(self, res):
+        self.i += 1
         if self.i % self.interval == 0:
             logger.info(f'Saving checkpoint to {self.checkpoint_path}')
             super().__call__(res)
@@ -55,16 +50,11 @@ class ObjectiveFunction(object):
     def __call__(self, x):
         res = self.fn(x)
         self.scores.append(res)
-        return -res['Validation']
+        return -res[('f1', 'validation')]
 
 
 def to_dict(x, space):
     return dict(zip([s.name for s in space], x))
-
-
-def to_args(x, space):
-    args = to_dict(x, space)
-    return ' '.join(['--{}={}'.format(k.replace('_', '-'), v) for k, v in args.items()])
 
 
 class TaskParameterOptimizer(object):
@@ -75,6 +65,9 @@ class TaskParameterOptimizer(object):
         self.minimizer = minimizer
         self.output_dir = osp.join(output_dir, task)
         self.device = device
+
+        # Initialize CLI client with list of parameters to be ignored (defaults for these are fine as-is)
+        self.client = cli_client.Client(exceptions=['log_level', 'seed', 'batch_size', 'vocab_limit', 'use_lower'])
 
         self.dirs = {}
         for d in ['checkpoints', 'data', 'log', 'splits']:
@@ -97,30 +90,30 @@ class TaskParameterOptimizer(object):
 
     def get_cmd(self, x):
         splits_file = self.get_splits_file()
-        args = to_args(x, self.space)
-        cmd = CMD_FORMAT.format(
-            script_file=CLI_PATH, relation_class=self.task,
-            device=self.device, output_dir=self.dirs['data'],
-            splits_file=splits_file,
-            log_dir=self.dirs['log'], args=args
+        train_opts = to_dict(x, self.space)
+        cmd = self.client(
+            cli=dict(relation_class=self.task, device=self.device, output_dir=self.dirs['data'], save_keys='"history"'),
+            train={**dict(splits_file=splits_file), **train_opts}
         )
+        cmd = CMD_FORMAT.format(cmd=cmd, log_dir=self.dirs['log'])
         return cmd
 
     def evaluate(self, x):
+        # Generate and run CLI command for sampled point in search space (non zero return codes raise automatically)
         cmd = self.get_cmd(x)
-        rc = os.system(cmd)
-        if rc != 0:
-            raise ValueError(f'Return code {rc} (!=0) for command: {cmd}')
-        df = pd.read_json(osp.join(self.dirs['data'], 'history.json'))
+        self.client.execute(cmd)
 
-        # Pivot to split in columns (Train, Validation, Test)
-        df = df.set_index(['epoch', 'type'])['f1'].unstack()
+        df = pd.read_json(osp.join(self.dirs['data'], 'history.json'))
+        df['type'] = df['type'].str.lower()
+
+        # Pivot to epoch in index and columns like (metric, type) (e.g. ('f1', 'validation'))
+        df = df.set_index(['epoch', 'type']).unstack()
 
         # Return all F1 @ best F1 on validation
-        idx = np.argmax(df['Validation'].values)
+        idx = np.argmax(df[('f1', 'validation')].values)
         return df.iloc[idx].to_dict()
 
-    def run(self, n_iterations, progress_interval=1, checkpoint_interval=10, n_random_starts=10):
+    def run(self, n_iterations, progress_interval=1, checkpoint_interval=10, n_random_starts=10, **kwargs):
         timer = TimerCallback()
         plogger = ProgressLogger(n_iterations, interval=progress_interval)
 
@@ -135,7 +128,8 @@ class TaskParameterOptimizer(object):
             n_calls=n_iterations,
             n_random_starts=n_random_starts,
             callback=list(callbacks.values()),
-            random_state=TCRE_SEED
+            random_state=TCRE_SEED,
+            **kwargs
         )
 
         return res, obj_fn.scores, callbacks

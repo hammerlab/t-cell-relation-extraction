@@ -174,14 +174,15 @@ def _predict(cands, splits, config):
         device=config['device']
     )
 
+    model = model.to(config['device'])
     model.eval()
     with torch.no_grad():
         predictions = []
         for batch in iterator:
             predictions.append(pd.DataFrame({
-                'id': batch.id,
-                'y_true': batch.label,
-                'y_pred': model.predict(batch)
+                'id': batch.id.clone().cpu().numpy(),
+                'y_true': batch.label.clone().cpu().numpy(),
+                'y_pred': model.predict(batch).clone().cpu().numpy()
             }))
         predictions = pd.concat(predictions).reset_index(drop=True)
 
@@ -259,15 +260,33 @@ def _to_candidate_class(relation_class):
     return classes[relation_class]
 
 
+PARAMS = {}
+
+
+class param(object):
+    """Decorator for click.option used to register parameter names for dynamic requirements"""
+
+    def __init__(self, *args, **kwargs):
+        self.param = args[0].replace('--', '').replace('-', '_')
+        self.click_fn = click.option(*args, **kwargs)
+
+    def __call__(self, f):
+        self.fn_name = f.__name__
+        if self.fn_name not in PARAMS:
+            PARAMS[self.fn_name] = []
+        PARAMS[self.fn_name].append(self.param)
+        return self.click_fn(f)
+
+
 @click.group(invoke_without_command=True)
-@click.option('--relation-class', default=None, help='Candidate type class (e.g. "inducing_cytokine")')
-@click.option('--device', default='cuda', help='Device to use for training')
-@click.option('--batch-size', default=64, help='Batch size used in training and prediction')
-@click.option('--log-level', default='info', help='Logging level')
-@click.option('--output-dir', default=None, help='Output directory (nothing saved if omitted)')
-@click.option('--seed', default=TCRE_SEED, help='RNG seed')
+@param('--relation-class', default=None, required=True, help='Candidate type class (e.g. "inducing_cytokine")')
+@param('--device', default='cuda', required=True, help='Device to use for training')
+@param('--batch-size', default=128, required=True, help='Batch size used in training and prediction')
+@param('--output-dir', default=None, required=True, help='Output directory (nothing saved if omitted)')
+@param('--seed', default=TCRE_SEED, required=True, help='RNG seed')
+@param('--log-level', default='info', help='Logging level')
 @click.pass_context
-def cli(ctx, relation_class, device, batch_size, log_level, output_dir, seed):
+def cli(ctx, relation_class, device, batch_size, output_dir, seed, log_level):
     logging.basicConfig(level=log_level.upper())
     ctx.obj['relation_class'] = relation_class
     ctx.obj['device'] = device
@@ -277,23 +296,26 @@ def cli(ctx, relation_class, device, batch_size, log_level, output_dir, seed):
 
 
 @cli.command()
-@click.option('--splits-file', default=None, help='Path to json file containing candidate ids keyed '
-                                                  'by split name ("train", "val", "test")')
-@click.option('--marker-list', default='mult_01', help='Marker list name ("doub_01", "sngl_01")')
-@click.option('--use-checkpoints', default=False, type=bool, help='Save checkpoint for best model')
-@click.option('--use-secondary', default=True, type=bool, help='Use secondary markers')
-@click.option('--use-swaps', default=True, type=bool, help='Use swaps for primary entity text')
-@click.option('--use-lower', default=False, type=bool, help='Whether or not to use only lower case tokens')
-@click.option('--use-positions', default=False, type=bool, help='Whether or not to use positional features')
-@click.option('--wrd-embedding-type', default='w2v_frozen', help='One of "w2v_frozen", "w2v_trained", or "denovo"')
-@click.option('--vocab-limit', default=50000, help='For pre-trained vectors, max vocab size')
-@click.option('--model-size', default='S', help='One of "S", "M", "L"')
-@click.option('--bidirectional', default=False, type=bool, help='Use bi-directional RNN')
-@click.option('--cell-type', default='LSTM', help='LSTM or GRU')
-@click.option('--weight-decay', default=0.0, help='Weight decay for training')
-@click.option('--dropout', default=0.0, help='Dropout rate')
-@click.option('--learning-rate', default=.005, help='Learning rate')
-@click.option('--save-keys', default='history,config,fields',
+@param('--splits-file', default=None, required=True,
+              help='Path to json file containing candidate ids keyed by split name ("train", "val", "test")')
+@param('--marker-list', default='mult_01', required=True, help='Marker list name ("doub_01", "sngl_01")')
+@param('--use-checkpoints', default=False, required=True, type=bool, help='Save checkpoint for best model')
+@param('--use-secondary', default=True, required=True, type=bool, help='Use secondary markers')
+@param('--use-swaps', default=True, required=True, type=bool, help='Use swaps for primary entity text')
+@param('--use-lower', default=False, required=True, type=bool,
+              help='Whether or not to use only lower case tokens')
+@param('--use-positions', default=False, required=True, type=bool,
+              help='Whether or not to use positional features')
+@param('--wrd-embedding-type', default='w2v_frozen', required=True,
+              help='One of "w2v_frozen", "w2v_trained", or "denovo"')
+@param('--vocab-limit', default=50000, required=True, help='For pre-trained vectors, max vocab size')
+@param('--model-size', default='S', help='One of "S", "M", "L"')
+@param('--bidirectional', default=False, type=bool, help='Use bi-directional RNN')
+@param('--cell-type', default='LSTM', help='LSTM or GRU')
+@param('--weight-decay', default=0.0, help='Weight decay for training')
+@param('--dropout', default=0.0, help='Dropout rate')
+@param('--learning-rate', default=.005, help='Learning rate')
+@param('--save-keys', default='history,config,fields',
               help='Resulting data to save as csv list (output_dir must be set to have an effect)')
 @click.pass_context
 def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swaps, use_lower, use_positions,
@@ -369,8 +391,7 @@ def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swa
 
 
 @cli.command()
-@click.option('--splits-file', default=None, help='Path to json file containing candidate ids keyed '
-                                                  'by split name ("predict")')
+@param('--splits-file', default=None, help='Path to json file containing candidate ids keyed by split name ("predict")')
 @click.pass_context
 def predict(ctx, splits_file):
     candidate_class = _to_candidate_class(ctx.obj['relation_class'])

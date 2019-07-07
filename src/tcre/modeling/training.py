@@ -102,7 +102,7 @@ def supervise(model, lr, decay, train_iter, val_iter,
         metrics = dict(engine.state.metrics)
         metrics['ct'] = len(iterator.dataset)
         metrics['lr'] = optimizer.param_groups[0]['lr']
-        record = {**metrics, **{'type': dataset_type.title(), 'epoch': epoch}}
+        record = {**metrics, **{'type': dataset_type, 'epoch': epoch}}
         history.append({k: v for k, v in record.items() if k != 'predictions'})
         if iteration % log_epoch_interval == 0:
             logger.info(
