@@ -10,6 +10,7 @@ import warnings
 from collections import defaultdict, Counter
 from snorkel import SnorkelSession
 from snorkel.models import Candidate, GoldLabel
+from snorkel.learning.utils import LabelBalancer
 from tcre.env import *
 from tcre.supervision import get_candidate_classes, ENT_TYP_CT_L, ENT_TYP_CK_L, ENT_TYP_TF_L, SPLIT_DEV
 from tcre.modeling import utils
@@ -42,6 +43,8 @@ MODEL_SIZES = {
     'M': {'hidden_dim': 10, 'wrd_embed_dim': 30, 'pos_embed_dim': 8},
     'L': {'hidden_dim': 20, 'wrd_embed_dim': 50, 'pos_embed_dim': 10},
     'XL': {'hidden_dim': 30, 'wrd_embed_dim': 100, 'pos_embed_dim': 10},
+    'XXL': {'hidden_dim': 100, 'wrd_embed_dim': 100, 'pos_embed_dim': 15},
+    'XXXL': {'hidden_dim': 250, 'wrd_embed_dim': 200, 'pos_embed_dim': 30},
 }
 
 
@@ -99,6 +102,33 @@ def get_model(fields, config):
     return model, model_args
 
 
+def _label_dist(y, nunique_max=10):
+    y = pd.cut(y, nunique_max) if y.nunique() > nunique_max else y
+    return pd.concat([
+        y.value_counts().rename('count'),
+        y.value_counts(normalize=True).rename('percent')
+    ], axis=1).sort_index()
+
+
+def _prepare(df, config):
+    assert df['split'].nunique() == 1
+    split = df['split'].iloc[0]
+
+    balance = float(config.get('balance', 0) or 0)
+    if split == 'train' and balance:
+        logger.info('Label distribution prior to balancing for split %s:\n%s', split, _label_dist(df['label']))
+        logger.info('Down-sampling positive class to target fraction %s', balance)
+        balancer = LabelBalancer(df['label'].values)
+        keep_idx = balancer.get_train_idxs(
+            rebalance=balance, split=.5,
+            rand_state=np.random.RandomState(TCRE_SEED)
+        )
+        df = df.iloc[keep_idx]
+
+    logger.info('Label distribution for split %s:\n%s', split, _label_dist(df['label']))
+    return df
+
+
 def _datasets(cands, splits, config, fields):
 
     logger.info('Collecting features')
@@ -123,8 +153,6 @@ def _datasets(cands, splits, config, fields):
     logger.info(f'Sample feature records:\n')
     for r in df.head(5).to_dict(orient='records'):
         logger.info(pprint.pformat(r, width=128, compact=True, indent=6))
-    logger.info('Label distribution:\n%s',
-                pd.concat([df['label'].value_counts(), df['label'].value_counts(normalize=True)], axis=1))
 
     # Build dataset for each split (one candidate may exist in multiple splits)
     logger.info('Initializing batch iterators')
@@ -133,8 +161,9 @@ def _datasets(cands, splits, config, fields):
         dfi.loc[cid].append(pd.Series({'split': s}))
         for s, cids in splits.items() for cid in cids
     ]).reset_index(drop=True)
+
     datasets = {
-        k: tcre_data.DataFrameDataset(g.drop('split', axis=1), fields)
+        k: tcre_data.DataFrameDataset(_prepare(g, config).drop('split', axis=1), fields)
         for k, g in datasets.groupby('split')
     }
 
@@ -204,9 +233,10 @@ def _train(cands, splits, config):
     if len({'train', 'val', 'test'} - set(splits.keys())) > 0:
         raise ValueError(f'Splits must contain keys "train", "val", "test", got keys {splits.keys()}')
 
+    # Note that all fields default to type torch.int64
     fields = {
         'text': txd.Field(sequential=True, lower=False, fix_length=SEQ_LEN, include_lengths=True),
-        'label': txd.Field(sequential=False, use_vocab=False),
+        'label': txd.Field(sequential=False, use_vocab=False, dtype=torch.float32),
         'e0_dist': txd.Field(sequential=True, use_vocab=False, pad_token=DIST_PAD_VAL, fix_length=SEQ_LEN),
         'e1_dist': txd.Field(sequential=True, use_vocab=False, pad_token=DIST_PAD_VAL, fix_length=SEQ_LEN),
         'id': txd.Field(sequential=False, use_vocab=False)
@@ -249,6 +279,8 @@ def _train(cands, splits, config):
     history = supervise(
         model, lr, decay, train_iter, val_iter, test_iter=test_iter,
         model_dir=config['output_dir'] if config['use_checkpoints'] else None,
+        log_iter_interval=config['log_iter_interval'],
+        log_epoch_interval=config['log_epoch_interval'],
         seed=config['seed']
     )
     return history, fields
@@ -315,12 +347,15 @@ def cli(ctx, relation_class, device, batch_size, output_dir, seed, log_level):
 @param('--weight-decay', default=0.0, help='Weight decay for training')
 @param('--dropout', default=0.0, help='Dropout rate')
 @param('--learning-rate', default=.005, help='Learning rate')
+@param('--balance', default=None, help='Desired fraction of positive examples in training data (e.g. 0.5)')
+@param('--log-iter-interval', default=10, help='Number of batches in training between logging messages')
+@param('--log-epoch-interval', default=1, help='Number of epochs in training between logging messages')
 @param('--save-keys', default='history,config,fields',
               help='Resulting data to save as csv list (output_dir must be set to have an effect)')
 @click.pass_context
 def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swaps, use_lower, use_positions,
         wrd_embedding_type, vocab_limit, model_size, bidirectional, cell_type,
-        weight_decay, dropout, learning_rate, save_keys):
+        weight_decay, dropout, learning_rate, balance, log_iter_interval, log_epoch_interval, save_keys):
     relation_class = ctx.obj['relation_class']
     candidate_class = _to_candidate_class(relation_class)
     output_dir = ctx.obj['output_dir']
@@ -348,6 +383,9 @@ def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swa
         dropout=dropout,
         vocab_limit=vocab_limit,
         save_keys=save_keys,
+        balance=balance,
+        log_iter_interval=log_iter_interval,
+        log_epoch_interval=log_epoch_interval,
         device=ctx.obj['device'],
         batch_size=ctx.obj['batch_size'],
         output_dir=ctx.obj['output_dir'],

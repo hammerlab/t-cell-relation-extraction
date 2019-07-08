@@ -91,9 +91,9 @@ class TaskParameterOptimizer(object):
     def get_cmd(self, x):
         splits_file = self.get_splits_file()
         train_opts = to_dict(x, self.space)
-        cmd = self.client(
-            cli=dict(relation_class=self.task, device=self.device, output_dir=self.dirs['data'], save_keys='"history"'),
-            train={**dict(splits_file=splits_file), **train_opts}
+        cmd = self.client.cmd(
+            cli=dict(relation_class=self.task, device=self.device, output_dir=self.dirs['data']),
+            train={**dict(splits_file=splits_file, use_checkpoints=False, save_keys='"history"'), **train_opts}
         )
         cmd = CMD_FORMAT.format(cmd=cmd, log_dir=self.dirs['log'])
         return cmd

@@ -38,6 +38,9 @@ def get_label(cand, label_type=LABEL_TYPE_MAP):
 
     # Return all labels in [0, 1] with default at 0 for candidates with no label
     if label_type == 'gold':
+        if len(cand.gold_labels) > 1:
+            raise AssertionError(
+                f'Expecting <= 1 gold label for candidate id {cand.id} ({cand}) but got {len(cand.gold_labels)}')
         return max(cand.gold_labels[0].value, 0) if cand.gold_labels else 0
     else:
         if len(cand.marginals) > 1:

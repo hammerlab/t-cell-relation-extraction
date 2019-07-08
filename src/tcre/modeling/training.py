@@ -16,6 +16,10 @@ import torch
 import logging
 logger = logging.getLogger(__name__)
 
+# Disable logs from Engine like "INFO:ignite.engine.engine.Engine:Epoch[1] Complete. Time taken: 00:00:00"
+# (leave it up to manual loggers to report progress)
+logging.getLogger("ignite.engine.engine.Engine").setLevel(logging.WARNING)
+
 
 def set_seed(seed):
     # See:
@@ -63,7 +67,8 @@ def supervise(model, lr, decay, train_iter, val_iter,
     def get_evaluator():
         return create_supervised_evaluator(
             model, metrics=get_metrics(), prepare_batch=model.prepare, device=model.device,
-            output_transform=lambda x, y, y_pred: (model.classify(model.transform(y_pred)), y)
+            # Convert logits to 0/1 and also round true labels (which may be probabilistic) in evaluation ONLY
+            output_transform=lambda x, y, y_pred: (model.classify(model.transform(y_pred)), torch.round(y))
         )
 
     train_evaluator = get_evaluator()
@@ -106,7 +111,7 @@ def supervise(model, lr, decay, train_iter, val_iter,
         history.append({k: v for k, v in record.items() if k != 'predictions'})
         if iteration % log_epoch_interval == 0:
             logger.info(
-                '{type} Results - Epoch: {epoch}  Count: {ct} Loss: {loss:.2f} Accuracy: {accuracy:.3f} F1: {f1:.3f}'.format(
+                '{type} Results - Epoch: {epoch}  Count: {ct} Loss: {loss:.4f} Accuracy: {accuracy:.3f} F1: {f1:.3f}'.format(
                     **record))
         return metrics
 
