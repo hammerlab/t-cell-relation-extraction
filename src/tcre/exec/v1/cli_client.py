@@ -2,6 +2,15 @@ from tcre.exec.v1 import cli
 import os
 
 
+def get_default_client():
+    """Get CLI client that will not enforce setting of less important options (log level, balancing, seed, etc)"""
+    return Client(require_options=True, exceptions=[
+        'log_level', 'seed', 'vocab_limit', 'use_lower', 'save_keys',
+        'log_iter_interval', 'log_epoch_interval', 'balance', 'batch_size',
+        'simulation_strategy', 'swap_list'
+    ])
+
+
 class Client(object):
 
     def __init__(self, require_options=True, exceptions=None):

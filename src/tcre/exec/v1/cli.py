@@ -28,23 +28,31 @@ import dill
 import torch
 logger = logging.getLogger(__name__)
 
-DEFAULT_SWAPS = {
-    ENT_TYP_CT_L: 'CELL',
-    ENT_TYP_CK_L: 'CYTOKINE',
-    ENT_TYP_TF_L: 'TF'
+SWAP_LISTS = {
+    'dflt_01': {
+        'primary': {ENT_TYP_CT_L: '{CL}', ENT_TYP_CK_L: '{CK}', ENT_TYP_TF_L: '{TF}'},
+        'secondary': {ENT_TYP_CT_L: '|CL|', ENT_TYP_CK_L: '|CK|', ENT_TYP_TF_L: '|TF|'}
+    },
+    'siml_01': {
+        'primary': {ENT_TYP_CT_L: '{CL}', ENT_TYP_CK_L: '{CK}', ENT_TYP_TF_L: '{TF}'},
+        'secondary': {ENT_TYP_CT_L: '{CL}', ENT_TYP_CK_L: '{CK}', ENT_TYP_TF_L: '{TF}'}
+    }
 }
 MARKER_LISTS = {
-    'doub_01': [('<<', '>>'), ('[[', ']]'), ('##', '##'), ('@@', '@@')],
+    'doub_01': [('{#', '#}'), ('{%', '%}'), ('|#', '#|'), ('|%', '%|')],
     'sngl_01': [('<', '>'), ('[', ']'), ('#', '#'), ('@', '@')],
-    'mult_01': [('< #', '# >'), ('< @', '@ >'), ('| #', '# |'), ('| @', '@')]
+    'mult_01': [('< #', '# >'), ('< @', '@ >'), ('| #', '# |'), ('| @', '@ |')],
+    'siml_01': [('{#', '#}'), ('{%', '%}'), ('{#', '#}'), ('{%', '%}')]
 }
+
 MODEL_SIZES = {
     'S': {'hidden_dim': 5, 'wrd_embed_dim': 10, 'pos_embed_dim': 3},
     'M': {'hidden_dim': 10, 'wrd_embed_dim': 30, 'pos_embed_dim': 8},
     'L': {'hidden_dim': 20, 'wrd_embed_dim': 50, 'pos_embed_dim': 10},
     'XL': {'hidden_dim': 30, 'wrd_embed_dim': 100, 'pos_embed_dim': 10},
-    'XXL': {'hidden_dim': 100, 'wrd_embed_dim': 100, 'pos_embed_dim': 15},
-    'XXXL': {'hidden_dim': 250, 'wrd_embed_dim': 200, 'pos_embed_dim': 30},
+    'XXL': {'hidden_dim': 128, 'wrd_embed_dim': 100, 'pos_embed_dim': 64},
+    'XXXL': {'hidden_dim': 256, 'wrd_embed_dim': 200, 'pos_embed_dim': 128},
+    'SIM1': {'hidden_dim': 10, 'wrd_embed_dim': 10, 'pos_embed_dim': 256},
 }
 
 
@@ -59,10 +67,20 @@ def get_modeling_config(**kwargs):
         'secondary': {typ0: list(markers[2] or []), typ1: list(markers[3] or [])}
     }
 
+    swaps = SWAP_LISTS[kwargs['swap_list']]
+    swaps = {
+        'primary': {typ0: swaps['primary'][typ0], typ1: swaps['primary'][typ1]},
+        'secondary': {typ0: swaps['secondary'][typ0], typ1: swaps['secondary'][typ1]}
+    }
+    if not kwargs['use_secondary']:
+        swaps['secondary'] = None
+    if not kwargs['use_swaps']:
+        swaps = None
+
     res = dict(kwargs)
     res['label'] = ':'.join([f'{k}={v}' for k, v in kwargs.items() if k != 'entity_types'])
     res['markers'] = markers
-    res['swaps'] = DEFAULT_SWAPS if kwargs['use_swaps'] else None
+    res['swaps'] = swaps
     return res
 
 
@@ -146,6 +164,13 @@ def _datasets(cands, splits, config, fields):
         subtokenizer=lambda t: t.split(), assert_unique=False
     )
     df = df.rename(columns={'tokens': 'text'})
+
+    # Apply label simulation if configured to do so
+    if config.get('simulation_strategy'):
+        from tcre.modeling import simulation
+        logger.info('Simulating labels using strategy "%s"', config['simulation_strategy'])
+        df['label'] = simulation.get_simulated_labels(df, config['simulation_strategy'])
+
     if not df['label'].between(0, 1).all():
         ex = df['label'][~df['label'].between(0, 1)].unique()
         raise AssertionError(f"Found label values outside [0, 1]; Examples: {ex[:10]}")
@@ -246,11 +271,13 @@ def _train(cands, splits, config):
 
     # If using w2v, set text field vocabulary on all datasets
     if config['wrd_embedding_type'].startswith('w2v'):
+        specials = features.get_specials(markers=config['markers'], swaps=config['swaps'])
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", message='.*')
             from gensim.models import KeyedVectors
-            logger.info(f"Loading w2v model with vocab limit {config['vocab_limit']}")
+            logger.info(f"Loading w2v model with vocab limit {config['vocab_limit']} (specials = {specials})")
             w2v = KeyedVectors.load_word2vec_format(W2V_MODEL_01, binary=True, limit=config['vocab_limit'])
+            #fields['text'].vocab = W2VVocab(w2v, specials=specials, random_state=TCRE_SEED)
             fields['text'].vocab = W2VVocab(w2v)
     # Build vocab on training dataset text field ONLY and assign to others
     elif config['wrd_embedding_type'] == 'denovo':
@@ -330,17 +357,15 @@ def cli(ctx, relation_class, device, batch_size, output_dir, seed, log_level):
 @cli.command()
 @param('--splits-file', default=None, required=True,
               help='Path to json file containing candidate ids keyed by split name ("train", "val", "test")')
-@param('--marker-list', default='mult_01', required=True, help='Marker list name ("doub_01", "sngl_01")')
-@param('--use-checkpoints', default=False, required=True, type=bool, help='Save checkpoint for best model')
-@param('--use-secondary', default=True, required=True, type=bool, help='Use secondary markers')
-@param('--use-swaps', default=True, required=True, type=bool, help='Use swaps for primary entity text')
-@param('--use-lower', default=False, required=True, type=bool,
-              help='Whether or not to use only lower case tokens')
-@param('--use-positions', default=False, required=True, type=bool,
-              help='Whether or not to use positional features')
-@param('--wrd-embedding-type', default='w2v_frozen', required=True,
-              help='One of "w2v_frozen", "w2v_trained", or "denovo"')
-@param('--vocab-limit', default=50000, required=True, help='For pre-trained vectors, max vocab size')
+@param('--marker-list', default='mult_01', help='Marker list name ("doub_01", "sngl_01")')
+@param('--swap-list', default='dflt_01', help='Swap list name ("dflt_01")')
+@param('--use-checkpoints', default=False, type=bool, help='Save checkpoint for best model')
+@param('--use-secondary', default=True, type=bool, help='Use secondary markers')
+@param('--use-swaps', default=True, type=bool, help='Use swaps for primary entity text')
+@param('--use-lower', default=False, type=bool, help='Whether or not to use only lower case tokens')
+@param('--use-positions', default=False, type=bool, help='Whether or not to use positional features')
+@param('--wrd-embedding-type', default='w2v_frozen', help='One of "w2v_frozen", "w2v_trained", or "denovo"')
+@param('--vocab-limit', default=50000, help='For pre-trained vectors, max vocab size')
 @param('--model-size', default='S', help='One of "S", "M", "L"')
 @param('--bidirectional', default=False, type=bool, help='Use bi-directional RNN')
 @param('--cell-type', default='LSTM', help='LSTM or GRU')
@@ -352,10 +377,13 @@ def cli(ctx, relation_class, device, batch_size, output_dir, seed, log_level):
 @param('--log-epoch-interval', default=1, help='Number of epochs in training between logging messages')
 @param('--save-keys', default='history,config,fields',
               help='Resulting data to save as csv list (output_dir must be set to have an effect)')
+@param('--simulation-strategy', default=None,
+              help='Name of strategy to use to simulate labels for validating capacity of models')
 @click.pass_context
-def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swaps, use_lower, use_positions,
+def train(ctx, splits_file, marker_list, swap_list, use_checkpoints, use_secondary, use_swaps, use_lower, use_positions,
         wrd_embedding_type, vocab_limit, model_size, bidirectional, cell_type,
-        weight_decay, dropout, learning_rate, balance, log_iter_interval, log_epoch_interval, save_keys):
+        weight_decay, dropout, learning_rate, balance, log_iter_interval, log_epoch_interval,
+        save_keys, simulation_strategy):
     relation_class = ctx.obj['relation_class']
     candidate_class = _to_candidate_class(relation_class)
     output_dir = ctx.obj['output_dir']
@@ -369,6 +397,7 @@ def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swa
         splits_file=splits_file,
         entity_types=candidate_class.entity_types,
         marker_list=marker_list,
+        swap_list=swap_list,
         use_secondary=use_secondary,
         use_swaps=use_swaps,
         use_lower=use_lower,
@@ -386,6 +415,7 @@ def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swa
         balance=balance,
         log_iter_interval=log_iter_interval,
         log_epoch_interval=log_epoch_interval,
+        simulation_strategy=simulation_strategy,
         device=ctx.obj['device'],
         batch_size=ctx.obj['batch_size'],
         output_dir=ctx.obj['output_dir'],
@@ -429,7 +459,8 @@ def train(ctx, splits_file, marker_list, use_checkpoints, use_secondary, use_swa
 
 
 @cli.command()
-@param('--splits-file', default=None, help='Path to json file containing candidate ids keyed by split name ("predict")')
+@param('--splits-file', default=None, required=True,
+       help='Path to json file containing candidate ids keyed by split name ("predict")')
 @click.pass_context
 def predict(ctx, splits_file):
     candidate_class = _to_candidate_class(ctx.obj['relation_class'])

@@ -4,7 +4,17 @@ import numpy as np
 import pandas as pd
 import tqdm
 from tcre.modeling.utils import mark_entities
-from tcre.supervision import LABEL_TYPE_MAP
+from tcre.supervision import LABEL_TYPE_MAP, ENT_TYP_CT_L, ENT_TYP_CK_L, ENT_TYP_TF_L
+
+MAX_POS_DIST = 127
+DEFAULT_MARKERS = {
+    'primary': {ENT_TYP_CT_L: ['<<', '>>'], ENT_TYP_CK_L: ['[[', ']]'], ENT_TYP_TF_L: ['{{', '}}']},
+    'secondary': {ENT_TYP_CT_L: ['<#', '#>'], ENT_TYP_CK_L: ['<%', '%>'], ENT_TYP_TF_L: ['<*', '*>']}
+}
+DEFAULT_SWAPS = {
+    'primary': {ENT_TYP_CT_L: '@CL', ENT_TYP_CK_L: '@CK', ENT_TYP_TF_L: '@TF'},
+    'secondary': {ENT_TYP_CT_L: '$CL', ENT_TYP_CK_L: '$CK', ENT_TYP_TF_L: '$TF'}
+}
 
 
 def candidate_to_entities(cand):
@@ -65,9 +75,6 @@ def candidates_to_records(cands, entity_predicate=None, label_type=LABEL_TYPE_MA
     return [get_record(cand) for cand in cands]
 
 
-MAX_POS_DIST = 127
-
-
 def get_dist_bin(i, rng):
     if i < rng[0]:
         v = i - rng[0]
@@ -78,13 +85,16 @@ def get_dist_bin(i, rng):
     return np.clip(v, -MAX_POS_DIST, MAX_POS_DIST)
 
 
-DEFAULT_MARKERS = {
-    'primary': {'immune_cell_type': ['<<', '>>'], 'cytokine': ['[[', ']]'], 'transcription_factor': ['{{', '}}']},
-    'secondary': {'immune_cell_type': ['##', '##'], 'cytokine': ['%%', '%%'], 'transcription_factor': ['**', '**']}
-}
+def get_specials(markers, swaps):
+    specials = []
+    # Extract tokens, ignoring None or empty strings
+    specials += [v3 for k1, v1 in (markers or {}).items() for v2 in (v1 or {}).values() for v3 in (v2 or []) if v3]
+    specials += [v2 for k1, v1 in (swaps or {}).items() for v2 in (v1 or {}).values() if v2]
+    return list(set(specials))
 
 
-def get_record_features(records, markers=DEFAULT_MARKERS, swaps=None, subtokenizer=None, lower=False, assert_unique=True):
+def get_record_features(records, markers=DEFAULT_MARKERS, swaps=DEFAULT_SWAPS,
+                        subtokenizer=None, lower=False, assert_unique=True, include_indices=False):
 
     if subtokenizer is None:
         subtokenizer = lambda t: [t]
@@ -122,30 +132,38 @@ def get_record_features(records, markers=DEFAULT_MARKERS, swaps=None, subtokeniz
         # Use potentially re-spaced index list to map original entity word positions to new positions
         positions = [(indices.index(positions[i][0]), indices.index(positions[i][1])) for i in range(n)]
 
+        # Note that if the subtokenizer returns an empty sequence, the main index in this loop will be
+        # skipped, which is useful for removing unwanted tokens in the sequence
         subtokens = [(i0, t0, i1, t1) for i0, t0 in enumerate(tokens) for i1, t1 in enumerate(subtokenizer(t0))]
         tokens = []
         word_indices = []
         token_indices = []
+        tags = ['O'] * len(subtokens)
         entity_distances = [[] for _ in range(len(entity_indices))]
         for i, (i0, t0, i1, t1) in enumerate(subtokens):
             word_indices.append(indices[i0])
             token_indices.append(i0)
             token = t1
-            for j, ei in enumerate(entity_indices):
-                # Get token range corresponding to candidate entity and calculate
-                # relative distance from current token
+            for ei, e in enumerate(rec['entities']):
                 rng = positions[ei]
-                entity_distances[j].append(get_dist_bin(i0, rng))
-                if swaps and rng[0] <= i0 <= rng[1]:
-                    ent = rec['entities'][ei]
-                    token = swaps[ent['type']]
+                typ = status[e['is_candidate']]  # primary/secondary
+                if typ == 'primary':
+                    entity_distances[entity_indices.index(ei)].append(get_dist_bin(i0, rng))
+                if rng[0] <= i0 <= rng[1]:
+                    tags[i] = f"E:{typ}:{e['type']}"
+                    if swaps and swaps[typ]:
+                        token = swaps[typ][e['type']]
+
             tokens.append(token)
 
-        features = dict(
-            tokens=tokens,
-            word_indices=word_indices,
-            token_indices=token_indices
-        )
+        features = dict(tokens=tokens, tags=tags)
+
+        # Include these fields only if necessary as they are largely only useful for debugging
+        if include_indices:
+            features['word_indices'] = word_indices
+            features['token_indices'] = token_indices
+
+        # Add relative distance and entity text fields
         for i, ei in enumerate(entity_indices):
             features[f'e{i}_dist'] = entity_distances[i]
             features[f'e{i}_text'] = rec['entities'][ei]['text']

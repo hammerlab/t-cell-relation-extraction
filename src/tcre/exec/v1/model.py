@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence
 from tcre.modeling.features import MAX_POS_DIST
+import logging
+logger = logging.getLogger(__name__)
 DIST_PAD_VAL = MAX_POS_DIST + 1
 CT_GRU = 'GRU'
 CT_LSTM = 'LSTM'
@@ -85,6 +87,8 @@ class RERNN(nn.Module):
             self.wrd_embed_shape = tuple(vectors.shape)
             self.wrd_embed = nn.Embedding.from_pretrained(vectors, padding_idx=0)
         self.wrd_embed.weight.requires_grad = self.train_wrd_embed
+        logger.info('Initialized word embedding with shape %s (trainable = %s)',
+                    self.wrd_embed_shape, self.train_wrd_embed)
 
         # Index values are 0=pad, 1=< -max_dist, 2=-max_dist, 3=-max_dist+1, ..., 2*(max_dist+2) > max_dist
         self.pos_embed_shape = (2 * (self.max_dist + 2), self.pos_embed_dim)
@@ -92,6 +96,7 @@ class RERNN(nn.Module):
         if self.pos_embed_dim:
             self.pos_embed_e0 = nn.Embedding(*self.pos_embed_shape, padding_idx=0)
             self.pos_embed_e1 = nn.Embedding(*self.pos_embed_shape, padding_idx=0)
+            logger.info('Initialized position embedding with shape %s', self.pos_embed_shape)
 
     def _init_cell(self):
         if self.cell_type not in CELL_TYPES:
