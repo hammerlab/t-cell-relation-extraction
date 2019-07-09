@@ -36,7 +36,7 @@ def candidate_to_entities(cand):
     return ents
 
 
-def get_label(cand, label_type=LABEL_TYPE_MAP):
+def get_label(cand, label_type=LABEL_TYPE_MAP, strict=False):
 
     # If label type is configured per split, resolve to scalar
     # lable type for candidate split
@@ -56,6 +56,10 @@ def get_label(cand, label_type=LABEL_TYPE_MAP):
         if len(cand.marginals) > 1:
             raise AssertionError(
                 f'Expecting <= 1 marginal value for candidate id {cand.id} ({cand}) but got {len(cand.marginals)}')
+        if strict:
+            if len(cand.marginals) < 1:
+                raise AssertionError(
+                    f'No marginal label found for candidate id {cand.id} ({cand})')
         return cand.marginals[0].probability if cand.marginals else 0
 
 

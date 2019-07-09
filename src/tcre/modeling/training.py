@@ -54,11 +54,21 @@ def supervise(model, lr, decay, train_iter, val_iter,
         device=model.device, prepare_batch=model.prepare
     )
 
+    def classify(output, thresh=.5):
+        y_pred, y = output
+        # Convert logits to 0/1 and round true values (which may be probabilistic)
+        # in evaluation ONLY
+        return model.transform(y_pred) > thresh, torch.round(y)
+
     def get_metrics():
         metrics = {
-            'accuracy': Accuracy(),
-            'precision': Precision(average=False),
-            'recall': Recall(average=False),
+            'accuracy': Accuracy(classify),
+            'precision': Precision(classify, average=False),
+            'precision@60': Precision(lambda output: classify(output, .60), average=False),
+            'precision@70': Precision(lambda output: classify(output, .70), average=False),
+            'precision@80': Precision(lambda output: classify(output, .80), average=False),
+            'precision@90': Precision(lambda output: classify(output, .90), average=False),
+            'recall': Recall(classify, average=False),
             'loss': Loss(criterion)
         }
         metrics['f1'] = get_f1_metric(metrics['precision'], metrics['recall'])
@@ -67,8 +77,7 @@ def supervise(model, lr, decay, train_iter, val_iter,
     def get_evaluator():
         return create_supervised_evaluator(
             model, metrics=get_metrics(), prepare_batch=model.prepare, device=model.device,
-            # Convert logits to 0/1 and also round true labels (which may be probabilistic) in evaluation ONLY
-            output_transform=lambda x, y, y_pred: (model.classify(model.transform(y_pred)), torch.round(y))
+            # Do not use an output transform here as the loss metric requires logits and probabilistic labels
         )
 
     train_evaluator = get_evaluator()
@@ -111,7 +120,8 @@ def supervise(model, lr, decay, train_iter, val_iter,
         history.append({k: v for k, v in record.items() if k != 'predictions'})
         if iteration % log_epoch_interval == 0:
             logger.info(
-                '{type} Results - Epoch: {epoch}  Count: {ct} Loss: {loss:.4f} Accuracy: {accuracy:.3f} F1: {f1:.3f}'.format(
+                '{type} Results - Epoch: {epoch}  Count: {ct} Loss: {loss:.4f} Precision@70: {precision@70:.3f} '
+                'Accuracy: {accuracy:.3f} F1: {f1:.3f}'.format(
                     **record))
         return metrics
 

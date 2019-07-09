@@ -36,18 +36,32 @@ def _label_by_secondary_marking(r):
     return 1.
 
 
+def _rs():
+    return np.random.RandomState(1)
+
+
 def _get_random_labels(n):
-    return np.random.RandomState(1).choice([0., 1.], size=n, replace=True)
+    return _rs().choice([0., 1.], size=n, replace=True)
+
+
+LABEL_SIM_FNS = {
+    'position-based': _label_by_dist,
+    'secondary-marking': _label_by_secondary_marking
+}
 
 
 def get_simulated_labels(df, strategy):
-    if strategy == 'position-based':
-        return df.apply(_label_by_dist, axis=1).values
-    elif strategy == 'secondary-marking':
-        return df.apply(_label_by_secondary_marking, axis=1).values
-    elif strategy == 'random':
+    if strategy == 'random':
         return _get_random_labels(len(df))
-    else:
-        raise ValueError(f'Simulation strategy "{strategy}" invalid')
+    if strategy.startswith('random-'):
+        # Use the strategy suffix to get permuted labels (to preserve class balance)
+        fn = strategy.replace('random-', '')
+        if fn in LABEL_SIM_FNS:
+            y = df.apply(LABEL_SIM_FNS[fn], axis=1).values
+            _rs().shuffle(y)
+            return y
+    if strategy in LABEL_SIM_FNS:
+        return df.apply(LABEL_SIM_FNS[strategy], axis=1).values
+    raise ValueError(f'Simulation strategy "{strategy}" invalid')
 
 

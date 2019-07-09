@@ -52,6 +52,7 @@ MODEL_SIZES = {
     'XL': {'hidden_dim': 30, 'wrd_embed_dim': 100, 'pos_embed_dim': 10},
     'XXL': {'hidden_dim': 128, 'wrd_embed_dim': 100, 'pos_embed_dim': 64},
     'XXXL': {'hidden_dim': 256, 'wrd_embed_dim': 200, 'pos_embed_dim': 128},
+    'XXXXL': {'hidden_dim': 512, 'wrd_embed_dim': 200, 'pos_embed_dim': 256},
     'SIM1': {'hidden_dim': 10, 'wrd_embed_dim': 10, 'pos_embed_dim': 256},
 }
 
@@ -90,6 +91,8 @@ def _splits(splits_file, keys=None):
     # --> {"train":[1,2,3],"test":[3,4]}
 
     logger.info(f'Gathering candidates for splits at "{splits_file}"')
+    if not pl.Path(splits_file).exists():
+        raise ValueError(f'Splits file "{splits_file}" does not exist')
     splits = pd.read_json(splits_file, typ='series', orient='index').to_dict()
     if keys is not None:
         splits = {k: v for k, v in splits.items() if k in keys}
@@ -277,8 +280,7 @@ def _train(cands, splits, config):
             from gensim.models import KeyedVectors
             logger.info(f"Loading w2v model with vocab limit {config['vocab_limit']} (specials = {specials})")
             w2v = KeyedVectors.load_word2vec_format(W2V_MODEL_01, binary=True, limit=config['vocab_limit'])
-            #fields['text'].vocab = W2VVocab(w2v, specials=specials, random_state=TCRE_SEED)
-            fields['text'].vocab = W2VVocab(w2v)
+            fields['text'].vocab = W2VVocab(w2v, specials=specials, random_state=TCRE_SEED)
     # Build vocab on training dataset text field ONLY and assign to others
     elif config['wrd_embedding_type'] == 'denovo':
         fields['text'].build_vocab(datasets['train'])
@@ -340,7 +342,7 @@ class param(object):
 @click.group(invoke_without_command=True)
 @param('--relation-class', default=None, required=True, help='Candidate type class (e.g. "inducing_cytokine")')
 @param('--device', default='cuda', required=True, help='Device to use for training')
-@param('--batch-size', default=128, required=True, help='Batch size used in training and prediction')
+@param('--batch-size', default=512, required=True, help='Batch size used in training and prediction')
 @param('--output-dir', default=None, required=True, help='Output directory (nothing saved if omitted)')
 @param('--seed', default=TCRE_SEED, required=True, help='RNG seed')
 @param('--log-level', default='info', help='Logging level')

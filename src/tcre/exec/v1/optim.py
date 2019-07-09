@@ -59,15 +59,15 @@ def to_dict(x, space):
 
 class TaskParameterOptimizer(object):
 
-    def __init__(self, task, space, output_dir, minimizer=forest_minimize, device=DEFAULT_DEVICE):
+    def __init__(self, task, space, output_dir, minimizer=forest_minimize, device=DEFAULT_DEVICE, client_args=None):
         self.task = task
         self.space = space
         self.minimizer = minimizer
         self.output_dir = osp.join(output_dir, task)
         self.device = device
 
-        # Initialize CLI client with list of parameters to be ignored (defaults for these are fine as-is)
-        self.client = cli_client.Client(exceptions=['log_level', 'seed', 'batch_size', 'vocab_limit', 'use_lower'])
+        self.client = cli_client.get_default_client()
+        self.client_args = client_args or {}
 
         self.dirs = {}
         for d in ['checkpoints', 'data', 'log', 'splits']:
@@ -76,7 +76,7 @@ class TaskParameterOptimizer(object):
                 os.makedirs(self.dirs[d])
 
     def get_splits_file(self):
-        return osp.join(self.dirs['splits'], f'hopt_{self.task}.json')
+        return osp.join(self.dirs['splits'], 'splits.json')
 
     def get_checkpoints_file(self):
         return osp.join(self.dirs['checkpoints'], 'checkpoint.pkl')
@@ -91,10 +91,16 @@ class TaskParameterOptimizer(object):
     def get_cmd(self, x):
         splits_file = self.get_splits_file()
         train_opts = to_dict(x, self.space)
-        cmd = self.client.cmd(
-            cli=dict(relation_class=self.task, device=self.device, output_dir=self.dirs['data']),
-            train={**dict(splits_file=splits_file, use_checkpoints=False, save_keys='"history"'), **train_opts}
-        )
+        cli_args = {
+            **dict(relation_class=self.task, device=self.device, output_dir=self.dirs['data']),
+            **self.client_args.get('cli', {})
+        }
+        train_args = {
+            **dict(splits_file=splits_file, use_checkpoints=False, save_keys='"history"'),
+            **self.client_args.get('train', {}),
+            **train_opts
+        }
+        cmd = self.client.cmd(cli=cli_args, train=train_args)
         cmd = CMD_FORMAT.format(cmd=cmd, log_dir=self.dirs['log'])
         return cmd
 
@@ -113,7 +119,7 @@ class TaskParameterOptimizer(object):
         idx = np.argmax(df[('f1', 'validation')].values)
         return df.iloc[idx].to_dict()
 
-    def run(self, n_iterations, progress_interval=1, checkpoint_interval=10, n_random_starts=10, **kwargs):
+    def run(self, n_iterations, progress_interval=1, checkpoint_interval=10, **kwargs):
         timer = TimerCallback()
         plogger = ProgressLogger(n_iterations, interval=progress_interval)
 
@@ -126,7 +132,6 @@ class TaskParameterOptimizer(object):
         res = self.minimizer(
             obj_fn, self.space,
             n_calls=n_iterations,
-            n_random_starts=n_random_starts,
             callback=list(callbacks.values()),
             random_state=TCRE_SEED,
             **kwargs
