@@ -12,6 +12,15 @@ REL_CLASS_INDUCING_CYTOKINE = 'InducingCytokine'
 REL_CLASS_SECRETED_CYTOKINE = 'SecretedCytokine'
 REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR = 'InducingTranscriptionFactor'
 
+REL_FIELD_INDUCING_CYTOKINE = 'inducing_cytokine'
+REL_FIELD_SECRETED_CYTOKINE = 'secreted_cytokine'
+REL_FIELD_INDUCING_TRANSCRIPTION_FACTOR = 'inducing_transcription_factor'
+
+COMP_CLASSES = {
+    REL_FIELD_INDUCING_CYTOKINE: REL_FIELD_SECRETED_CYTOKINE,
+    REL_FIELD_SECRETED_CYTOKINE: REL_FIELD_INDUCING_CYTOKINE
+}
+
 SPLIT_TRAIN = 0
 SPLIT_DEV = 1
 SPLIT_INFER = 2
@@ -79,17 +88,17 @@ class CandidateClasses(object):
 def get_candidate_classes():
     return CandidateClasses([
         CandidateClass(
-            0, REL_CLASS_INDUCING_CYTOKINE, 'inducing_cytokine', 'Induction', 
+            0, REL_CLASS_INDUCING_CYTOKINE, REL_FIELD_INDUCING_CYTOKINE, 'Induction',
             [ENT_TYP_CK_L, ENT_TYP_CT_L]
         ),
         CandidateClass(
             # * Make sure SecretedCytokine gives cytokine + cell type in same order as they 
             # will share rules for labeling functions
-            1, REL_CLASS_SECRETED_CYTOKINE, 'secreted_cytokine', 'Secretion', 
+            1, REL_CLASS_SECRETED_CYTOKINE, REL_FIELD_SECRETED_CYTOKINE, 'Secretion',
             [ENT_TYP_CK_L, ENT_TYP_CT_L]
         ),
         CandidateClass(
-            2, REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR, 'inducing_transcription_factor', 'Differentiation', 
+            2, REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR, REL_FIELD_INDUCING_TRANSCRIPTION_FACTOR, 'Differentiation',
             [ENT_TYP_TF_L, ENT_TYP_CT_L]
         ),
     ])
@@ -111,6 +120,30 @@ def get_cids_query(session, candidate_class, split):
 ###############################
 # Labeling Function Utilities
 ###############################
+
+
+def get_cand_span_type(c, span):
+    # Return entity type for sentence at position of first word for span
+    return c.get_parent().entity_types[span.get_word_range()[0]]
+
+
+def get_cand_sibling(c, strict=True):
+    """Return a candidate of a different type for relation classes specified on identical spans"""
+    if c.type not in COMP_CLASSES:
+        return None
+    entity_types = c.__class__.__argnames__  # ['cytokine', 'immune_cell_type']
+    sibl_type = COMP_CLASSES[c.type]  # 'secreted_cytokine'
+    cand_spans = sorted(c.get_contexts(), key=lambda v: v.id)
+    span_map = {get_cand_span_type(c, span): span for i, span in enumerate(cand_spans)}  # map spans by type
+    # Find sibling candidates through backref fields like "secreted_cytokine_cytokines"
+    # * only first entity type is necessary for lookup since the sibling candidate will be attached to both
+    sibl_cands = getattr(span_map[entity_types[0]], sibl_type + '_' + entity_types[0] + 's')
+    # Filter to candidate with same spans
+    sibl_cands = [s for s in sibl_cands if sorted(s.get_contexts(), key=lambda v: v.id) == cand_spans]
+    if strict and len(sibl_cands) != 1:
+        raise ValueError(
+            f'Failed to find exactly one sibling candidate for candidate {c} (siblings found = {sibl_cands})')
+    return sibl_cands[0] if sibl_cands else None
 
 
 def is_a_before_b(c):

@@ -136,7 +136,7 @@ def _prepare(df, config):
     split = df['split'].iloc[0]
 
     balance = float(config.get('balance', 0) or 0)
-    if split == 'train' and balance:
+    if split != 'predict' and balance:
         logger.info('Label distribution prior to balancing for split %s:\n%s', split, _label_dist(df['label']))
         logger.info('Down-sampling positive class to target fraction %s', balance)
         balancer = LabelBalancer(df['label'].values)
@@ -280,7 +280,7 @@ def _train(cands, splits, config):
             from gensim.models import KeyedVectors
             logger.info(f"Loading w2v model with vocab limit {config['vocab_limit']} (specials = {specials})")
             w2v = KeyedVectors.load_word2vec_format(W2V_MODEL_01, binary=True, limit=config['vocab_limit'])
-            fields['text'].vocab = W2VVocab(w2v, specials=specials, random_state=TCRE_SEED)
+            fields['text'].vocab = W2VVocab(w2v, specials=specials, random_state=config['seed'])
     # Build vocab on training dataset text field ONLY and assign to others
     elif config['wrd_embedding_type'] == 'denovo':
         fields['text'].build_vocab(datasets['train'])
@@ -295,7 +295,8 @@ def _train(cands, splits, config):
         sort_key=lambda x: len(x.text),
         sort=True,
         sort_within_batch=True,
-        repeat=False
+        repeat=False,
+        shuffle=False
     )
     logger.info('Split datasets with sizes %s', {k: len(ds) for k, ds in datasets.items()})
 

@@ -22,6 +22,7 @@ PNC_REGEX_1 = re.compile(r'\s+(\.|\?|\!)')
 TC_REGEX_1 = re.compile(r'<sup><xref[^>]*>.*?</sup>')
 TC_REGEX_2 = re.compile(r'<xref[^>]*>[^<]*</xref[^>]*>')
 
+
 def clean_text_whitespace(text):
     # Remove individual lines that have a very small number of characters
     text = '\n'.join([l for l in text.split('\n') if len(l.strip()) == 0 or len(l.strip()) >= 64])
@@ -29,16 +30,19 @@ def clean_text_whitespace(text):
     text = WS_REGEX.sub('\n\n', text)
     return text
 
+
 def clean_text_enclosures(text):
     # Remove empty enclosures like "(\t)" or "[]"
     text = ENC_REGEX_1.sub('', text)
     text = ENC_REGEX_2.sub('', text)
     return text
 
+
 def clean_text_punctuation(text):
     # Remove whitespace before punctuation
     text = PNC_REGEX_1.sub('\\1', text)
     return text
+
 
 def remove_xml_citations(text):
     # Remove citation elements
@@ -53,6 +57,7 @@ def remove_xml_citations(text):
     text = TC_REGEX_2.sub('', text)
     
     return text
+
 
 def extract_text(xml, clean_whitespace=True, remove_citations=True):
     if not xml:
@@ -70,6 +75,7 @@ def extract_text(xml, clean_whitespace=True, remove_citations=True):
         body = clean_text_whitespace(body)
     return body
 
+
 def combine_text(title, abstract, body):
     parts = ['' if pd.isnull(p) else p for p in [title, abstract, body]]
     
@@ -77,6 +83,7 @@ def combine_text(title, abstract, body):
         return t + '.' if t.strip() and t.strip()[-1] not in string.punctuation else t
     
     return '\n'.join([add_punc(p) for p in parts])
+
 
 def parse_article(soup, clean_text=True):
     res = {}
@@ -157,9 +164,11 @@ def parse_article(soup, clean_text=True):
         res['body'] = None
     return res
 
+
 def parse_nxml(doc):
     soup = BeautifulSoup(doc, 'xml')
     return pd.DataFrame([parse_article(article) for article in soup.find_all('article')])
+
 
 def get_scispacy_pipeline(model='en_ner_jnlpba_md'):
     import spacy

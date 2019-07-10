@@ -88,21 +88,29 @@ class TaskParameterOptimizer(object):
         splits.to_json(splits_file, orient='index')
         return splits_file
 
-    def get_cmd(self, x):
-        splits_file = self.get_splits_file()
-        train_opts = to_dict(x, self.space)
-        cli_args = {
+    def cli_args(self):
+        return {
             **dict(relation_class=self.task, device=self.device, output_dir=self.dirs['data']),
             **self.client_args.get('cli', {})
         }
-        train_args = {
+
+    def train_args(self, x):
+        splits_file = self.get_splits_file()
+        train_opts = to_dict(x, self.space)
+        return {
             **dict(splits_file=splits_file, use_checkpoints=False, save_keys='"history"'),
             **self.client_args.get('train', {}),
             **train_opts
         }
+
+    def format(self, cmd):
+        return CMD_FORMAT.format(cmd=cmd, log_dir=self.dirs['log'])
+
+    def get_cmd(self, x):
+        cli_args = self.cli_args()
+        train_args = self.train_args(x)
         cmd = self.client.cmd(cli=cli_args, train=train_args)
-        cmd = CMD_FORMAT.format(cmd=cmd, log_dir=self.dirs['log'])
-        return cmd
+        return self.format(cmd)
 
     def evaluate(self, x):
         # Generate and run CLI command for sampled point in search space (non zero return codes raise automatically)
@@ -117,7 +125,7 @@ class TaskParameterOptimizer(object):
 
         # Return all F1 @ best F1 on validation
         idx = np.argmax(df[('f1', 'validation')].values)
-        return df.iloc[idx].to_dict()
+        return {**df.iloc[idx].to_dict(), **{('epoch', ''): df.index.values[idx]}}
 
     def run(self, n_iterations, progress_interval=1, checkpoint_interval=10, **kwargs):
         timer = TimerCallback()
