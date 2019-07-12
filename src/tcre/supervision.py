@@ -28,8 +28,17 @@ SPLIT_TEST = 3
 SPLIT_VAL = 4
 
 SPLIT_MAP = {SPLIT_TRAIN: 'train', SPLIT_DEV: 'dev', SPLIT_INFER: 'infer', SPLIT_TEST: 'test', SPLIT_VAL: 'val'}
-LABEL_TYPE_MAP = {k: 'gold' if k in [SPLIT_DEV, SPLIT_TEST, SPLIT_VAL] else 'marginal' for k in SPLIT_MAP.keys()}
 
+
+def get_expected_label_type(split):
+    if split in [SPLIT_DEV, SPLIT_TEST, SPLIT_VAL]:
+        return 'gold'
+    if split in [SPLIT_TRAIN]:
+        return 'marginal'
+    return 'none'
+
+
+LABEL_TYPE_MAP = {k: get_expected_label_type(k) for k in SPLIT_MAP.keys()}
 DISPLACY_ENT_OPTS = {
     "ents": [ENT_TYP_CK, ENT_TYP_CT, ENT_TYP_TF],
     "colors": {
@@ -112,10 +121,12 @@ def get_entity_type(cand, span):
 
 
 def get_cids_query(session, candidate_class, split):
+    """Fetch list of candidate ids for a particular class"""
     from snorkel.models import Candidate
     return session.query(Candidate.id)\
         .filter(Candidate.type == candidate_class.field)\
         .filter(Candidate.split == split)
+
 
 ###############################
 # Labeling Function Utilities

@@ -36,31 +36,56 @@ def candidate_to_entities(cand):
     return ents
 
 
-def get_label(cand, label_type=LABEL_TYPE_MAP, strict=False):
+def get_label(cand, label_type=LABEL_TYPE_MAP):
 
     # If label type is configured per split, resolve to scalar
     # lable type for candidate split
     if isinstance(label_type, dict):
         label_type = label_type[cand.split]
 
-    if label_type not in ['gold', 'marginal']:
-        raise ValueError(f'Label type must be "gold" or "marginal" (candidate = {cand})')
+    if label_type not in ['gold', 'marginal', 'none']:
+        raise ValueError(
+            f'Label type must be "gold", "marginal", or "none" (candidate = {cand}, label type = {label_type}')
 
-    # Return all labels in [0, 1] with default at 0 for candidates with no label
+    # For gold labels, expect labels in {NA, -1, 0, 1} and map to {0, 1} (missing candidates are assumed 0)
     if label_type == 'gold':
         if len(cand.gold_labels) > 1:
             raise AssertionError(
                 f'Expecting <= 1 gold label for candidate id {cand.id} ({cand}) but got {len(cand.gold_labels)}')
-        return max(cand.gold_labels[0].value, 0) if cand.gold_labels else 0
-    else:
+        res = max(cand.gold_labels[0].value if cand.gold_labels else 0, 0)
+        if res not in [0, 1]:
+            raise AssertionError(f'Exptecting label in {{0, 1}} for candidate {cand} but got {res}')
+        return res
+    # For marginal labels, enforce in [0, 1] (or NAN if not present)
+    elif label_type == 'marginal':
         if len(cand.marginals) > 1:
             raise AssertionError(
                 f'Expecting <= 1 marginal value for candidate id {cand.id} ({cand}) but got {len(cand.marginals)}')
-        if strict:
-            if len(cand.marginals) < 1:
-                raise AssertionError(
-                    f'No marginal label found for candidate id {cand.id} ({cand})')
-        return cand.marginals[0].probability if cand.marginals else 0
+        res = cand.marginals[0].probability if cand.marginals else np.float64(np.nan)
+        if res < 0 or res > 1:
+            raise AssertionError(f'Exptecting label in [0, 1] for candidate {cand} but got {res}')
+        return res
+    # If no label is expected, return NAN
+    else:
+        return np.float64(np.nan)
+
+
+def get_candidate_labels(session, splits=None, allow_mixed_presence=False):
+    """Fetch data frame with all candidate ids, types, splits, and labels"""
+    from snorkel.models import Candidate
+    query = session.query(Candidate)
+    if splits is not None:
+        query = query.filter(Candidate.split.in_(splits))
+    df = pd.DataFrame([
+        dict(id=c.id, type=c.type, split=c.split, label=get_label(c))
+        for c in query.all()
+    ])
+    if not allow_mixed_presence:
+        # Ensure that for each split, labels are either completely present or completely absent
+        cts = df.groupby('split').apply(lambda g: g['label'].notnull().nunique())
+        if any(cts > 1):
+            raise ValueError(f'The following splits have a mixture of present/absent labels: {cts[cts > 1].index}')
+    return df
 
 
 def candidates_to_records(cands, entity_predicate=None, label_type=LABEL_TYPE_MAP):
@@ -176,3 +201,4 @@ def get_record_features(records, markers=DEFAULT_MARKERS, swaps=DEFAULT_SWAPS,
     df1 = pd.DataFrame([(rec['id'], rec['label']) for rec in records], columns=['id', 'label'])
     df2 = pd.DataFrame([get_features(rec) for rec in tqdm.tqdm(records)])
     return pd.concat([df1, df2], axis=1)
+

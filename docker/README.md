@@ -24,5 +24,4 @@ nvidia-docker run --rm -ti -p 8888:8888 -p 6006:6006 \
 -v $TCRE_REPO_DIR:/lab/repos/t-cell-relation-extraction \
 -v $TCRE_DATA_DIR:/lab/data \
 t-cell-relation-extraction
-> 
 ```
