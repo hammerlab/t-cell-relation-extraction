@@ -1,0 +1,60 @@
+label,cl0,cl1,cl2,syms,lkp
+TN        ,CL:0000898,          ,CL:0000084,T-naïve|naïve-T
+TMEM      ,CL:0000813,          ,CL:0000084,T-mem|memory-T|mem-T
+TEMRA     ,CL:0001062,          ,CL:0000084,T-emra|emra-T
+TCM       ,CL:0000904,          ,CL:0000084,T-cm|cm-T|central-memory-T
+TEM       ,CL:0000905,          ,CL:0000084,T-em|em-T|effector-memory-T|effector-memory-T
+IEL       ,CL:0002496,          ,CL:0000084,IELs|Intraepithelial-lymphocyte|Intraepithelial-lymphocytes
+DETC      ,CL:0000916,          ,CL:0000084,DETCs|Dendritic-epidermal-T
+Thymocyte ,CL:0000893,          ,CL:0000084,thymocyte|thymocytes
+Th        ,CL:0000912,          ,CL:0000084,T-Helper|Helper-T
+Tc        ,CL:0000910,          ,CL:0000084,T-Cytotoxic|Cytotoxic-T|Cytolitic-T|T-Cytolitic|CTL|CTLs
+ThP       ,CL:0000790,          ,CL:0000084,Th-Precursor|Precursor-Th
+Trm       ,          ,CL:0000813,CL:0000084,T-rm|T-resident-memory|resident-memory-T
+Tscm      ,          ,CL:0000813,CL:0000084,T-SCM|T-SC|stem-memory-T|T-stem-memory|memory-stem-T|T-memory-stem
+NKT       ,CL:0000814,          ,CL:0000814,natural-killer-T|T-natural-killer|INKT|TRNKT|CNKT|NK/T
+MAIT      ,CL:0000940,          ,CL:0000814,Mucosal-associated invariant T|Mucosal associated invariant-T|Mucosal-associated-invariant-T
+Treg      ,CL:0000792,          ,CL:0000814,T-reg|T-regs|T-regulatory|regulatory-T
+Tsupp     ,CL:0000792,          ,CL:0000814,Tsuppressor|Ts/c|Ts/Tc|T-suppressor/cytotoxic
+Treg1     ,CL:0000901,          ,CL:0000814,T-reg1|T-reg-1|Treg/Th1|Treg-Th1|Tr-1
+Treg17    ,          ,CL:0000792,CL:0000814,T-reg17|T-reg-17|Treg/Th17|Treg-Th17|Tr-17
+Tfh       ,CL:0002038,          ,CL:0000814,T-FH|T-follicular-helper|follicular-helper-T|fhT|T-follicular
+
+# https://www.ebi.ac.uk/ols/ontologies/cl/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCL_0000908
+Tc{}      ,          ,CL:0000908,CL:0000084,Tc-{}|T-cytolitic-{}|T cytolitic-{}|T-cytotoxic-{}|T cytotoxic-{},0=|1=CL:0000917|2=CL:0000918|3=|9=|17=CL:0002128|22=
+
+# Use cl0 if present, otherwise use cl1 (which is essentially a best guess at where the cell type should be in CL)
+# TODO:
+# - add NK variants (check INKT in current NKT entry)
+# - add TEFF back in?
+
+
+
+Tfh,CL:0002038,T-FH|T-follicular-helper|follicular-helper-T|fhT|T-follicular
+Tfreg,None,Tf-reg|T-follicular-regulatory|follicular-regulatory-T|follicular-Treg|fTreg
+iTreg,CL:0000902,i-Treg|induced-Treg|inducible-Treg|induced-T-reg|inducible-T-reg|induced T-regulatory|induced-T-regulatory|induced regulatory-T|induced-regulatory-T|inducible T-regulatory|inducible-T-regulatory|inducible regulatory-T|inducible-regulatory-T
+nTreg,CL:0000903,n-Treg|natural-Treg|natural-T-reg|natural T-regulatory|natural-T-regulatory|natural regulatory-T|natural-regulatory-T
+pTreg,None,p-Treg|peripheral-Treg|peripheral-T-reg|peripheral T-regulatory|peripheral-T-regulatory|peripheral regulatory-T|peripheral-regulatory-T|peripherally-induced-Treg
+γδT,CL:0000798,Gamma-Delta-T|T-Gamma-Delta|Gamma/Delta-T|γ/δ-T|γδ-T|gd-T|Tgd|g/dT|Tg/d
+γδT-Vδ1,None,VDelta1-T|Vδ1-T
+γδT-Vδ2,None,VDelta2-T|Vδ2-T
+γδT-Vγ1,None,VGamma1-T|Vγ1-T
+γδT-Vγ4,None,VGamma4-T|Vγ4-T
+γδT-Vγ9,None,VGamma9-T|Vγ9-T
+γδT-Vγ9Vδ2,None,T-VGamma9-Delta2|VGamma9-Delta2-T|Vγ9Vδ2T
+γδT-17,None,γδ17T|T-Gamma-Delta17|Gamma-Delta17-T
+γδT-TCS1,None,TCS1
+Th0,None,Th-0|T-helper-0|T-helper 0|T helper-0|T helper cell-0|T helper cell (Th)-0|T helper (Th)-0
+Th1,None,Th-1|T-helper-1|T-helper 1|T helper-1|T helper cell-1|T helper cell (Th)-1|T helper (Th)-1
+Th2,None,Th-2|T-helper-2|T-helper 2|T helper-2|T helper cell-2|T helper cell (Th)-2|T helper (Th)-2
+Th3,None,Th-3|T-helper-3|T-helper 3|T helper-3|T helper cell-3|T helper cell (Th)-3|T helper (Th)-3
+Th9,None,Th-9|T-helper-9|T-helper 9|T helper-9|T helper cell-9|T helper cell (Th)-9|T helper (Th)-9
+Th17,None,Th-17|T-helper-17|T-helper 17|T helper-17|T helper cell-17|T helper cell (Th)-17|T helper (Th)-17
+Th22,None,Th-22|T-helper-22|T-helper 22|T helper-22|T helper cell-22|T helper cell (Th)-22|T helper (Th)-22
+Tfh0like,None,Tfh-0-like|Tfh-0like|Tfh0-like|Tfh0
+Tfh1like,None,Tfh-1-like|Tfh-1like|Tfh1-like|Tfh1
+Tfh2like,None,Tfh-2-like|Tfh-2like|Tfh2-like|Tfh2
+Tfh3like,None,Tfh-3-like|Tfh-3like|Tfh3-like|Tfh3
+Tfh9like,None,Tfh-9-like|Tfh-9like|Tfh9-like|Tfh9
+Tfh17like,None,Tfh-17-like|Tfh-17like|Tfh17-like|Tfh17
+Tfh22like,None,Tfh-22-like|Tfh-22like|Tfh22-like|Tfh22
