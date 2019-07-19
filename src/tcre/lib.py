@@ -10,6 +10,7 @@ SPECIES_MOUSE_ID = 2
 CELL_TYPES = 'cell_types'
 CYTOKINES = 'cytokines'
 TRANSCRIPTION_FACTORS = 'transcription_factors'
+FILTERS = 'filters'
 
 
 def fix_jupyter_spacy_config():
@@ -20,8 +21,16 @@ def fix_jupyter_spacy_config():
 
     
 def get_entity_meta_data(table):
-    path = osp.join(META_DATA_DIR, '{}.csv'.format(table))
+    path = osp.join(META_DATA_DIR, f'{table}.csv')
     return pd.read_csv(path)
+
+
+def get_entity_meta_filters(table=None):
+    path = osp.join(META_DATA_DIR, 'raw', f'{FILTERS}.csv')
+    df = pd.read_csv(path)
+    if table is not None:
+        df = df[(df['table'] == table) | (df['table'] == 'all')]
+    return df
 
 
 class IntervalMergingDict(object):
