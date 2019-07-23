@@ -104,10 +104,11 @@ venv.bak/
 .mypy_cache/
 
 # snorkel
-snorkel.db
 snorkel.*.db
+snorkel.db
 checkpoints/
 .stats_cache
 viz/
 dask-worker-space/
 runs/
+data/snorkel

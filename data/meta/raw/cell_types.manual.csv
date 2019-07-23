@@ -22,10 +22,10 @@ Trm       ,3,          ,CL:0000813,CL:0000789,T-rm|T-resident-memory|resident-me
 Tscm      ,3,          ,CL:0000813,CL:0000789,T-SCM|T-SC|stem-memory-T|stem-cell-memory-T|T-stem-memory|T-stem-cell-memory|memory-stem-T|memory-stem-cell-T|T-memory-stem
 NKT       ,2,CL:0000814,          ,CL:0000789,natural-killer-T|T-natural-killer|INKT|TRNKT|CNKT|NK/T
 # Type I NKT cells with specific (nearly constant) alpha chain and beta chains w/ numbers corresponding to cytokine production of analogous Th subset
-iNKT      ,3,CL:0000921,CL:0000814,CL:0000789,I-NKT,invariant-natural-killer-T,invariant-NKT
-iNKT1     ,3,CL:0000929,CL:0000814,CL:0000789,NKT1,I-NKT1,invariant-NKT1
-iNKT2     ,3,CL:0000930,CL:0000814,CL:0000789,NKT2,I-NKT2,invariant-NKT2
-iNKT17    ,3,          ,CL:0000814,CL:0000789,NKT17,I-NKT17,invariant-NKT17
+iNKT      ,3,CL:0000921,CL:0000814,CL:0000789,I-NKT|invariant-natural-killer-T|invariant-NKT
+iNKT1     ,3,CL:0000929,CL:0000814,CL:0000789,NKT1|I-NKT1|invariant-NKT1
+iNKT2     ,3,CL:0000930,CL:0000814,CL:0000789,NKT2|I-NKT2|invariant-NKT2
+iNKT17    ,3,          ,CL:0000814,CL:0000789,NKT17|I-NKT17|invariant-NKT17
 MAIT      ,2,CL:0000940,          ,CL:0000789,Mucosal-associated invariant T|Mucosal associated invariant-T|Mucosal-associated-invariant-T
 Treg      ,2,CL:0000792,          ,CL:0000789,T-reg|T-regs|T-regulatory|regulatory-T
 Tsupp     ,2,CL:0000792,          ,CL:0000789,Tsuppressor|Ts/c|Ts/Tc|T-suppressor/cytotoxic
