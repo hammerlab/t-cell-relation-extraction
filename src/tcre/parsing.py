@@ -42,12 +42,13 @@ class SpaCyParser(Parser):
             parts = defaultdict(list)
             text = sent.text
             # Map token index to entity for reverse lookup
+            # Note: The token indexes are absolute, not relative to sentence start and
+            # must be matched against the token.i attribute (not sentence token counter)
             entities = {token_index: ent for ent in sent.ents for token_index in range(ent.start, ent.end)}
-
             for i, token in enumerate(sent):
                 ent = {'type': 'O', 'cid': 'O'}
-                if i in entities:
-                    ent = self.ent_fn(entities[i])
+                if token.i in entities:
+                    ent = self.ent_fn(entities[token.i])
                 parts['words'].append(str(token))
                 parts['lemmas'].append(token.lemma_)
                 parts['pos_tags'].append(token.tag_)

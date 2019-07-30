@@ -20,9 +20,13 @@ def fix_jupyter_spacy_config():
     ip.config['IPKernelApp']['parent_appname'] = 'notebook'
 
     
-def get_entity_meta_data(table):
+def get_entity_meta_data(table, enabled_only=True):
     path = osp.join(META_DATA_DIR, f'{table}.csv')
-    return pd.read_csv(path)
+    df = pd.read_csv(path)
+    # Disabled records are kept for provenance but generally ignored otherwise
+    if enabled_only:
+        df = df[df['enabled'] == True]
+    return df
 
 
 def get_entity_meta_filters(table=None):
