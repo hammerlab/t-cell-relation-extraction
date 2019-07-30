@@ -21,6 +21,7 @@ mygene==3.1.0
 xlrd==1.2.0
 lxml==4.3.4
 pyarrow==0.13.0
+tables==3.5.2
 interlap==0.2.6
 unidecode==1.1.1
 pytorch-pretrained-bert==0.6.2
@@ -30,5 +31,10 @@ gensim==3.7.3
 Click==7.0
 dill==0.3.0
 beautifulsoup4==4.7.1
+biopython==1.74
+beautifulsoup4==4.8.0
+dask==2.1.0
+distributed==2.1.0
+ipywidgets==7.5.1
 plotly
 jupyterlab

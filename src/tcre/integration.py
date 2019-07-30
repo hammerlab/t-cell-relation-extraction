@@ -19,8 +19,6 @@ ENC_CHRS = '\\s,\\' + '\\'.join(CHR_CAT_MAP['Pd'])
 ENC_REGEX_1 = re.compile(r'\([' + ENC_CHRS + r']*?\)')
 ENC_REGEX_2 = re.compile(r'\[[' + ENC_CHRS + r']*?\]')
 PNC_REGEX_1 = re.compile(r'\s+(\.|\?|\!)')
-TC_REGEX_1 = re.compile(r'<sup><xref[^>]*>.*?</sup>')
-TC_REGEX_2 = re.compile(r'<xref[^>]*>[^<]*</xref[^>]*>')
 
 
 def clean_text_whitespace(text):
@@ -42,38 +40,6 @@ def clean_text_punctuation(text):
     # Remove whitespace before punctuation
     text = PNC_REGEX_1.sub('\\1', text)
     return text
-
-
-def remove_xml_citations(text):
-    # Remove citation elements
-    # Example: <sup><xref ref-type="bibr" rid="CR8">8</xref>–<xref ref-type="bibr" rid="CR11">11</xref></sup>
-    
-    # First, attempt to remove everything in superscript citation reference as there
-    # are often characters in the superscript but not the xref tags that relate to the
-    # citations (hyphens and commas mainly) and these should be removed as well
-    text = TC_REGEX_1.sub('', text)
-    
-    # Then remove any lingering citations not in superscript
-    text = TC_REGEX_2.sub('', text)
-    
-    return text
-
-
-def extract_text(xml, clean_whitespace=True, remove_citations=True):
-    if not xml:
-        return None
-    # Apply transformations prior to BS4 tag strip (happens on .text call)
-    if remove_citations:
-        xml = remove_xml_citations(xml)
-    soup = BeautifulSoup(xml, 'xml')
-    body = soup.find('body')
-    if not body:
-        return None
-    body = body.text
-    # Post-tag-stripping transformations
-    if clean_whitespace:
-        body = clean_text_whitespace(body)
-    return body
 
 
 def combine_text(title, abstract, body):
@@ -117,6 +83,7 @@ def parse_article(soup, clean_text=True):
     # Dates related to transmission
     history_dates = soup.find('history')
     history_dates = history_dates.find_all('date') if history_dates else []
+
     def get_history_date(typ):
         dt = [t for t in history_dates if t.get('date-type') == typ]
         return parse_date(dt[0]) if dt else None
@@ -168,6 +135,40 @@ def parse_article(soup, clean_text=True):
 def parse_nxml(doc):
     soup = BeautifulSoup(doc, 'xml')
     return pd.DataFrame([parse_article(article) for article in soup.find_all('article')])
+
+
+def extract_corpus(stream, output_file, batch_size=1000, parser_fn=parse_nxml):
+    import pyarrow.parquet as pq
+    import pyarrow as pa
+    dfs = []
+    writer = None
+
+    def flush(dfs, writer):
+        dfs = pd.concat(dfs)
+        table = pa.Table.from_pandas(dfs, preserve_index=False)
+        if writer is None:
+            writer = pq.ParquetWriter(output_file, table.schema)
+        writer.write_table(table)
+        return writer
+
+    for row, text in stream:
+        df = parser_fn(text)
+        if row is not None:
+            df = df.assign(**{k: v for k, v in row.items()})
+
+        # Convert to string to avoid issue with all null vs datetime type fields
+        for col in df.filter(regex='date_'):
+            df[col] = df[col].astype(str)
+
+        if len(df) > 0:
+            dfs.append(df)
+        if len(dfs) >= batch_size:
+            writer = flush(dfs, writer)
+            dfs = []
+    if len(dfs) > 0:
+        writer = flush(dfs, writer)
+    if writer is not None:
+        writer.close()
 
 
 def get_scispacy_pipeline(model='en_ner_jnlpba_md'):
