@@ -1,6 +1,7 @@
 sym,table
 MINOR,transcription_factors
 GENESIS,transcription_factors
+PRISM,transcription_factors
 CD4,cytokines
 CD4 molecule,cytokines
 CD4mut,cytokines
@@ -8,4 +9,9 @@ T-cell surface glycoprotein CD4,cytokines
 T-cell differentiation antigen L3T4,cytokines
 T-cell surface antigen T4/Leu-3,cytokines
 CD25,cytokines
+kit,cytokines
+light,cytokines
+rank,cytokines
+TR1,cytokines
+DP,cell_types
 TIL,all

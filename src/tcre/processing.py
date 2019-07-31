@@ -34,7 +34,10 @@ class DataFrameDocProcessor(object):
         if self.df[self.id_col].isnull().any():
             raise ValueError('Found null id for document in row group {} (file = {})'.format(rg, self.path))
         for i, r in self.df.iterrows():
-            text = integration.combine_text(*[r[c] for c in self.text_cols])
+            if 'text' in r and not pd.isnull(r['text']) and len(r['text']) > 0:
+                text = r['text']
+            else:
+                text = integration.combine_text(*[r[c] for c in self.text_cols])
             doc_id = self.id_prefix + r[self.id_col]
             meta = {**r[self.meta_cols].to_dict(), **self.meta}
             stable_id = self.get_stable_id(doc_id)
