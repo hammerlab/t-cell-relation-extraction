@@ -39,7 +39,8 @@ Tfreg     ,2,          ,CL:0000792,CL:0000789,Tf-reg|Tfr|T-follicular-regulatory
 Tc        ,2,CL:0000910,          ,CL:0000789,T-Cytotoxic|Cytotoxic-T|Cytolitic-T|T-Cytolitic|CTL|CTLs
 Tc{}      ,3,          ,CL:0000910,CL:0000789,Tc-{}|T-cytolitic-{}|T cytolitic-{}|T-cytotoxic-{}|T cytotoxic-{},0=|1=CL:0000917|2=CL:0000918|3=|9=|17=CL:0002128|22=
 # https://www.ebi.ac.uk/ols/ontologies/cl/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCL_0000912
-Th        ,2,CL:0000912,          ,CL:0000789,T-Helper|Helper-T
+# Ignore the generic "T Helper" term 
+# Th        ,2,CL:0000912,          ,CL:0000789,T-Helper|Helper-T
 Th{}      ,3,          ,CL:0000912,CL:0000789,Th-{}|T-helper-{}|T-helper {}|T helper-{}|T helper cell-{}|T helper cell (Th)-{}|T helper (Th)-{},0=|1=CL:0000545|2=CL:0000546|3=|9=CL:0002061|17=CL:0000899|22=CL:0001042
 # https://www.ebi.ac.uk/ols/ontologies/cl/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCL_0002038
 Tfh       ,2,CL:0002038,CL:0000912,CL:0000789,T-FH|T-follicular-helper|follicular-helper-T|fhT|T-follicular

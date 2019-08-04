@@ -13,5 +13,11 @@ kit,cytokines
 light,cytokines
 rank,cytokines
 TR1,cytokines
+killer,cytokines
+CVID,cytokines
+Tc1,cytokines
+pilot,cytokines
 DP,cell_types
+thymic,cell_types
+EMT,cell_types
 TIL,all
