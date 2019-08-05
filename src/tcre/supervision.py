@@ -1,4 +1,7 @@
 import collections
+import string
+import pandas as pd
+import numpy as np
 
 ENT_TYP_CT = 'IMMUNE_CELL_TYPE'
 ENT_TYP_CK = 'CYTOKINE'
@@ -118,6 +121,10 @@ def get_candidate_classes():
     ])
 
 
+#########################
+# Snorkel Data Utilities
+#########################
+
 def get_entity_type(cand, span):
     """Return string type of a span associated with a candidate"""
     # Find index of type for first word in span and use it to lookup type in list 
@@ -131,6 +138,41 @@ def get_cids_query(session, candidate_class, split):
     return session.query(Candidate.id)\
         .filter(Candidate.type == candidate_class.field)\
         .filter(Candidate.split == split)
+
+
+def _load_gold_labels(session, candidate_class, **kwargs):
+    from snorkel.annotations import csr_LabelMatrix, load_matrix
+    from snorkel.models import GoldLabelKey, GoldLabel
+
+    # Get annotator keys (expect relation name substring)
+    key_names = [k[0] for k in session.query(GoldLabelKey.name).all() if candidate_class.field in k[0]]
+    if len(key_names) == 0:
+        raise ValueError(f'Failed to find annotator names for relation class {candidate_class.field}')
+    # Fetch labels for all annotators above
+    return load_matrix(csr_LabelMatrix, GoldLabelKey, GoldLabel, session, key_names=key_names, **kwargs)
+
+
+def get_gold_labels(session, candidate_class, split, **kwargs):
+    """ Return gold labels for candidates as numpy array (all -1 or 1) and candidate index as
+    label_index -> cand_index dict if requested
+    """
+    cids_query = get_cids_query(session, candidate_class, split)
+    y = _load_gold_labels(session, candidate_class, split=split, load_as_array=False, cids_query=cids_query, **kwargs)
+    assert y.ndim == 2, f'Expecting 2D labels array but got shape {y.shape}'
+
+    def get_value(r, cand_id):
+        if (r != 0).sum() > 1:
+            raise AssertionError(f'Found multiple annotations for candidate id {cand_id}')
+        # For all annotators, labels should be present or considered negative when absent
+        if (r != 0).sum() == 0:
+            return -1
+        return r[r != 0][0]
+
+    # Get label_id -> cand_id mapping
+    cand_idx = y.row_index
+    y = np.array([get_value(r, cand_idx[i]) for i, r in enumerate(y.toarray())])
+    assert np.all(np.in1d(y, [-1, 1]))
+    return pd.Series(y, index=[cand_idx[i] for i in range(len(y))])
 
 
 ###############################
@@ -211,6 +253,94 @@ def has_closer_reference(c, right=True):
         if ent_typ == target_typ and cid != target_cid:
             return 1
     return 0
+
+
+PUNC_TOKENS = list('!.:;?')
+PAREN_TOKENS = list('()[]{}')
+
+
+def num_punctuation_tokens(tokens):
+    return len([t for t in tokens if t in PUNC_TOKENS])
+
+
+def num_paren_tokens(tokens):
+    return len([t for t in tokens if t in PAREN_TOKENS])
+
+
+def num_newlines(text):
+    return text.count('\n')
+
+
+FIG_TOKENS = [
+    'p', 'table', 'tables', 'figure', 'figures', 'fig.', 'fig', 'diagram', 'diagrams',
+    'plot', 'plots', 'chart', 'charts', 'graph', 'graphs', 'error', 'formula', 'formulas',
+    'abbreviation', 'abbreviations'
+]
+
+
+def num_fig_tokens(tokens):
+    ct = 0
+    for t in tokens:
+        tl = t.lower()
+        if tl in FIG_TOKENS:
+            ct += 1
+            continue
+    return ct
+
+
+def candidate_high_fig_keywords(c, thresh=1):
+    return num_fig_tokens(c.get_parent().words) >= thresh
+
+
+def candidate_high_punctuation_tokens(c, thresh=8):
+    return num_punctuation_tokens(c.get_parent().words) >= thresh
+
+
+def candidate_high_paren_tokens(c, thresh=16):
+    return num_paren_tokens(c.get_parent().words) >= thresh
+
+
+def candidate_high_newlines(c, thresh=3):
+    return num_newlines(c.get_parent().text) >= thresh
+
+
+def candidate_high_characters(c, thresh=2000):
+    return len(c.get_parent().text) >= thresh
+
+
+def is_invalid_candidate(c, fig_kw_ct_thresh=1, punc_ct_thresh=8,
+                       paren_ct_thresh=16, newline_ct_thresh=3, char_ct_thresh=2000):
+
+    return candidate_high_fig_keywords(c, fig_kw_ct_thresh) or \
+        candidate_high_punctuation_tokens(c, punc_ct_thresh) or \
+        candidate_high_paren_tokens(c, paren_ct_thresh) or \
+        candidate_high_newlines(c, newline_ct_thresh) or \
+        candidate_high_characters(c, char_ct_thresh)
+
+
+def _get_unique_entity_mentions(typs, null_val='O'):
+    """Get unique entity types for a list of token entity types (which may repeat)
+
+    Example: _get_unique_entity_mentions(['e1', 'O', 'O', 'e2', 'e2', 'e3']) -> {0: 'e1', 3: 'e2', 5: 'e3'}
+    """
+    uniq = np.unique(typs)
+    uniq = {v: i for i, v in enumerate(uniq)}
+    ind = pd.Series(typs).map(uniq).diff().values
+    ind[0] = float(typs[0] != null_val)
+    ind = np.argwhere(ind).ravel()
+    return {i: typs[i] for i in ind if typs[i] != null_val}
+
+
+def is_complex_candidate(c, entity_ct_thresh=3, char_ct_thresh=500):
+    sent = c.get_parent()
+    if entity_ct_thresh:
+        typs = _get_unique_entity_mentions(sent.entity_types)
+        if len(typs) >= entity_ct_thresh:
+            return True
+    if char_ct_thresh:
+        if len(sent.text) >= char_ct_thresh:
+            return True
+    return False
 
 
 def ltp(x):

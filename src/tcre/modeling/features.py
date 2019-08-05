@@ -122,6 +122,10 @@ def get_specials(markers, swaps):
     return list(set(specials))
 
 
+def get_sentence_features(record):
+    pass
+
+
 def get_record_features(records, markers=DEFAULT_MARKERS, swaps=DEFAULT_SWAPS,
                         subtokenizer=None, lower=False, assert_unique=True, include_indices=False):
 

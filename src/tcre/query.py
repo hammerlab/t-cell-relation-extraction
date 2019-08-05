@@ -1,6 +1,7 @@
 """Query utilities for efficient snorkel entity linking"""
 import pandas as pd
 
+
 class DocToCand(object):
 
     QUERY_TEMPLATE = (
