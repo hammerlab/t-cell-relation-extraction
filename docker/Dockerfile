@@ -44,7 +44,7 @@ RUN pip install --no-deps git+https://github.com/HazyResearch/treedlib@master
 RUN pip install -e git://github.com/scikit-optimize/scikit-optimize.git@v0.6#egg=scikit-optimize
 
 # Install helpful jupyter extensions
-RUN pip install jupyter_contrib_nbextensions && \
+RUN pip install jupyter-contrib-nbextensions==0.5.1 && \
     jupyter contrib nbextension install --user && \
     jupyter nbextension enable python-markdown/main
 
