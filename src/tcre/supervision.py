@@ -2,6 +2,7 @@ import collections
 import string
 import pandas as pd
 import numpy as np
+from snorkel.lf_helpers import rule_regex_search_tagged_text
 
 ENT_TYP_CT = 'IMMUNE_CELL_TYPE'
 ENT_TYP_CK = 'CYTOKINE'
@@ -318,6 +319,41 @@ def is_invalid_candidate(c, fig_kw_ct_thresh=1, punc_ct_thresh=8,
         candidate_high_characters(c, char_ct_thresh)
 
 
+HYPOTHESIS_PREFIX = ['to']
+HYPOTHESIS_TOKENS = [
+    'may', 'maybe', 'whether', 'might', 'wish', 'wished', 'could',
+    'analyze', 'analyzed', 'assess', 'assessed',
+    'tested', 'intent', 'intended', 'goal', 'aim', 'aimed',
+    'objective'
+]
+
+
+def is_hypothesis_candidate(c, prefix_ct_thresh=1, token_ct_thresh=1):
+    """Function to detect sentences that propose a relation without confirming it
+
+    Examples:
+        - "We designed our study to capture ..."
+        - "To determine if ..."
+        - "The relation was analzyed using ..."
+    """
+    words = [w.lower() for w in c.get_parent().words]
+    if prefix_ct_thresh:
+        ct = len([w for w in HYPOTHESIS_PREFIX if words[0] == w])
+        if ct >= prefix_ct_thresh:
+            return True
+    if token_ct_thresh:
+        ws = set(words)
+        ct = len(ws) - len(ws - set(HYPOTHESIS_TOKENS))
+        if ct >= token_ct_thresh:
+            return True
+    return False
+
+
+def is_expressed_protein(c):
+    """Rule to catch cytokines and transcription factors mentioned with positive expression modifier (e.g. FoxP3+)"""
+    return True if rule_regex_search_tagged_text(c, r'{{A}}\+', 1) > 0 else False
+
+
 def _get_unique_entity_mentions(typs, null_val='O'):
     """Get unique entity types for a list of token entity types (which may repeat)
 
@@ -341,6 +377,10 @@ def is_complex_candidate(c, entity_ct_thresh=3, char_ct_thresh=500):
         if len(sent.text) >= char_ct_thresh:
             return True
     return False
+
+###########################
+# Regex Function Utilities
+###########################
 
 
 def ltp(x):

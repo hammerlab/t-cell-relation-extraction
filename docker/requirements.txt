@@ -36,5 +36,6 @@ beautifulsoup4==4.8.0
 dask==2.1.0
 distributed==2.1.0
 ipywidgets==7.5.1
+xgboost==0.90
 plotly
 jupyterlab

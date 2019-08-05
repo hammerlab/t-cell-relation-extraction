@@ -27,3 +27,4 @@ class PredictionAggregator(Metric):
 
     def compute(self):
         return pd.concat([pd.DataFrame(p) for p in self.predictions])
+

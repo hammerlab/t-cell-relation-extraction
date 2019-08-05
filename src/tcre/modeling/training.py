@@ -3,7 +3,7 @@ import pathlib as pl
 import numpy as np
 import random
 import os
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from ignite.metrics import Accuracy, Loss, Precision, Recall
 from ignite.handlers import EarlyStopping, ModelCheckpoint
 from ignite.engine import Events, Engine, create_supervised_trainer, create_supervised_evaluator
@@ -61,7 +61,7 @@ def supervise(model, lr, decay, train_iter, val_iter,
         return model.transform(y_pred) > thresh, torch.round(y)
 
     def get_metrics():
-        metrics = {
+        metrics = OrderedDict({
             'accuracy': Accuracy(classify),
             'precision': Precision(classify, average=False),
             'precision@60': Precision(lambda output: classify(output, .60), average=False),
@@ -70,7 +70,7 @@ def supervise(model, lr, decay, train_iter, val_iter,
             'precision@90': Precision(lambda output: classify(output, .90), average=False),
             'recall': Recall(classify, average=False),
             'loss': Loss(criterion)
-        }
+        })
         metrics['f1'] = get_f1_metric(metrics['precision'], metrics['recall'])
         return metrics
 
@@ -120,7 +120,7 @@ def supervise(model, lr, decay, train_iter, val_iter,
         history.append({k: v for k, v in record.items() if k != 'predictions'})
         if iteration % log_epoch_interval == 0:
             logger.info(
-                '{type} Results - Epoch: {epoch}  Count: {ct} Loss: {loss:.4f} Precision@70: {precision@70:.3f} '
+                '{type} Results - Epoch: {epoch}  Count: {ct} Loss: {loss:.4f} '
                 'Accuracy: {accuracy:.3f} F1: {f1:.3f}'.format(
                     **record))
         return metrics
