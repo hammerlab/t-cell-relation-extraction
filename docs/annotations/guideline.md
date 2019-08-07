@@ -1,16 +1,5 @@
 # Annotation Guidelines
 
-Cytokines to remove: 
-rules: Do something with "respectively"
-ways to make process better:
-  - Build NER models first
-  - Decide upfront if recall should across all relations, or the simplest ones in a corpus
-      - In other words, is it ok to simply ignore positive examples because they're more complex?
-  - Use a sentence complexity filter as in iX prior to annotation as well as candidate filtering
-  - Annotate candidates (not documents) with ability to expand certain cases into more examples (no such tool exists)
-  - Start by doing minimal supervision until models beat baseline, then work on improving with snorkel
-      - Error analysis on this should have been used to inform heuristics
-
 ## All Relations
 
 - **Positive**
