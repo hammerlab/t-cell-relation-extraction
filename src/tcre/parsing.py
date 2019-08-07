@@ -54,7 +54,8 @@ class SpaCyParser(Parser):
                 parts['pos_tags'].append(token.tag_)
                 parts['char_offsets'].append(token.idx)
                 parts['abs_char_offsets'].append(token.idx)
-                head_idx = 0 if token.head is token else token.head.i - sent[0].i + 1
+                # Make parent index 0 if root or one-based token index otherwise
+                head_idx = 0 if token.head.i == token.i else token.head.i - sent[0].i + 1
                 parts['dep_parents'].append(head_idx)
                 parts['dep_labels'].append(token.dep_)
                 parts['ner_tags'].append(ent['type'])

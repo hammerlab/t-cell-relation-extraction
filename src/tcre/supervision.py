@@ -378,6 +378,137 @@ def is_complex_candidate(c, entity_ct_thresh=3, char_ct_thresh=500):
             return True
     return False
 
+
+#############################
+# Dependency Parse Utilities
+#############################
+
+
+VERB_MAP = {
+    REL_FIELD_INDUCING_CYTOKINE: [
+        'induce', 'drive', 'direct', 'regulate', 'control', 'promote', 'rise',
+        'mediate', 'cause', 'depend', 'create', 'generate', 'need', 'require', 'rely',
+        'polarize', 'differentiate', 'develop', 'form', 'stabilize'
+    ],
+    REL_FIELD_SECRETED_CYTOKINE: [
+        'secrete', 'express', 'coexpress', 'co-express', 'release',
+        'produce', 'exhibit', 'display', 'show'
+    ],
+    REL_FIELD_INDUCING_TRANSCRIPTION_FACTOR: [
+        # Differentiation program verbs
+        'induce', 'drive', 'direct', 'regulate', 'control', 'promote', 'rise',
+        'mediate', 'cause', 'depend', 'create', 'generate', 'need', 'require', 'rely',
+        'polarize', 'differentiate', 'develop', 'form', 'stabilize',
+        # Transcription/expression verbs
+        'express', 'coexpress', 'co-express', 'transcribe'
+    ],
+    'negative': [
+        # From iX verb lexicon
+        'abolish', 'abrogate', 'aggravate', 'alleviate', 'antagonize',
+        'arise', 'arrested', 'attenuate', 'augment', 'block', 'cleave',
+        'confined', 'counteract', 'damage', 'deactivates', 'decline',
+        'decrease', 'degrade', 'delay', 'delete', 'deplete', 'depress',
+        'deprive', 'desensitize', 'destabilize', 'destroy', 'detached',
+        'diminish', 'disable', 'disappeared', 'disrupt', 'dissect',
+        'down-modulate', 'downregulate', 'down-regulate', 'draining',
+        'dysregulate', 'eliminate', 'exacerbate', 'excise', 'fail',
+        'hinders', 'impair', 'inactivate', 'inhibit', 'interfere',
+        'interfering', 'kill', 'lack', 'limit', 'lose', 'lost', 'lower',
+        'lyse', 'minimize', 'mitigate', 'obstruct', 'oppose', 'overridden',
+        'predominate', 'prevent', 'reduce', 'reject', 'remove', 'repress',
+        'restraining', 'restrict', 'reverse', 'spikes', 'stop', 'stress',
+        'suppress', 'sustain', 'truncated', 'understand', 'underwent',
+        'undifferentiate', 'unstimulate'
+    ]
+}
+
+
+def get_parse_tree(candidate):
+    """Reconstruct parse tree from token parent indicies stored in DB (from SpaCy initially)"""
+    from treelib import Tree
+    sent = candidate.get_parent()
+    words = sent.words
+    tree = Tree()
+
+    # Map token index to token data
+    nodes = {
+        i: dict(
+            token=words[i], dep_label=sent.dep_labels[i],
+            # Dep parents are stored with one-based index
+            dep_parent=sent.dep_parents[i] - 1,
+            index=i, node_id=i
+        )
+        for i in range(len(words))
+    }
+
+    # Recursive method for building tree that ensures parent is always added first
+    def add_node(n):
+        parent_id = None
+        if n['dep_label'] != 'ROOT':
+            parent = add_node(nodes[n['dep_parent']])
+            parent_id = parent.identifier
+        if not tree.contains(n['node_id']):
+            tree.create_node(tag=n['token'], identifier=n['node_id'], parent=parent_id, data=n)
+        return tree.get_node(n['node_id'])
+
+    # Build tree up from every possible starting token
+    for i in range(len(words)):
+        add_node(nodes[i])
+    assert len(tree) == len(words)
+    return tree
+
+
+class DependencyParseTree(object):
+
+    def get_relation_verbs(self, doc, tree, verbs, entities, between=True):
+        res = []
+        entities = sorted(entities)
+        for t in doc:
+            if not (t['pos'].startswith('VB') or t['pos'] == 'VERB'):
+                continue
+            # Ensure verb lemma is in target set
+            if t['lemma'] not in verbs:
+                continue
+            # Ignore verbs not between the entities, if requested
+            if between:
+                if t['index'] <= entities[0] or t['index'] >= entities[1]:
+                    continue
+            # Fitler to verbs with both entities in subtree
+            subtree = tree.subtree(t['index'])
+            indexes = set([n.data['index'] for n in subtree.all_nodes()])
+            for ei in entities:
+                if ei not in indexes:
+                    continue
+            res.append(t)
+        return res
+
+    def is_candidate_relation(self, c, typ):
+        verbs = VERB_MAP.get(typ)
+        if verbs is None:
+            raise ValueError(
+                'Candidate type "{}" not supported; must be one of {}'
+                .format(c.type, VERB_MAP.keys())
+            )
+
+        sent = c.get_parent()
+        tree = get_parse_tree(c)
+        doc = [
+            dict(lemma=sent.lemmas[i], pos=sent.pos_tags[i], index=i)
+            for i in range(len(sent.words))
+        ]
+
+        # Pull 0-based indexes of first tokens for each entity
+        entities = [ctx.get_word_start() for ctx in c.get_contexts()]
+
+        # Determine number of verbs implying a positive or negative relation
+        pos_verbs = len(self.get_relation_verbs(doc, tree, verbs, entities, between=True))
+        neg_verbs = len(self.get_relation_verbs(doc, tree, VERB_MAP['negative'], entities, between=False))
+
+        if pos_verbs > 0 and neg_verbs == 0:
+            return True
+        return False
+
+
 ###########################
 # Regex Function Utilities
 ###########################
