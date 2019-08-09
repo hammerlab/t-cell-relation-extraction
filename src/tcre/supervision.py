@@ -20,6 +20,16 @@ REL_FIELD_INDUCING_CYTOKINE = 'inducing_cytokine'
 REL_FIELD_SECRETED_CYTOKINE = 'secreted_cytokine'
 REL_FIELD_INDUCING_TRANSCRIPTION_FACTOR = 'inducing_transcription_factor'
 
+REL_INDCK = 'indck'
+REL_SECCK = 'secck'
+REL_INDTF = 'indtf'
+
+REL_ABBRS = collections.OrderedDict([
+    (REL_INDCK, REL_CLASS_INDUCING_CYTOKINE),
+    (REL_SECCK, REL_CLASS_SECRETED_CYTOKINE),
+    (REL_INDTF, REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR),
+])
+
 COMP_CLASSES = {
     REL_FIELD_INDUCING_CYTOKINE: REL_FIELD_SECRETED_CYTOKINE,
     REL_FIELD_SECRETED_CYTOKINE: REL_FIELD_INDUCING_CYTOKINE
@@ -37,6 +47,8 @@ SPLIT_VAL = 3
 SPLIT_INFER = 9
 
 SPLIT_MAP = {SPLIT_TRAIN: 'train', SPLIT_DEV: 'dev', SPLIT_INFER: 'infer', SPLIT_TEST: 'test', SPLIT_VAL: 'val'}
+SPLIT_MAPI = {v: k for k, v in SPLIT_MAP.items()}
+SPLIT_GOLD_LABELS = [SPLIT_DEV, SPLIT_VAL, SPLIT_TEST]
 
 
 def get_expected_label_type(split):
@@ -60,12 +72,13 @@ DISPLACY_ENT_OPTS = {
 
 class CandidateClass(object):
     
-    def __init__(self, index, name, field, label, entity_types):
+    def __init__(self, index, name, field, label, abbr, entity_types):
         from snorkel.models import candidate_subclass
-        self.index = index # Most often used as tie to snorkel key_group
+        self.index = index  # Most often used as tie to snorkel key_group
         self.name = name
         self.field = field
         self.label = label
+        self.abbr = abbr
         self.entity_types = entity_types
         self.subclass = candidate_subclass(name, entity_types)
         
@@ -107,17 +120,17 @@ def get_candidate_classes():
     return CandidateClasses([
         CandidateClass(
             0, REL_CLASS_INDUCING_CYTOKINE, REL_FIELD_INDUCING_CYTOKINE, 'Induction',
-            [ENT_TYP_CK_L, ENT_TYP_CT_L]
+            REL_INDCK, [ENT_TYP_CK_L, ENT_TYP_CT_L]
         ),
         CandidateClass(
             # * Make sure SecretedCytokine gives cytokine + cell type in same order as they 
             # will share rules for labeling functions
             1, REL_CLASS_SECRETED_CYTOKINE, REL_FIELD_SECRETED_CYTOKINE, 'Secretion',
-            [ENT_TYP_CK_L, ENT_TYP_CT_L]
+            REL_SECCK, [ENT_TYP_CK_L, ENT_TYP_CT_L]
         ),
         CandidateClass(
             2, REL_CLASS_INDUCING_TRANSCRIPTION_FACTOR, REL_FIELD_INDUCING_TRANSCRIPTION_FACTOR, 'Differentiation',
-            [ENT_TYP_TF_L, ENT_TYP_CT_L]
+            REL_INDTF, [ENT_TYP_TF_L, ENT_TYP_CT_L]
         ),
     ])
 
@@ -141,24 +154,34 @@ def get_cids_query(session, candidate_class, split):
         .filter(Candidate.split == split)
 
 
-def _load_gold_labels(session, candidate_class, **kwargs):
+def get_gold_labels_matrix(session, candidate_class, split, **kwargs):
     from snorkel.annotations import csr_LabelMatrix, load_matrix
     from snorkel.models import GoldLabelKey, GoldLabel
 
-    # Get annotator keys (expect relation name substring)
+    # Set candidates to get labels for
+    cids_query = get_cids_query(session, candidate_class, split)
+
+    # Set annotator keys (expect relation name substring)
     key_names = [k[0] for k in session.query(GoldLabelKey.name).all() if candidate_class.field in k[0]]
     if len(key_names) == 0:
         raise ValueError(f'Failed to find annotator names for relation class {candidate_class.field}')
-    # Fetch labels for all annotators above
-    return load_matrix(csr_LabelMatrix, GoldLabelKey, GoldLabel, session, key_names=key_names, **kwargs)
+
+    # Fetch labels for all candidates and keys determined above
+    y = load_matrix(
+        csr_LabelMatrix, GoldLabelKey, GoldLabel, session,
+        key_names=key_names, cids_query=cids_query, split=split, **kwargs)
+
+    # Ensure size of labels array matches expectations
+    ct = cids_query.count()
+    assert ct == y.shape[0], \
+        'Gold labels matrix length ({}) does not match candidate count ({}) for class {}, split {}'\
+        .format(y.shape[0], ct, candidate_class.field, split)
+    return y
 
 
 def get_gold_labels(session, candidate_class, split, **kwargs):
-    """ Return gold labels for candidates as numpy array (all -1 or 1) and candidate index as
-    label_index -> cand_index dict if requested
-    """
-    cids_query = get_cids_query(session, candidate_class, split)
-    y = _load_gold_labels(session, candidate_class, split=split, load_as_array=False, cids_query=cids_query, **kwargs)
+    """ Return gold labels for candidates as numpy array (all -1 or 1) with candidate id as index """
+    y = get_gold_labels_matrix(session, candidate_class, split, load_as_array=False, **kwargs)
     assert y.ndim == 2, f'Expecting 2D labels array but got shape {y.shape}'
 
     def get_value(r, cand_id):
