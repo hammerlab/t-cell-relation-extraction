@@ -60,4 +60,4 @@ ENV SNORKELDB sqlite:///$TCRE_REPO_DIR/data/snorkel/snorkel.db
 ENV SHELL /bin/bash
 
 WORKDIR /lab
-CMD jupyter lab --port=8888 --ip=0.0.0.0 --allow-root
+CMD git -C $SNORKEL_REPO_DIR pull origin master && jupyter lab --port=8888 --ip=0.0.0.0 --allow-root
