@@ -122,10 +122,6 @@ def get_specials(markers, swaps):
     return list(set(specials))
 
 
-def get_sentence_features(record):
-    pass
-
-
 def get_record_features(records, markers=DEFAULT_MARKERS, swaps=DEFAULT_SWAPS,
                         subtokenizer=None, lower=False, assert_unique=True, include_indices=False):
 
@@ -206,3 +202,33 @@ def get_record_features(records, markers=DEFAULT_MARKERS, swaps=DEFAULT_SWAPS,
     df2 = pd.DataFrame([get_features(rec) for rec in tqdm.tqdm(records)])
     return pd.concat([df1, df2], axis=1)
 
+
+def get_scibert_text(cand):
+    """ Return sentence for candidate using markers as in SciBERT
+
+    See: https://github.com/allenai/scibert/blob/5d72d0ec50e2d3ebe971122f8b282278c210eccd/scripts/chemprot_to_relation.py#L47
+    """
+    text = cand.get_parent().text
+    ctx = cand.get_contexts()
+    assert len(ctx) == 2, 'Expecting 2 contexts, found {} in candidate {}'.format(len(ctx), cand)
+
+    # If first context is not a cell type, set the placemark characters accordingly
+    chars = ['<< ', ' >>', '[[ ', ' ]]']
+    if cand.get_parent().entity_types[ctx[0].get_word_start()] == ENT_TYP_CT_L:
+        chars = ['[[ ', ' ]]', '<< ', ' >>']
+
+    # Determine which entity is first, so that the substitution to follow
+    # can occur with no knowledge of order
+    if ctx[0].char_start < ctx[1].char_start:
+        e1, e2 = ctx
+    else:
+        e2, e1 = ctx
+
+    text = ''.join([
+        text[:e1.char_start],
+        chars[0], text[e1.char_start:(e1.char_end + 1)], chars[1],
+        text[(e1.char_end + 1):e2.char_start],
+        chars[2], text[e2.char_start:(e2.char_end + 1)], chars[3],
+        text[(e2.char_end + 1):]
+    ])
+    return text
