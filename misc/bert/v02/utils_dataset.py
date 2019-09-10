@@ -30,7 +30,7 @@ import pandas as pd
 import os.path as osp
 
 from scipy.stats import pearsonr, spearmanr
-from sklearn.metrics import matthews_corrcoef, f1_score
+from sklearn.metrics import matthews_corrcoef, f1_score, precision_score, recall_score
 
 logger = logging.getLogger(__name__)
 
@@ -301,13 +301,17 @@ def simple_accuracy(preds, labels):
     return (preds == labels).mean()
 
 
-def acc_and_f1(preds, labels):
+def classification_metrics(preds, labels):
     acc = simple_accuracy(preds, labels)
     f1 = f1_score(y_true=labels, y_pred=preds)
     return {
         "acc": acc,
         "f1": f1,
         "acc_and_f1": (acc + f1) / 2,
+        "precision": precision_score(labels, preds),
+        "recall": recall_score(labels, preds),
+        "n": len(preds),
+        "rate": (labels > .5).mean()
     }
 
 
@@ -324,11 +328,11 @@ def pearson_and_spearman(preds, labels):
 def compute_metrics(task_name, preds, labels):
     assert len(preds) == len(labels)
     if task_name == "imdb":
-        return acc_and_f1(preds, labels)
+        return classification_metrics(preds, labels)
     elif task_name == "quora":
-        return acc_and_f1(preds, labels)
+        return classification_metrics(preds, labels)
     elif task_name == "tcre":
-        return acc_and_f1(preds, labels)
+        return classification_metrics(preds, labels)
     else:
         raise KeyError(task_name)
 

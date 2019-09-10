@@ -24,9 +24,11 @@ import argparse
 import glob
 import logging
 import os
+import os.path as osp
 import random
 
 import numpy as np
+import pandas as pd
 import torch
 from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,
                               TensorDataset)
@@ -468,8 +470,16 @@ def main():
             model = model_class.from_pretrained(checkpoint)
             model.to(args.device)
             result = evaluate(args, model, tokenizer, prefix=global_step)
-            result = dict((k + '_{}'.format(global_step), v) for k, v in result.items())
+            if global_step:
+                result = dict((k + '_{}'.format(global_step), v) for k, v in result.items())
             results.update(result)
+            
+    # Save results
+    if args.do_eval and args.local_rank in [-1, 0]:
+        path = osp.join(args.output_dir, 'scores.json')
+        print(results)
+        pd.Series(results).to_json(path)
+        logger.info('Saved evaluation results to path %s', path)
 
     return results
 
