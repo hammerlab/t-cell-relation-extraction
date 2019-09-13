@@ -45,7 +45,7 @@ from pytorch_transformers import (WEIGHTS_NAME, BertConfig,
 
 from pytorch_transformers import AdamW, WarmupLinearSchedule
 
-from utils_dataset import (compute_metrics, convert_examples_to_features,
+from tcre.exec.v1.bert.utils_dataset import (compute_metrics, convert_examples_to_features,
                            output_modes, processors)
 
 logger = logging.getLogger(__name__)
@@ -370,6 +370,8 @@ def main():
                         help="For distributed training: local_rank")
     parser.add_argument('--server_ip', type=str, default='', help="For distant debugging.")
     parser.add_argument('--server_port', type=str, default='', help="For distant debugging.")
+    parser.add_argument('--scores_filename', type=str, default='scores',
+                        help="Name of exported json file containing scores (omitting .json extension)")
     args = parser.parse_args()
 
     if os.path.exists(args.output_dir) and os.listdir(
@@ -491,8 +493,7 @@ def main():
 
     # Save results
     if args.do_eval and args.local_rank in [-1, 0]:
-        path = osp.join(args.output_dir, 'scores.json')
-        print(results)
+        path = osp.join(args.output_dir, args.scores_filename.replace('.json', '') + '.json')
         pd.Series(results).to_json(path)
         logger.info('Saved evaluation results to path %s', path)
 
