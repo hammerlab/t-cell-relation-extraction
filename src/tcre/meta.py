@@ -5,6 +5,7 @@ import hashlib
 ID_TYP_CK = 'CK'
 ID_TYP_TF = 'TF'
 ID_TYP_CT = 'CT'
+ID_TYP_PR = 'PR'
 MIN_CK_SYM_LEN = 3
 MIN_TF_SYM_LEN = 4
 mg = mygene.MyGeneInfo()

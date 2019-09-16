@@ -6,6 +6,7 @@ import itertools
 VOCAB_SIGN_POS = ['+', 'pos', 'positive', 'high', 'hi', 'bright']
 VOCAB_SIGN_NEG = ['-', '–', '—', '−', 'neg', 'negative', 'lo', 'low', 'dim']
 
+
 def match(string, words, max_unmatched_len):
     """Recursively break string input using known vocabulary (with unknown substrings of maximum size)
     

@@ -10,6 +10,7 @@ SPECIES_MOUSE_ID = 2
 CELL_TYPES = 'cell_types'
 CYTOKINES = 'cytokines'
 TRANSCRIPTION_FACTORS = 'transcription_factors'
+SURFACE_PROTEINS = 'surface_proteins'
 FILTERS = 'filters'
 
 
