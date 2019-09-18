@@ -119,7 +119,7 @@ def get_specials(markers, swaps):
     # Extract tokens, ignoring None or empty strings
     specials += [v3 for k1, v1 in (markers or {}).items() for v2 in (v1 or {}).values() for v3 in (v2 or []) if v3]
     specials += [v2 for k1, v1 in (swaps or {}).items() for v2 in (v1 or {}).values() if v2]
-    return list(set(specials))
+    return list(sorted(set(specials)))
 
 
 def get_record_features(records, markers=DEFAULT_MARKERS, swaps=DEFAULT_SWAPS,

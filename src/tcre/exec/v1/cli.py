@@ -300,6 +300,16 @@ def _train(cands, splits, config):
     )
     logger.info('Split datasets with sizes %s', {k: len(ds) for k, ds in datasets.items()})
 
+    def getiterdf(iterator):
+        args = [(b.text[0].t().detach().numpy(), b.id.detach().numpy(), b.label.detach().numpy()) for b in iterator]
+        df = pd.DataFrame(np.concatenate([a[0] for a in args], axis=0))
+        df['id'] = np.concatenate([a[1] for a in args], axis=0)
+        df['label'] = np.concatenate([a[2] for a in args], axis=0)
+        return df
+    getiterdf(train_iter).to_pickle('/tmp/train_df_2.1.pkl')
+    getiterdf(train_iter).to_pickle('/tmp/train_df_2.2.pkl')
+    getiterdf(val_iter).to_pickle('/tmp/val_df_2.1.pkl')
+
     model, model_args = get_model(fields, config)
     config['model_args'] = model_args
     logger.info(f"Built model with arguments: {config['model_args']}")
@@ -350,6 +360,7 @@ class param(object):
 @click.pass_context
 def cli(ctx, relation_class, device, batch_size, output_dir, seed, log_level):
     logging.basicConfig(level=log_level.upper())
+    set_seed(seed)
     ctx.obj['relation_class'] = relation_class
     ctx.obj['device'] = device
     ctx.obj['batch_size'] = batch_size

@@ -19,7 +19,8 @@ class W2VVocab(Vocab):
 
         # Remove any specials already present in the vocab and prepend pad token
         assert '<pad>' not in model.vocab
-        specials = [v for v in (specials or []) if v not in model.vocab]
+        specials = list(sorted(specials)) if specials else []
+        specials = [v for v in specials if v not in model.vocab]
         specials = ['<pad>'] + specials
 
         self.itos = specials + list(model.vocab.keys())

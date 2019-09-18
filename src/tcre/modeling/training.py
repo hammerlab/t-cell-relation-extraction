@@ -1,8 +1,10 @@
 import glob
 import pathlib as pl
 import numpy as np
+import shutil
 import random
 import os
+import os.path as osp
 from collections import defaultdict, OrderedDict
 from ignite.metrics import Accuracy, Loss, Precision, Recall
 from ignite.handlers import EarlyStopping, ModelCheckpoint
@@ -25,6 +27,7 @@ def set_seed(seed):
     # See:
     # - https://pytorch.org/docs/stable/notes/randomness.html
     # - https://www.kaggle.com/protan/lstm-cnn-torchtext-with-ignite
+    logger.info('Setting seed (%s)', seed)
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
@@ -92,15 +95,18 @@ def supervise(model, lr, decay, train_iter, val_iter,
         EarlyStopping(patience=es_patience, score_function=score_function, trainer=trainer)
     )
     if model_dir is not None:
+        dirname = osp.join(model_dir, 'model')
+        if osp.exists(dirname):
+            shutil.rmtree(dirname)
+        os.makedirs(dirname)
         val_evaluator.add_event_handler(
             Events.EPOCH_COMPLETED,
             ModelCheckpoint(
-                dirname=model_dir, filename_prefix='model', score_function=score_function, score_name='f1',
+                dirname=dirname, filename_prefix='model', score_function=score_function, score_name='f1',
                 create_dir=True, require_empty=True, n_saved=1
             ),
             {'model': model, 'optimizer': optimizer, 'scheduler': scheduler}
         )
-
     history = []
 
     @trainer.on(Events.ITERATION_COMPLETED)
