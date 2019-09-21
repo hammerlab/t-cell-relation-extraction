@@ -95,14 +95,13 @@ def supervise(model, lr, decay, train_iter, val_iter,
         EarlyStopping(patience=es_patience, score_function=score_function, trainer=trainer)
     )
     if model_dir is not None:
-        dirname = osp.join(model_dir, 'model')
-        if osp.exists(dirname):
-            shutil.rmtree(dirname)
-        os.makedirs(dirname)
+        if osp.exists(model_dir):
+            shutil.rmtree(model_dir)
+        os.makedirs(model_dir)
         val_evaluator.add_event_handler(
             Events.EPOCH_COMPLETED,
             ModelCheckpoint(
-                dirname=dirname, filename_prefix='model', score_function=score_function, score_name='f1',
+                dirname=model_dir, filename_prefix='model', score_function=score_function, score_name='f1',
                 create_dir=True, require_empty=True, n_saved=1
             ),
             {'model': model, 'optimizer': optimizer, 'scheduler': scheduler}

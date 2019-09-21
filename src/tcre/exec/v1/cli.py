@@ -7,6 +7,7 @@ import json
 import shutil
 import pprint
 import warnings
+import tqdm
 from collections import defaultdict, Counter
 from snorkel import SnorkelSession
 from snorkel.models import Candidate, GoldLabel
@@ -56,6 +57,12 @@ MODEL_SIZES = {
     'SIM1': {'hidden_dim': 10, 'wrd_embed_dim': 10, 'pos_embed_dim': 256},
 }
 
+# Make sure session is not garbage collected for the lifetime as this script
+# as many lazy-loaded attributes (e.g. candidate.get_parent) require that
+# the session used to retrieve the original object not be closed (to avoid
+# "Parent instance is not bound to a Session" errors)
+session = SnorkelSession()
+
 
 def get_modeling_config(**kwargs):
     markers = MARKER_LISTS[kwargs['marker_list']]
@@ -102,10 +109,13 @@ def _splits(splits_file, keys=None):
 
 
 def _cands(candidate_class, splits):
-    session = SnorkelSession()
     cids = list(set([cid for s, cids in splits.items() for cid in cids]))
-    return session.query(candidate_class.subclass) \
-        .filter(candidate_class.subclass.id.in_(cids)).all()
+    # Shortcut to get all candidates (circumvents "Too many SQL variables" errors)
+    if len(cids) == 1 and isinstance(cids[0], str) and cids[0] == 'all':
+        return session.query(candidate_class.subclass).all()
+    else:
+        return session.query(candidate_class.subclass) \
+            .filter(candidate_class.subclass.id.in_(cids)).all()
 
 
 def get_model(fields, config):
@@ -150,7 +160,7 @@ def _prepare(df, config):
     return df
 
 
-def _datasets(cands, splits, config, fields):
+def _datasets(cands, splits, config, fields, allow_null_label=False):
 
     logger.info('Collecting features')
     # Filter for candidates used in marking
@@ -174,8 +184,12 @@ def _datasets(cands, splits, config, fields):
         logger.info('Simulating labels using strategy "%s"', config['simulation_strategy'])
         df['label'] = simulation.get_simulated_labels(df, config['simulation_strategy'])
 
-    if not df['label'].between(0, 1).all():
-        ex = df['label'][~df['label'].between(0, 1)].unique()
+    if allow_null_label:
+        labels_valid = (df['label'].isnull() | df['label'].between(0, 1))
+    else:
+        labels_valid = df['label'].between(0, 1)
+    if not labels_valid.all():
+        ex = df['label'][~labels_valid].unique()
         raise AssertionError(f"Found label values outside [0, 1]; Examples: {ex[:10]}")
 
     logger.info(f'Sample feature records:\n')
@@ -198,8 +212,38 @@ def _datasets(cands, splits, config, fields):
     return datasets
 
 
-def _predict(cands, splits, config):
-    """Predict labels for candidates using a model checkpoint"""
+def _predict_dataset(model, dataset, config):
+
+    iterator = Iterator(
+        dataset,
+        config['batch_size'],
+        sort_key=lambda x: len(x.text),
+        sort_within_batch=True,
+        repeat=False,
+        shuffle=False,
+        device=config['device']
+    )
+
+    with torch.no_grad():
+        predictions = []
+        for batch in iterator:
+            predictions.append(pd.DataFrame({
+                'id': batch.id.clone().cpu().numpy(),
+                'y_true': batch.label.clone().cpu().numpy(),
+                'y_pred': model.predict(batch).clone().cpu().numpy()
+            }))
+        predictions = pd.concat(predictions).reset_index(drop=True)
+
+    return predictions
+
+
+def _predict(cands, config, cand_batch_size=100000):
+    """Predict labels for candidates using a model checkpoint
+
+    Note that batching is done both on retrieval of candidate features and in prediction.
+    The former is necessary because features for 100k candidates use a considerable amount
+    of RAM (~15G) and the latter is necessary to fit features into GPU memory.
+    """
 
     output_dir = pl.Path(config['output_dir'])
 
@@ -216,33 +260,24 @@ def _predict(cands, splits, config):
     model.load_state_dict(checkpoint['model'])
     logger.info(f'Restored model with arguments: {model_args}')
 
-    datasets = _datasets(cands, splits, config, fields)
-    if 'predict' not in datasets:
-        raise AssertionError(f'Expecting dataset with key "predict"; got datasets {datasets.keys()}')
-    dataset = datasets['predict']
-
-    iterator = Iterator(
-        dataset,
-        config['batch_size'],
-        sort_key=lambda x: len(x.text),
-        sort_within_batch=True,
-        repeat=False,
-        shuffle=False,
-        device=config['device']
-    )
-
     model = model.to(config['device'])
     model.eval()
-    with torch.no_grad():
-        predictions = []
-        for batch in iterator:
-            predictions.append(pd.DataFrame({
-                'id': batch.id.clone().cpu().numpy(),
-                'y_true': batch.label.clone().cpu().numpy(),
-                'y_pred': model.predict(batch).clone().cpu().numpy()
-            }))
-        predictions = pd.concat(predictions).reset_index(drop=True)
 
+    predictions = []
+    n_batch = int(np.ceil(len(cands) / float(cand_batch_size)))
+    logger.info('Beginning predictions for %s candidate batches', n_batch)
+    cand_idx = list(np.arange(len(cands)))
+    batches = np.array_split(cand_idx, n_batch)
+    for ids in tqdm.tqdm(list(batches)):
+        batch = [cands[i] for i in ids]
+        splits = {'predict': [c.id for c in batch]}
+        datasets = _datasets(batch, splits, config, fields, allow_null_label=True)
+        if 'predict' not in datasets:
+            raise AssertionError(f'Expecting dataset with key "predict"; got datasets {datasets.keys()}')
+        dataset = datasets['predict']
+        predictions.append(_predict_dataset(model, dataset, config))
+    predictions = pd.concat(predictions).reset_index(drop=True)
+    assert len(predictions) == len(cands), f'{len(predictions)} predictions found but {len(cands)} were expected'
     return predictions
 
 
@@ -480,7 +515,7 @@ def predict(ctx, splits_file):
     logger.info(f'Found {len(cands)} candidates')
 
     logger.info('Gathering predictions')
-    predictions = _predict(cands, splits, config)
+    predictions = _predict(cands, config)
     logger.info(f'Prediction Info:\n{predictions.info()}')
 
     path = pl.Path(output_dir) / 'predictions.json'

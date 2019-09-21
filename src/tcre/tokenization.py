@@ -1,3 +1,8 @@
+""" Expression signature tokenization utility functions
+
+This module can be used to initialize a ProteinTokenizer instance to decompose strings
+like CD4+IL-17-IFN-γhi into the more tractable form [CD4+, IL-17-, IFN-γ+]
+"""
 from tcre import lib
 from ptkn.protein_tokenization import ProteinTokenizer
 

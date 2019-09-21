@@ -1,0 +1,54 @@
+type|src|tgt
+cell_type|regulatory T|Treg
+cell_type|CD4-positive, CD25-positive, alpha-beta regulatory T|Treg
+cell_type|CD8-positive, CD25-positive, alpha-beta regulatory T|Treg
+cell_type|CD8-positive, CXCR3-positive, alpha-beta regulatory T|Treg
+cell_type|CD8-positive, CD28-negative, alpha-beta regulatory T|Treg
+cell_type|CD8-positive, alpha-beta regulatory T|Treg
+cell_type|natural T-regulatory|nTreg
+cell_type|induced T-regulatory|iTreg
+cell_type|effector CD8-positive, alpha-beta T|TEFF
+cell_type|effector CD4-positive, alpha-beta T|TEFF
+cell_type|effector T|TEFF
+cell_type|naive thymus-derived CD8-positive, alpha-beta T|TN
+cell_type|naive thymus-derived CD8-positive, alpha-beta T|TN
+cell_type|naive thymus-derived CD4-positive, alpha-beta T|TN
+cell_type|naive T|TN
+cell_type|effector memory CD8-positive, alpha-beta T cell, terminally differentiated|TEMRA
+cell_type|effector memory CD4-positive, alpha-beta T|TEM
+cell_type|effector memory CD8-positive, alpha-beta T|TEM
+cell_type|central memory CD4-positive, alpha-beta T|TCM
+cell_type|memory T|TMEM
+cell_type|CD4-positive, alpha-beta memory T|TMEM
+cell_type|T-helper 0|Th0
+cell_type|T-helper 1|Th1
+cell_type|T-helper 2|Th2
+cell_type|T-helper 3|Th3
+cell_type|T-helper 9|Th9
+cell_type|T-helper 17|Th17
+cell_type|T-helper 22|Th22
+cell_type|central memory CD8-positive, alpha-beta T|TCM
+cell_type|activated CD8-positive, alpha-beta T cell, human|activated T
+cell_type|activated CD4-positive, alpha-beta T cell, human|activated T
+cell_type|gamma-delta T|γδT
+cell_type|CD8-positive, alpha-beta cytotoxic T|Tc
+cell_type|cytotoxic T|Tc
+cell_type|CD4-positive, alpha-beta thymocyte|Thymocyte
+cell_type|CD8-positive, alpha-beta thymocyte|Thymocyte
+cell_type|double-positive, alpha-beta thymocyte|Thymocyte
+cell_type|DN2 thymocyte|Thymocyte
+cell_type|DN3 thymocyte|Thymocyte
+cell_type|DN2a thymocyte|Thymocyte
+cell_type|DN4 thymocyte|Thymocyte
+cell_type|double negative thymocyte|Thymocyte
+cell_type|immature single positive thymocyte|Thymocyte
+cell_type|fetal thymocyte|Thymocyte
+cell_type|intraepithelial|IEL
+cell_type|thymocyte|Thymocyte
+cell_type|T follicular helper|Tfh
+cell_type|dendritic epidermal T|DETC
+cell_type|helper T|Th
+cell_type|CD4-positive helper T|Th
+cell_type|alpha-beta T|αβT
+cell_type|CD4-positive, alpha-beta T|αβT
+cell_type|CD8-positive, alpha-beta T|αβT

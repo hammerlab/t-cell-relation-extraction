@@ -93,12 +93,12 @@ def candidates_to_records(cands, entity_predicate=None, label_type=LABEL_TYPE_MA
         ents = candidate_to_entities(cand)
         if entity_predicate is not None:
             ents = [e for e in ents if entity_predicate(e)]
-        label = get_label(cand, label_type=label_type)
+        label = float(get_label(cand, label_type=label_type))
         return dict(
             id=cand.id,
             text=str(cand.get_parent().text),
             words=list(cand.get_parent().words),
-            label=float(label),
+            label=label,
             entities=ents
         )
     return [get_record(cand) for cand in cands]
