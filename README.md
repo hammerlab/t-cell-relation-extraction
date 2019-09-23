@@ -12,7 +12,7 @@ The relations are identified by a weakly supervised classifier trained using dis
 
 ## Resources
 
-This work is currently in progress, but this [Summary Notebook](https://nbviewer.jupyter.org/github/hammerlab/t-cell-relation-extraction/blob/master/results/summary.render.ipynb) contains a rolling account of many details such as how documents were selected, what labeling functions were developed, tokenization challenges, controlled vocabularies, preliminary classification performance results, etc.
+This [Summary Notebook](https://nbviewer.jupyter.org/github/hammerlab/t-cell-relation-extraction/blob/master/results/summary.render.ipynb) contains a rolling account of many details such as how documents were selected, what labeling functions were developed, tokenization challenges, controlled vocabularies, preliminary classification performance results, etc.
 
 An early draft of a pre-print is also available at [Extracting T Cell Function and Differentiation Characteristics from the Biomedical Literature](https://www.biorxiv.org/content/10.1101/643767v1).
 
