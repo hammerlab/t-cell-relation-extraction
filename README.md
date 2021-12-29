@@ -1,6 +1,6 @@
 # T Cell Relation Extraction (TCRE)
 
-This repository contains the scripts and analysis necessary to extract relationships between T cells, cytokines, and transcription factors from a large PMC corpus using [Data Programming](https://arxiv.org/abs/1605.07723).  In short, the purpose of this reasearch is to identify relations like this often referenced as a small part of larger cell signaling networks:
+This repository contains the scripts and analysis necessary to extract relationships between T cells, cytokines, and transcription factors from a large PMC corpus using [Data Programming](https://arxiv.org/abs/1605.07723).  In short, the purpose of this research is to identify relations like this often referenced as a small part of larger cell signaling networks:
 
 <img src="docs/images/relation_examples.png" width="100%"/>
 
