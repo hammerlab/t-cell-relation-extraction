@@ -32,7 +32,7 @@ dill==0.3.0
 biopython==1.74
 beautifulsoup4==4.8.0
 dask==2.1.0
-distributed==2.1.0
+distributed==2021.10.0
 ipywidgets==7.5.1
 xgboost==0.90
 treelib==1.5.5
